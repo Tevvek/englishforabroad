@@ -1,6 +1,6 @@
 ---
 import "swiper/css";
-
+import FiveStars from "../components/FiveStars.astro";
 interface Testimonial {
   student: string;
   platform: string;
@@ -11,27 +11,31 @@ const TESTIMONIALS: Testimonial[] = [
   {
     student: "John Doe",
     platform: "Google",
-    opinion: "Great course, I learned a lot.",
+    opinion: "Great course!",
   },
   {
     student: "Jane Doe",
     platform: "Facebook",
-    opinion: "I liked the course, but it could be better.",
+    opinion:
+      "I liked the course, but I think some topics need deeper coverage.",
   },
   {
     student: "Alice Doe",
     platform: "Twitter",
-    opinion: "It was ok, but I expected more.",
+    opinion:
+      "The course content was decent, but my expectations were perhaps too high. I was looking for more advanced techniques and practical projects.",
   },
   {
     student: "Bob Doe",
     platform: "Instagram",
-    opinion: "I didn't like the course, it was a waste of time.",
+    opinion:
+      "I didn't find the course helpful. It didn't align with my learning goals, and the pacing was off for me.",
   },
   {
     student: "Eve Doe",
     platform: "LinkedIn",
-    opinion: "I hated the course, it was a scam.",
+    opinion:
+      "Honestly, I was extremely disappointed. The course was advertised to cover extensive material and provide in-depth learning experiences, but it failed to deliver on those promises. It felt like a complete misrepresentation of what was actually offered.",
   },
 ];
 ---
@@ -42,14 +46,25 @@ const TESTIMONIALS: Testimonial[] = [
 
   new Swiper(".swiper-testimonials", {
     loop: true,
-    slidesPerView: 4,
+    slidesPerView: 1,
     modules: [Autoplay],
     autoplay: {
       delay: 1500,
-      disableOnInteraction: false,
+      disableOnInteraction: true,
     },
     speed: 1000,
     spaceBetween: 32,
+    breakpoints: {
+      768: {
+        slidesPerView: 2,
+      },
+      1024: {
+        slidesPerView: 3,
+      },
+      1440: {
+        slidesPerView: 4,
+      },
+    },
   });
 </script>
 
@@ -58,10 +73,13 @@ const TESTIMONIALS: Testimonial[] = [
     {
       TESTIMONIALS.map((testimonial) => (
         <div class="swiper-slide">
-          <div class="bg-white rounded-xl text-cyan-800 flex flex-col gap-y-2 p-8">
-            <p>{testimonial.opinion}</p>
-            <h3 class="font-bold text-xl">{testimonial.student}</h3>
-            <p class="text-lgs">{testimonial.platform}</p>
+          <div class="bg-white rounded-xl text-cyan-800 flex flex-col gap-y-2 p-8 shadow-lg">
+            <p class="line-clamp-6" title={testimonial.opinion}>
+              {testimonial.opinion}
+            </p>
+            <h3 class="font-bold text-lg">{testimonial.student}</h3>
+            <p>{testimonial.platform}</p>
+            <FiveStars />
           </div>
         </div>
       ))

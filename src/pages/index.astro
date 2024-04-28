@@ -1,33 +1,43 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Logo from "../components/Logo.astro";
-import TopLeftBlob from "../components/TopLeftBlob.astro";
-import BottomLeftBlob from "../components/BottomLeftBlob.astro";
-import HeroBlob from "../components/HeroBlob.astro";
 import Banner from "../components/Banner.astro";
+import BottomLeftBlob from "../components/BottomLeftBlob.astro";
+import BottomRightBlob from "../components/BottomRightBlobk.astro";
 import Card from "../components/Card.astro";
+import Navbar from "../components/Navbar.astro";
 import TestimonialsCarousel from "../components/TestimonialsCarousel.astro";
+import TopLeftBlob from "../components/TopLeftBlob.astro";
+import Layout from "../layouts/Layout.astro";
+// import BigArrowRight from "../icons/BigArrowRight.astro";
+import Calendar from "../icons/Calendar.astro";
+import Certficate from "../icons/Certificate.astro";
+import Notebook from "../icons/Notebook.astro";
+import Writing from "../icons/Writing.astro";
+import Email from "../icons/Email.astro";
 
 const cards = [
   {
-    title: "Personalized Classes",
-    description:
-      "I offer one-on-one classes tailored to fit the goals and learning styles of students at all levels.",
-  },
-  {
     title: "Flexible Scheduling",
     description:
-      "I work with you to find a time that fits your schedule, no matter where you are in the world.",
+      "Choose a lesson plan that work for you. From daily 30 minutes to once a week, I adjust to your needs!",
+    icon: Calendar,
   },
   {
-    title: "Customized Curriculum",
+    title: "Personalized Curriculum",
     description:
-      "I create a personalized curriculum for each student, focusing on the skills you want to improve.",
+      "Your goals guide our lessons. Expect a learning plan that adapts to your needs and interests.",
+    icon: Notebook,
   },
   {
-    title: "Professional Experience",
+    title: "Continuous Feedback",
     description:
-      "With two master’s degrees and a background in education, I have the experience to help you succeed.",
+      "Grow with every lesson. Receive consistent feedback that highlights your progress and points for development.",
+    icon: Writing,
+  },
+  {
+    title: "Content Mastery",
+    description:
+      "Gain a firm grasp of English. Apply it confidently in your professional life and academic endeavors.",
+    icon: Certficate,
   },
 ];
 
@@ -35,43 +45,21 @@ const currentYear = new Date().getFullYear();
 ---
 
 <Layout title="Welcome to Astro.">
-  <aside class="py-6">
-    <nav class="">
-      <ul class="flex justify-center items-center gap-x-20">
-        <li class="text-cyan-800 font-bold uppercase">
-          <a href="/">ABOUT ME</a>
-        </li>
-        <li class="text-cyan-800 font-bold uppercase">
-          <a href="/plans">PLANS</a>
-        </li>
-        <li>
-          <a href="/">
-            <Logo />
-          </a>
-        </li>
-        <li class="text-cyan-800 font-bold uppercase">
-          <a href="/esl-classes">ESL CLASSES</a>
-        </li>
-        <li class="text-cyan-800 font-bold uppercase">
-          <a href="/college-apps">COLLEGE APPS</a>
-        </li>
-      </ul>
-    </nav>
-  </aside>
+  <Navbar />
 
   <main class="">
     <!-- Main blob -->
-    <div class="absolute -top-10 -left-10">
+    <div class="absolute top-0 left-0 -z-10">
       <TopLeftBlob />
     </div>
 
-    <section class="grid grid-cols-2 pl-32 py-20 relative">
+    <section class="grid grid-cols-[1fr,auto] gap-x-32 pl-32 pt-20 relative">
       <!-- Hero blobs -->
       <div class="absolute bottom-0 right-0 -z-10">
-        <HeroBlob />
+        <BottomRightBlob />
       </div>
 
-      <div class="absolute bottom-0 left-0">
+      <div class="absolute bottom-0 left-0 -z-10">
         <BottomLeftBlob />
       </div>
 
@@ -86,10 +74,11 @@ const currentYear = new Date().getFullYear();
           fit the goals and learning styles of students at all levels. Let’s
           work together to build your confidence and skills in English!
         </p>
-        <button
-          class="bg-amber-500 text-white font-bold uppercase rounded-full px-4 py-2"
-          >Enroll Now ➡️</button
-        >
+        <!-- <a
+          href="/"
+          class="bg-amber-500 text-white font-bold uppercase rounded-full px-4 py-2 flex gap-x-2"
+          >Enroll Now <BigArrowRight />
+        </a> -->
       </div>
 
       <div class="flex justify-end">
@@ -105,8 +94,8 @@ const currentYear = new Date().getFullYear();
 
     <Banner />
 
-    <section class="bg-[#F0F0F0] grid grid-cols-2 gap-12 p-20">
-      <h2 class="font-bold text-5xl text-cyan-800 col-span-2 text-center">
+    <section id="methodology" class="bg-[#F0F0F0] grid grid-cols-2 gap-12 p-20">
+      <h2 class="text-5xl text-cyan-800 col-span-2 text-center">
         Discover a new way of learning
       </h2>
 
@@ -117,25 +106,26 @@ const currentYear = new Date().getFullYear();
       </div>
     </section>
 
-    <section class="bg-[#85CBCC] p-20">
-      <h2 class="font-bold text-5xl text-center text-white pb-12">
-        Testimonials
-      </h2>
+    <section id="testimonials" class="bg-[#85CBCC] p-20">
+      <h2 class="text-5xl text-center text-white pb-12">Testimonials</h2>
 
       <TestimonialsCarousel />
     </section>
 
-    <section class="">PRICES PRICES PRICES</section>
+    <!-- <section class="bg-red-200">PRICES PRICES PRICES</section> -->
   </main>
 
-  <footer class="bg-[#85CBCC] py-10 px-20 text-white grid grid-cols-2 gap-y-4">
-    <h3 class="font-bold">Contact</h3>
+  <footer
+    id="contact"
+    class="bg-[#85CBCC] py-10 px-20 text-white grid grid-cols-2 gap-y-4"
+  >
+    <h2 class="text-2xl">Contact</h2>
 
-    <a class="col-start-1" href="mailto:ali@theenrights.com">
-      📫 info@alienright.com
+    <a class="col-start-1 flex gap-x-2" href="mailto:ali@theenrights.com">
+      <Email /> info@alienright.com
     </a>
 
-    <!-- separator -->
+    <!-- Separator -->
     <div class="col-span-2 border-b border-white my-4"></div>
 
     <p>
