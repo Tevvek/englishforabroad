@@ -53,7 +53,6 @@ const TESTIMONIALS: Testimonial[] = [
       disableOnInteraction: true,
     },
     speed: 1000,
-    spaceBetween: 32,
     breakpoints: {
       768: {
         slidesPerView: 2,
@@ -72,7 +71,7 @@ const TESTIMONIALS: Testimonial[] = [
   <div class="swiper-wrapper">
     {
       TESTIMONIALS.map((testimonial) => (
-        <div class="swiper-slide">
+        <div class="swiper-slide px-8">
           <div class="bg-white rounded-xl text-cyan-800 flex flex-col gap-y-2 p-8 shadow-lg">
             <p class="line-clamp-6" title={testimonial.opinion}>
               {testimonial.opinion}
