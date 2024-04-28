@@ -53,9 +53,11 @@ const currentYear = new Date().getFullYear();
       <TopLeftBlob />
     </div>
 
-    <section class="grid grid-cols-[1fr,auto] gap-x-32 pl-32 pt-20 relative">
+    <section
+      class="grid md:grid-cols-[1fr,auto] gap-x-32 px-8 md:pl-32 pt-12 md:pt-20 relative"
+    >
       <!-- Hero blobs -->
-      <div class="absolute bottom-0 right-0 -z-10">
+      <div class="absolute bottom-0 right-0 -z-10 hidden md:block">
         <BottomRightBlob />
       </div>
 
@@ -63,7 +65,7 @@ const currentYear = new Date().getFullYear();
         <BottomLeftBlob />
       </div>
 
-      <div class="flex flex-col items-start gap-y-4">
+      <div class="flex flex-col items-start gap-y-4 text-center md:text-start">
         <h1 class="text-6xl text-cyan-800">
           Launch your English <br /> Learning Journey
         </h1>
@@ -94,14 +96,19 @@ const currentYear = new Date().getFullYear();
 
     <Banner />
 
-    <section id="methodology" class="bg-[#F0F0F0] grid grid-cols-2 gap-12 p-20">
-      <h2 class="text-5xl text-cyan-800 col-span-2 text-center">
+    <section
+      id="methodology"
+      class="bg-[#F0F0F0] grid md:grid-cols-2 gap-12 p-20"
+    >
+      <h2 class="text-5xl text-cyan-800 md:col-span-2 text-center">
         Discover a new way of learning
       </h2>
 
-      <div><img src="/student.png" alt="Student" /></div>
+      <div class="hidden md:block">
+        <img src="/student.png" alt="Student" />
+      </div>
 
-      <div class="grid grid-cols-2 grid-rows-2 gap-6">
+      <div class="grid sm:grid-cols-2 grid-rows-2 gap-6">
         {cards.map((card) => <Card {...card} />)}
       </div>
     </section>
@@ -117,21 +124,20 @@ const currentYear = new Date().getFullYear();
 
   <footer
     id="contact"
-    class="bg-[#85CBCC] py-10 px-20 text-white grid grid-cols-2 gap-y-4"
+    class="bg-[#85CBCC] py-10 px-20 text-white grid grid-cols-1 md:grid-cols-2 gap-y-4"
   >
-    <h2 class="text-2xl">Contact</h2>
+    <h2 class="text-2xl md:col-span-2">Contact</h2>
 
-    <a class="col-start-1 flex gap-x-2" href="mailto:ali@theenrights.com">
-      <Email /> info@alienright.com
+    <a class="md:col-span-2 flex gap-x-2" href="mailto:ali@theenrights.com">
+      <Email /> ali@theenrights.com
     </a>
 
-    <!-- Separator -->
-    <div class="col-span-2 border-b border-white my-4"></div>
+    <div class="md:col-span-2 border-b border-white my-4"></div>
 
-    <p>
+    <a class="text-center md:text-start" href="/terms">Terms & Conditions</a>
+
+    <p class="text-center md:text-end">
       ©️ Ali Enright. All Rights Reserved {currentYear}
     </p>
-
-    <a class="text-end" href="/terms">Terms & Conditions</a>
   </footer>
 </Layout>

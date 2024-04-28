@@ -4,14 +4,21 @@ import Logo from "../components/Logo.astro";
 
 <aside class="py-6">
   <nav class="">
-    <ul class="flex justify-between items-center px-32">
+    <ul
+      class="flex flex-col md:flex-row justify-between gap-y-6 md:gap-y-0 items-center md:px-16 lg:px-32 md:gap-x-6"
+    >
+      <li class="block md:hidden">
+        <a href="/">
+          <Logo />
+        </a>
+      </li>
       <li class="text-cyan-800 font-extrabold uppercase">
         <a href="/">HOME</a>
       </li>
       <li class="text-cyan-800 font-extrabold uppercase">
         <a href="#methodology">METHODOLOGY</a>
       </li>
-      <li>
+      <li class="hidden md:block">
         <a href="/">
           <Logo />
         </a>
