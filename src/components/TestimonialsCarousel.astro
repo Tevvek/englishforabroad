@@ -1,0 +1,70 @@
+---
+import "swiper/css";
+
+interface Testimonial {
+  student: string;
+  platform: string;
+  opinion: string;
+}
+
+const TESTIMONIALS: Testimonial[] = [
+  {
+    student: "John Doe",
+    platform: "Google",
+    opinion: "Great course, I learned a lot.",
+  },
+  {
+    student: "Jane Doe",
+    platform: "Facebook",
+    opinion: "I liked the course, but it could be better.",
+  },
+  {
+    student: "Alice Doe",
+    platform: "Twitter",
+    opinion: "It was ok, but I expected more.",
+  },
+  {
+    student: "Bob Doe",
+    platform: "Instagram",
+    opinion: "I didn't like the course, it was a waste of time.",
+  },
+  {
+    student: "Eve Doe",
+    platform: "LinkedIn",
+    opinion: "I hated the course, it was a scam.",
+  },
+];
+---
+
+<script>
+  import Swiper from "swiper";
+  import { Autoplay } from "swiper/modules";
+
+  new Swiper(".swiper-testimonials", {
+    loop: true,
+    slidesPerView: 4,
+    modules: [Autoplay],
+    autoplay: {
+      delay: 1500,
+      disableOnInteraction: false,
+    },
+    speed: 1000,
+    spaceBetween: 32,
+  });
+</script>
+
+<div class="swiper swiper-testimonials">
+  <div class="swiper-wrapper">
+    {
+      TESTIMONIALS.map((testimonial) => (
+        <div class="swiper-slide">
+          <div class="bg-white rounded-xl text-cyan-800 flex flex-col gap-y-2 p-8">
+            <p>{testimonial.opinion}</p>
+            <h3 class="font-bold text-xl">{testimonial.student}</h3>
+            <p class="text-lgs">{testimonial.platform}</p>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</div>

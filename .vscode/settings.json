@@ -1,0 +1,6 @@
+{
+    "editor.formatOnSave": true,
+    "emojisense.languages": {
+        "astro": true
+    }
+}
