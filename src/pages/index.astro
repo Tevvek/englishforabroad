@@ -12,7 +12,7 @@ import Calendar from "../icons/Calendar.astro";
 import Certficate from "../icons/Certificate.astro";
 import Notebook from "../icons/Notebook.astro";
 import Writing from "../icons/Writing.astro";
-import Email from "../icons/Email.astro";
+import Footer from "../sections/Footer.astro";
 
 const cards = [
   {
@@ -40,8 +40,6 @@ const cards = [
     icon: Certficate,
   },
 ];
-
-const currentYear = new Date().getFullYear();
 ---
 
 <Layout title="Welcome to Astro.">
@@ -121,22 +119,5 @@ const currentYear = new Date().getFullYear();
     <!-- <section class="bg-red-200">PRICES PRICES PRICES</section> -->
   </main>
 
-  <footer
-    id="contact"
-    class="bg-[#85CBCC] py-10 px-20 text-white grid grid-cols-1 md:grid-cols-2 gap-y-4"
-  >
-    <h2 class="text-2xl md:col-span-2">Contact</h2>
-
-    <a class="md:col-span-2 flex gap-x-2" href="mailto:ali@theenrights.com">
-      <Email /> ali@theenrights.com
-    </a>
-
-    <div class="md:col-span-2 border-b border-white my-4"></div>
-
-    <a class="text-center md:text-start" href="/terms">Terms & Conditions</a>
-
-    <p class="text-center md:text-end">
-      ©️ Ali Enright. All Rights Reserved {currentYear}
-    </p>
-  </footer>
+  <Footer />
 </Layout>

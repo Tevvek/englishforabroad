@@ -1,0 +1,26 @@
+---
+import Email from "../icons/Email.astro";
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer
+  id="contact"
+  class="bg-[#85CBCC] text-white divide-y divide-white px-4 md:px-8 py-8 md:py-12 flex flex-col gap-y-4"
+>
+  <div class="space-y-4 2xl:container">
+    <h2 class="text-2xl">Contact</h2>
+    <a class="flex gap-x-2" href="mailto:ali@theenrights.com">
+      <Email /> ali@theenrights.com
+    </a>
+  </div>
+
+  <div
+    class="gap-y-4 pt-4 flex flex-col items-center md:flex-row md:justify-between 2xl:container"
+  >
+    <a class="" href="/terms">Terms & Conditions</a>
+    <p class="">
+      ©️ Ali Enright. All Rights Reserved {currentYear}
+    </p>
+  </div>
+</footer>
