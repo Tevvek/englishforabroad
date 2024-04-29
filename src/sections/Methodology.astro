@@ -1,9 +1,11 @@
 ---
+import { Image } from "astro:assets";
 import Card from "../components/Card.astro";
 import Calendar from "../icons/Calendar.astro";
 import Certficate from "../icons/Certificate.astro";
 import Notebook from "../icons/Notebook.astro";
 import Writing from "../icons/Writing.astro";
+import studentImage from "../images/student.png";
 
 const cards = [
   {
@@ -43,7 +45,7 @@ const cards = [
 
     <!-- Student image -->
     <div class="hidden lg:block">
-      <img src="/student.png" alt="Student" width="500" height="500" />
+      <Image src={studentImage} alt="Student" width="500" height="500" />
     </div>
 
     <!-- Cards -->

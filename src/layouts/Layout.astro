@@ -11,10 +11,16 @@ const { title } = Astro.props;
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Astro description" />
+    <meta
+      name="description"
+      content="Ali Enright ESL offers private, personalized online English lessons, catering to both children and adult students from Korea to Spain. Class offerings range from conversation and business English to writing tutoring and test prep. Each session is tailored to your individual learning goals. Classes also integrate advanced paraphrasing tools to enhance your learning growth. Enjoy focused instruction adjusted for all proficiency levels, whether you're a beginner or advanced. Benefit from my professional guidance as an experienced teacher dedicated to your success. Launch your learning journey and enroll in your first class today!"
+    />
+    <meta
+      name="keywords"
+      content="ESL Classes, Online Lessons, Business English, English Tutoring, Conversation Course"
+    />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <title>{title}</title>
   </head>
   <body>
@@ -24,7 +30,7 @@ const { title } = Astro.props;
 <style is:global>
   @font-face {
     font-family: "BobbyJone";
-    src: url("/fonts/BobbyJonesSoft.otf") format("opentype");
+    src: url("/fonts/BobbyJonesSoft.woff2") format("woff2");
     font-weight: normal;
     font-style: normal;
     font-display: swap;

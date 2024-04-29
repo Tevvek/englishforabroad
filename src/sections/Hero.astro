@@ -1,6 +1,8 @@
 ---
+import { Image } from "astro:assets";
 import BottomLeftBlob from "../components/BottomLeftBlob.astro";
 import BottomRightBlob from "../components/BottomRightBlobk.astro";
+import aliImage from "../images/ali.png";
 ---
 
 <section class="relative">
@@ -38,8 +40,8 @@ import BottomRightBlob from "../components/BottomRightBlobk.astro";
     </div>
 
     <!-- Hero image -->
-    <img
-      src="/ali.png"
+    <Image
+      src={aliImage}
       alt="Ali"
       width="400"
       height="422.25"
