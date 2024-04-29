@@ -1,0 +1,54 @@
+---
+import Card from "../components/Card.astro";
+import Calendar from "../icons/Calendar.astro";
+import Certficate from "../icons/Certificate.astro";
+import Notebook from "../icons/Notebook.astro";
+import Writing from "../icons/Writing.astro";
+
+const cards = [
+  {
+    title: "Flexible Scheduling",
+    description:
+      "Choose a lesson plan that work for you. From daily 30 minutes to once a week, I adjust to your needs!",
+    icon: Calendar,
+  },
+  {
+    title: "Personalized Curriculum",
+    description:
+      "Your goals guide our lessons. Expect a learning plan that adapts to your needs and interests.",
+    icon: Notebook,
+  },
+  {
+    title: "Continuous Feedback",
+    description:
+      "Grow with every lesson. Receive consistent feedback that highlights your progress and points for development.",
+    icon: Writing,
+  },
+  {
+    title: "Content Mastery",
+    description:
+      "Gain a firm grasp of English. Apply it confidently in your professional life and academic endeavors.",
+    icon: Certficate,
+  },
+];
+---
+
+<section id="methodology" class="bg-[#F0F0F0]">
+  <div
+    class="grid md:grid-cols-[auto,1fr] gap-8 md:gap-12 px-4 md:px-8 py-8 md:py-12 2xl:container"
+  >
+    <h2 class="text-5xl text-cyan-800 md:col-span-2 text-center">
+      Discover a new way of learning
+    </h2>
+
+    <!-- Student image -->
+    <div class="hidden lg:block">
+      <img src="/student.png" alt="Student" width="500" height="500" />
+    </div>
+
+    <!-- Cards -->
+    <div class="grid gap-6 sm:grid-cols-2 sm:gap-8 md:col-span-2 lg:col-span-1">
+      {cards.map((card) => <Card {...card} />)}
+    </div>
+  </div>
+</section>

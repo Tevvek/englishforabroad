@@ -2,44 +2,13 @@
 import Banner from "../components/Banner.astro";
 import BottomLeftBlob from "../components/BottomLeftBlob.astro";
 import BottomRightBlob from "../components/BottomRightBlobk.astro";
-import Card from "../components/Card.astro";
 import Navbar from "../components/Navbar.astro";
 import TopLeftBlob from "../components/TopLeftBlob.astro";
 import Layout from "../layouts/Layout.astro";
 // import BigArrowRight from "../icons/BigArrowRight.astro";
-import Calendar from "../icons/Calendar.astro";
-import Certficate from "../icons/Certificate.astro";
-import Notebook from "../icons/Notebook.astro";
-import Writing from "../icons/Writing.astro";
 import Footer from "../sections/Footer.astro";
 import Testimonials from "../sections/Testimonials.astro";
-
-const cards = [
-  {
-    title: "Flexible Scheduling",
-    description:
-      "Choose a lesson plan that work for you. From daily 30 minutes to once a week, I adjust to your needs!",
-    icon: Calendar,
-  },
-  {
-    title: "Personalized Curriculum",
-    description:
-      "Your goals guide our lessons. Expect a learning plan that adapts to your needs and interests.",
-    icon: Notebook,
-  },
-  {
-    title: "Continuous Feedback",
-    description:
-      "Grow with every lesson. Receive consistent feedback that highlights your progress and points for development.",
-    icon: Writing,
-  },
-  {
-    title: "Content Mastery",
-    description:
-      "Gain a firm grasp of English. Apply it confidently in your professional life and academic endeavors.",
-    icon: Certficate,
-  },
-];
+import Methodology from "../sections/Methodology.astro";
 ---
 
 <Layout title="Welcome to Astro.">
@@ -94,21 +63,7 @@ const cards = [
 
     <Banner />
 
-    <section id="methodology" class="bg-[#F0F0F0]">
-      <div class="2xl:container grid md:grid-cols-2 gap-12 p-20 2xl:px-0">
-        <h2 class="text-5xl text-cyan-800 md:col-span-2 text-center">
-          Discover a new way of learning
-        </h2>
-        <div class="hidden lg:flex lg:items-center lg:justify-center">
-          <img src="/student.png" alt="Student" />
-        </div>
-        <div
-          class="grid sm:grid-cols-2 md:col-span-2 lg:col-span-1 grid-rows-2 gap-6"
-        >
-          {cards.map((card) => <Card {...card} />)}
-        </div>
-      </div>
-    </section>
+    <Methodology />
 
     <Testimonials />
     <!-- <section class="bg-red-200">PRICES PRICES PRICES</section> -->
