@@ -1,7 +1,5 @@
 ---
 import Banner from "../components/Banner.astro";
-import BottomLeftBlob from "../components/BottomLeftBlob.astro";
-import BottomRightBlob from "../components/BottomRightBlobk.astro";
 import Navbar from "../components/Navbar.astro";
 import TopLeftBlob from "../components/TopLeftBlob.astro";
 import Layout from "../layouts/Layout.astro";
@@ -9,57 +7,20 @@ import Layout from "../layouts/Layout.astro";
 import Footer from "../sections/Footer.astro";
 import Testimonials from "../sections/Testimonials.astro";
 import Methodology from "../sections/Methodology.astro";
+import Hero from "../sections/Hero.astro";
 ---
 
 <Layout title="Welcome to Astro.">
+  <div class="absolute top-0 left-0 -z-10">
+    <TopLeftBlob />
+  </div>
+
   <Navbar />
 
   <main class="">
     <!-- Main blob -->
-    <div class="absolute top-0 left-0 -z-10">
-      <TopLeftBlob />
-    </div>
 
-    <section class="relative">
-      <!-- Hero blobs -->
-      <div class="absolute bottom-0 right-0 -z-10 hidden md:block">
-        <BottomRightBlob />
-      </div>
-
-      <div class="absolute bottom-0 left-0 -z-10">
-        <BottomLeftBlob />
-      </div>
-
-      <div
-        class="grid md:grid-cols-3 lg:grid-cols-[1fr,auto] gap-x-32 px-8 md:pr-0 lg:pl-32 pt-12 2xl:container 2xl:px-0"
-      >
-        <div
-          class="flex flex-col items-center md:items-start gap-y-4 text-center md:text-start md:col-span-2 lg:col-span-1"
-        >
-          <h1 class="text-6xl text-cyan-800">
-            Launch your English <br /> Learning Journey
-          </h1>
-          <p class="text-cyan-800">
-            Hi! I’m Ali, an American English teacher offering personalized ESL
-            classes. With an educational foundation from Georgetown University
-            and two master’s degrees, I specialize in one-on-one classes
-            tailored to fit the goals and learning styles of students at all
-            levels. Let’s work together to build your confidence and skills in
-            English!
-          </p>
-          <!-- <a
-            href="/"
-            class="bg-amber-500 text-white font-bold uppercase rounded-full px-4 py-2 flex gap-x-2"
-            >Enroll Now <BigArrowRight />
-          </a> -->
-        </div>
-        <div
-          class="flex justify-center md:justify-end md:col-span-2 md:col-start-2 lg:col-span-1 object-contain"
-        >
-          <img src="/ali.png" alt="Ali" width="400" height="422.25" />
-        </div>
-      </div>
-    </section>
+    <Hero />
 
     <Banner />
 
@@ -69,5 +30,5 @@ import Methodology from "../sections/Methodology.astro";
     <!-- <section class="bg-red-200">PRICES PRICES PRICES</section> -->
   </main>
 
-  <Footer />
-</Layout>
+  <Footer /></Layout
+>

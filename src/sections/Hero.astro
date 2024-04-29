@@ -1,0 +1,41 @@
+---
+import BottomLeftBlob from "../components/BottomLeftBlob.astro";
+import BottomRightBlob from "../components/BottomRightBlobk.astro";
+---
+
+<section class="relative">
+  <!-- Hero blobs -->
+  <div class="absolute bottom-0 right-0 -z-10 hidden sm:block">
+    <BottomRightBlob />
+  </div>
+
+  <div class="absolute bottom-0 left-0 -z-10">
+    <BottomLeftBlob />
+  </div>
+
+  <div
+    class="px-4 md:px-8 py-8 md:py-12 grid gap-y-4 place-items-center place-content-center 2xl:container grid-cols-[minmax(250px,450px)] lg:grid-cols-[minmax(250px,450px),max-content] lg:place-content-between lg:pr-0"
+  >
+    <!-- Title & Description -->
+    <div class="text-center text-cyan-800 space-y-4 lg:text-start">
+      <h1 class="text-6xl">
+        Launch your English <br /> Learning Journey
+      </h1>
+      <p class="">
+        Hi! I'm Ali, an American English teacher offering personalized ESL
+        classes. With an educational foundation from Georgetown University and
+        two master's degrees, I specialize in one-on-one classes tailored to fit
+        the goals and learning styles of students at all levels. Let's work
+        together to build your confidence and skills in English!
+      </p>
+      <!-- <a
+          href="/"
+          class="bg-amber-500 text-white font-bold uppercase rounded-full px-4 py-2 flex gap-x-2"
+          >Enroll Now <BigArrowRight />
+        </a> -->
+    </div>
+
+    <!-- Hero image -->
+    <img src="/ali.png" alt="Ali" width="400" height="422.25" />
+  </div>
+</section>
