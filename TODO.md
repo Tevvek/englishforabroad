@@ -8,8 +8,7 @@
 6. Use Astro's Image component
 7. Set websites title, description and keywords.
 8. Change reviews to actual reviews
-9. On phone, align the "+" and spaces on the Banner
-10. Transform .otf fonts files to .wwof2
+9. Transform .otf fonts files to .wwof2
 
 # DOING
 
@@ -17,3 +16,5 @@
    5.1. As device grows, px rule should grow too to make things slightly more spaced out
 
 # DONE
+
+9. On phone, align the "+" and spaces on the Banner
