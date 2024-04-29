@@ -4,7 +4,6 @@ import BottomLeftBlob from "../components/BottomLeftBlob.astro";
 import BottomRightBlob from "../components/BottomRightBlobk.astro";
 import Card from "../components/Card.astro";
 import Navbar from "../components/Navbar.astro";
-import TestimonialsCarousel from "../components/TestimonialsCarousel.astro";
 import TopLeftBlob from "../components/TopLeftBlob.astro";
 import Layout from "../layouts/Layout.astro";
 // import BigArrowRight from "../icons/BigArrowRight.astro";
@@ -13,6 +12,7 @@ import Certficate from "../icons/Certificate.astro";
 import Notebook from "../icons/Notebook.astro";
 import Writing from "../icons/Writing.astro";
 import Footer from "../sections/Footer.astro";
+import Testimonials from "../sections/Testimonials.astro";
 
 const cards = [
   {
@@ -110,12 +110,7 @@ const cards = [
       </div>
     </section>
 
-    <section id="testimonials" class="bg-[#85CBCC] py-20">
-      <h2 class="text-5xl text-center text-white pb-12">Testimonials</h2>
-
-      <TestimonialsCarousel />
-    </section>
-
+    <Testimonials />
     <!-- <section class="bg-red-200">PRICES PRICES PRICES</section> -->
   </main>
 
