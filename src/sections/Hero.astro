@@ -14,10 +14,12 @@ import BottomRightBlob from "../components/BottomRightBlobk.astro";
   </div>
 
   <div
-    class="px-4 md:px-8 py-8 md:py-12 grid gap-y-4 place-items-center place-content-center 2xl:container grid-cols-[minmax(250px,450px)] lg:grid-cols-[minmax(250px,450px),max-content] lg:place-content-between lg:pr-0"
+    class="px-4 md:px-8 pt-8 md:pt-12 grid gap-y-8 place-items-center place-content-center 2xl:container grid-cols-[minmax(250px,550px)] lg:grid-cols-[minmax(250px,550px),max-content] lg:pr-0 lg:grid-rows-5 lg:gap-x-20"
   >
     <!-- Title & Description -->
-    <div class="text-center text-cyan-800 space-y-4 lg:text-start">
+    <div
+      class="text-center text-cyan-800 space-y-4 lg:text-start lg:row-span-4 lg:row-start-1"
+    >
       <h1 class="text-6xl">
         Launch your English <br /> Learning Journey
       </h1>
@@ -36,6 +38,12 @@ import BottomRightBlob from "../components/BottomRightBlobk.astro";
     </div>
 
     <!-- Hero image -->
-    <img src="/ali.png" alt="Ali" width="400" height="422.25" />
+    <img
+      src="/ali.png"
+      alt="Ali"
+      width="400"
+      height="422.25"
+      class="lg:row-span-4 lg:row-start-2"
+    />
   </div>
 </section>
