@@ -3,7 +3,15 @@ import { Image } from "astro:assets";
 import BottomLeftBlob from "../components/BottomLeftBlob.astro";
 import BottomRightBlob from "../components/BottomRightBlobk.astro";
 import aliImage from "../images/ali.png";
+import BigArrowRight from "../icons/BigArrowRight.astro";
 ---
+
+<script
+  is:inline
+  id="setmore_script"
+  type="text/javascript"
+  src="https://storage.googleapis.com/fullintegration-live/webComponentAppListing/Container/setmoreIframeLive.js"
+></script>
 
 <section class="relative">
   <!-- Hero blobs -->
@@ -32,11 +40,13 @@ import aliImage from "../images/ali.png";
         the goals and learning styles of students at all levels. Let's work
         together to build your confidence and skills in English!
       </p>
-      <!-- <a
-          href="/"
-          class="bg-amber-500 text-white font-bold uppercase rounded-full px-4 py-2 flex gap-x-2"
-          >Enroll Now <BigArrowRight />
-        </a> -->
+
+      <a
+        id="Setmore_button_iframe"
+        href="https://booking.setmore.com/scheduleappointment/90f174af-1ae5-468c-8188-4f4eeea19cfa"
+        class="bg-indigo-500 text-white font-bold uppercase rounded-xl px-4 py-2 flex gap-x-2 w-full md:w-fit justify-center md:mx-auto lg:mx-0"
+        >Enroll Now <BigArrowRight />
+      </a>
     </div>
 
     <!-- Hero image -->
