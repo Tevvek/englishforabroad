@@ -1,12 +1,13 @@
 ---
-import Banner from "../components/Banner.astro";
-import Navbar from "../components/Navbar.astro";
-import TopLeftBlob from "../components/TopLeftBlob.astro";
-import Layout from "../layouts/Layout.astro";
-import Footer from "../sections/Footer.astro";
-import Testimonials from "../sections/Testimonials.astro";
-import Methodology from "../sections/Methodology.astro";
-import Hero from "../sections/Hero.astro";
+import Banner from "@/components/Banner.astro";
+import Navbar from "@/components/Navbar.astro";
+import TopLeftBlob from "@/components/TopLeftBlob.astro";
+import Layout from "@/layouts/Layout.astro";
+import Footer from "@/sections/Footer.astro";
+import Testimonials from "@/sections/Testimonials.astro";
+import Methodology from "@/sections/Methodology.astro";
+import Hero from "@/sections/Hero.astro";
+import Prices from "@/sections/Prices.astro";
 ---
 
 <Layout title="Ali Enright ESL - Online English Lessons">
@@ -21,10 +22,11 @@ import Hero from "../sections/Hero.astro";
 
     <Banner />
 
+    <Prices />
+
     <Methodology />
 
     <Testimonials />
-    <!-- <section class="bg-red-200">PRICES PRICES PRICES</section> -->
   </main>
 
   <Footer />
