@@ -4,78 +4,57 @@ import Check from "@/icons/Check.astro";
 const tiers = [
   {
     name: "Single class",
-    price: { shorter: 19.99, longer: 199.99 },
+    price: 36,
     description:
       "Get access to a single class. Perfect for those who want to try out a class before committing.",
-    features: ["Access to all classes", "Cancel anytime", "Priority support"],
+    features: [
+      "One 50 minute lesson",
+      "Online lesson & activities",
+      "Immediate feedback",
+    ],
+    isPackage: false,
+    total: 36,
   },
   {
     name: "5 classes",
-    price: { shorter: 24.99, longer: 249.99 },
+    price: 34,
     description:
       "Save 20% with this bundle of 5 classes. Perfect for those who want to try out a few classes.",
-    features: [
-      "Access to all classes",
-      "Cancel anytime",
-      "Priority support",
-      "Save 20%",
-    ],
     popular: true,
+    features: [
+      "Five 50 minute lessons ($10 discount)",
+      "Online lesson & activities",
+      "Immediate feedback",
+      "Custom learning materials",
+      "Follow-up corrections & activities",
+      "Additional focus on ongoing evaluation and progression",
+    ],
+    isPackage: true,
+    singleTotal: 180,
+    total: 170,
   },
   {
     name: "10 classes",
-    price: { shorter: 39.99, longer: 399.99 },
+    price: 32,
     description:
       "Save 40% with this bundle of 10 classes. Perfect for those who want to commit to their practice.",
     features: [
-      "Access to all classes",
-      "Cancel anytime",
-      "Priority support",
-      "Save 40%",
-      "Free yoga mat",
+      "Ten 50 minute lessons ($40 discount)",
+      "Online lesson & activities",
+      "Immediate feedback",
+      "Custom learning materials",
+      "Follow-up corrections & activities",
+      "Additional focus on ongoing evaluation and progression",
     ],
+    isPackage: true,
+    singleTotal: 360,
+    total: 320,
   },
 ];
 ---
 
 <section class="2xl:container px-4 md:px-8 py-8 md:py-12">
   <h2 class="text-5xl text-cyan-800 md:col-span-2 text-center">PRICING</h2>
-  <!-- Classes duration -->
-  <div class="flex justify-center mt-16">
-    <fieldset
-      id="duration-toggle"
-      class="w-48 grid grid-cols-2 gap-x-1 rounded-full p-1 text-center text-xs font-semibold leading-5 ring-1 ring-inset ring-gray-200"
-    >
-      <legend class="sr-only">Classes duration</legend>
-      <input
-        type="radio"
-        id="shorter"
-        name="duration"
-        value="shorter"
-        class="sr-only peer/shorter"
-        checked
-      />
-      <label
-        for="shorter"
-        class="select-none cursor-pointer rounded-full px-2.5 py-1 peer-checked/shorter:bg-cyan-800 peer-checked/shorter:text-white text-gray-500"
-      >
-        <span>30 minutes</span>
-      </label>
-      <input
-        type="radio"
-        id="longer"
-        name="duration"
-        value="longer"
-        class="sr-only peer/longer"
-      />
-      <label
-        for="longer"
-        class="select-none cursor-pointer rounded-full px-2.5 py-1 peer-checked/longer:bg-cyan-800 peer-checked/longer:text-white text-gray-500"
-      >
-        <span>50 minutes</span>
-      </label>
-    </fieldset>
-  </div>
 
   <!-- Tiers -->
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 mt-10">
@@ -89,7 +68,7 @@ const tiers = [
           <div class="flex justify-between items-center">
             <h3
               class={`
-                    font-bold text-xl
+                    font-bold text-xl uppercase
                     ${tier.popular && "text-cyan-800"}
                     `}
             >
@@ -101,17 +80,15 @@ const tiers = [
               </span>
             )}
           </div>
-          <p class="text-gray-600 text-sm mt-4">{tier.description}</p>
           <p class="mt-6">
-            <span
-              class="text-gray-900 text-4xl font-bold"
-              data-price
-              data-price-shorter={`${tier.price.shorter}`}
-              data-price-longer={`${tier.price.longer}`}
-            >
-              ${tier.price.shorter}
-            </span>
+            <span class="text-gray-900 text-4xl font-bold">${tier.price}</span>
             <span class="text-gray-600 text-sm font-semibold">/class</span>
+          </p>
+          <p class="text-sm text-gray-600">
+            <span class={`line-through pr-1 ${!tier.singleTotal && "hidden"}`}>
+              ${tier.singleTotal}
+            </span>
+            ${tier.total} in total
           </p>
           <a
             id="Setmore_button_iframe"
@@ -120,7 +97,7 @@ const tiers = [
                 ${tier.popular ? "bg-cyan-800 text-white" : "text-cyan-800 "}
                 `}
           >
-            Buy class
+            {tier.isPackage ? "Buy package" : "Buy class"}
           </a>
           <ul class="mt-8 space-y-3 text-sm text-gray-600">
             {tier.features.map((benefit) => (
@@ -137,32 +114,3 @@ const tiers = [
     }
   </div>
 </section>
-
-<script>
-  function togglePrice(duration: "shorter" | "longer") {
-    const priceElements = document.querySelectorAll("[data-price]");
-
-    priceElements.forEach((el) => {
-      const shorterPrice = el.getAttribute("data-price-shorter");
-      const longerPrice = el.getAttribute("data-price-longer");
-
-      el.textContent =
-        duration === "shorter" ? `$${shorterPrice}` : `$${longerPrice}`;
-    });
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    const toggle = document.getElementById("duration-toggle");
-    toggle.addEventListener("change", (event) => {
-      if (event.target.name === "duration") {
-        togglePrice(event.target.value);
-      }
-    });
-  });
-
-  // Initial price toggle based on the default checked radio button
-  const checkedRadio = document.querySelector(
-    'input[name="frequency"]:checked'
-  );
-  togglePrice(checkedRadio.value);
-</script>
