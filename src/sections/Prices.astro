@@ -14,6 +14,7 @@ const tiers = [
     ],
     isPackage: false,
     total: 36,
+    stripeURL: "https://buy.stripe.com/14k17AefV0JHdigdQQ",
   },
   {
     name: "5 classes",
@@ -32,6 +33,7 @@ const tiers = [
     isPackage: true,
     singleTotal: 180,
     total: 170,
+    stripeURL: "https://buy.stripe.com/6oE6rUdbR9gd1zybIJ",
   },
   {
     name: "10 classes",
@@ -49,6 +51,7 @@ const tiers = [
     isPackage: true,
     singleTotal: 360,
     total: 320,
+    stripeURL: "https://buy.stripe.com/eVacQic7N785fqo9AC",
   },
 ];
 ---
@@ -91,8 +94,9 @@ const tiers = [
             ${tier.total} in total
           </p>
           <a
-            id="Setmore_button_iframe"
-            href="https://booking.setmore.com/scheduleappointment/90f174af-1ae5-468c-8188-4f4eeea19cfa"
+            href={tier.stripeURL}
+            rel="noopener noreferrer"
+            target="_blank"
             class={`mt-6 shadow-sm rounded-md py-2 px-3 text-center text-sm w-full font-semibold border border-cyan-800 block
                 ${tier.popular ? "bg-cyan-800 text-white" : "text-cyan-800 "}
                 `}
