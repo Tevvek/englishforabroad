@@ -1,5 +1,3 @@
-import { reactive } from "vue";
-
 export enum TagsPodcasts {
   English = "English Language",
   News = "News & Current Events",
@@ -9,7 +7,9 @@ export enum TagsPodcasts {
   Business = "Business & Tech",
 }
 
-export const tagsStore = reactive({
-  podcasts: TagsPodcasts.English,
-  //   tvShows: "",
-});
+export interface Podcast {
+  title: string;
+  description: string;
+  image: string;
+  tag: TagsPodcasts;
+}

@@ -1,68 +1,74 @@
 ---
-import PodcastsTags from "@/components/PodcastsTags.vue";
 import PodcastsList from "@/components/PodcastsList.vue";
+import PodcastsTags from "@/components/PodcastsTags.vue";
+import PodcastsStore from "@/components/PodcastsStore.vue";
+import { type Podcast, TagsPodcasts } from "@/types/resources";
 
 import "swiper/css";
 import "swiper/css/pagination";
-
-interface Podcast {
-  title: string;
-  description: string;
-  image: string;
-}
 
 const podcasts: Podcast[] = [
   {
     title: "Tech Talks Daily",
     description:
-      "A daily podcast discussing the latest in tech and innovation. A daily podcast discussing the latest in tech and innovation. A daily podcast discussing the latest in tech and innovation. A daily podcast discussing the latest in tech and innovation. A daily podcast discussing the latest in tech and innovation. ",
+      "A daily podcast discussing the latest in tech and innovation. A daily podcast discussing the latest in tech and innovation. A daily podcast discussing the latest in tech and innovation. A daily podcast discussing the latest in tech and innovation. A daily podcast discussing the latest in tech and innovation.",
     image: "https://picsum.photos/id/237/1000",
+    tag: TagsPodcasts.English,
   },
   {
     title: "Health and Wellness",
     description: "Exploring tips and strategies for a healthy lifestyle.",
     image: "https://picsum.photos/id/238/1000",
+    tag: TagsPodcasts.SelfHelp,
   },
   {
     title: "True Crime Stories",
     description: "Investigating the most intriguing true crime cases.",
     image: "https://picsum.photos/id/239/1000",
+    tag: TagsPodcasts.Stories,
   },
   {
     title: "History Uncovered",
     description: "Unveiling the lesser-known stories from history.",
     image: "https://picsum.photos/id/240/1000",
+    tag: TagsPodcasts.Stories,
   },
   {
     title: "Science Explained",
     description:
       "Breaking down complex scientific concepts into easy-to-understand episodes.",
     image: "https://picsum.photos/id/241/1000",
+    tag: TagsPodcasts.News,
   },
   {
     title: "Mindful Living",
     description: "Guidance and inspiration for living a mindful life.",
     image: "https://picsum.photos/id/242/1000",
+    tag: TagsPodcasts.SelfHelp,
   },
   {
     title: "Business Insights",
     description: "Interviews with leading entrepreneurs and business experts.",
     image: "https://picsum.photos/id/243/1000",
+    tag: TagsPodcasts.Business,
   },
   {
     title: "Travel Diaries",
     description: "Stories and tips from travelers around the world.",
     image: "https://picsum.photos/id/244/1000",
+    tag: TagsPodcasts.Stories,
   },
   {
     title: "Pop Culture Pulse",
     description: "Keeping you updated on the latest trends in pop culture.",
     image: "https://picsum.photos/id/235/1000",
+    tag: TagsPodcasts.News,
   },
   {
     title: "Music Masters",
     description: "Diving deep into the world of music and its creators.",
     image: "https://picsum.photos/id/234/1000",
+    tag: TagsPodcasts.Art,
   },
 ];
 ---
@@ -70,7 +76,9 @@ const podcasts: Podcast[] = [
 <section class="bg-[#85CBCC]">
   <h2>Podcasts</h2>
 
+  <PodcastsStore client:load podcasts={podcasts} />
+
   <PodcastsTags client:load />
 
-  <PodcastsList client:load podcasts={podcasts} />
+  <PodcastsList client:load />
 </section>

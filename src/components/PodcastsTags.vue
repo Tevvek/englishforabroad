@@ -10,11 +10,6 @@
 </template>
 
 <script setup lang="ts">
-import { TagsPodcasts, tagsStore } from '@/components/stores';
-import { computed } from 'vue';
-
-const selectedTag = computed({
-    get: () => tagsStore.podcasts,
-    set: (newTag) => tagsStore.podcasts = newTag
-});
+import { podcastsTag as selectedTag } from '@/components/resourcesStore';
+import { TagsPodcasts } from '@/types/resources';
 </script>
