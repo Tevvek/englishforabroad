@@ -13,7 +13,7 @@ const podcasts: Podcast[] = [
     description:
       "A daily podcast discussing the latest in tech and innovation. A daily podcast discussing the latest in tech and innovation. A daily podcast discussing the latest in tech and innovation. A daily podcast discussing the latest in tech and innovation. A daily podcast discussing the latest in tech and innovation.",
     image: "https://picsum.photos/id/237/1000",
-    tag: TagsPodcasts.English,
+    tag: TagsPodcasts.SelfHelp,
   },
   {
     title: "Health and Wellness",
@@ -73,8 +73,8 @@ const podcasts: Podcast[] = [
 ];
 ---
 
-<section class="bg-[#85CBCC]">
-  <h2>Podcasts</h2>
+<section class="bg-[#85CBCC] px-4 md:px-8 py-8 md:py-12">
+  <h2 class="text-5xl">Podcasts</h2>
 
   <PodcastsStore client:load podcasts={podcasts} />
 

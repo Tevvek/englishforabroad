@@ -5,12 +5,17 @@
         '--swiper-pagination-bullet-inactive-opacity': 1
     }" wrapper-class="pb-10 pt-2">
         <swiper-slide v-for="(podcast, key) in filteredPodcasts" :key="key" class="px-8">
-            <div class="bg-white rounded-xl p-4 h-44 flex gap-x-4 transition duration-300 hover:scale-105">
+            <div class="bg-white rounded-xl p-4 h-44 flex gap-x-4 transition duration-300 hover:scale-105 shadow-lg">
                 <img :src="podcast.image" alt="podcast" class="rounded-lg">
                 <div class="flex flex-col gap-y-1">
                     <h3 class="font-bold">{{ podcast.title }}</h3>
                     <p class="text-sm line-clamp-6" :title="podcast.description">{{ podcast.description }}</p>
                 </div>
+            </div>
+        </swiper-slide>
+        <swiper-slide v-if="filteredPodcasts.length === 0" class="px-8">
+            <div class="bg-white rounded-xl p-4 h-44 flex gap-x-4 shadow-lg justify-center items-center">
+                <p>Coming soon! 🚀</p>
             </div>
         </swiper-slide>
     </swiper>
