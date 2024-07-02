@@ -73,9 +73,9 @@ const podcasts: Podcast[] = [
 <section class="bg-[#85CBCC] px-4 md:px-8 py-8 md:py-12">
   <h2 class="text-5xl">Podcasts</h2>
 
-  <PodcastsStore client:load podcasts={podcasts} />
+  <PodcastsStore client:load podcasts={podcasts} transition:persist={true} />
 
-  <PodcastsTags client:load />
+  <PodcastsTags client:only="vue" />
 
-  <PodcastsCarousel client:load />
+  <PodcastsCarousel client:only="vue" />
 </section>
