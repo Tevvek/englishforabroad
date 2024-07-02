@@ -1,5 +1,5 @@
 ---
-import PodcastsList from "@/components/PodcastsList.vue";
+import PodcastsCarousel from "@/components/PodcastsCarousel.vue";
 import PodcastsTags from "@/components/PodcastsTags.vue";
 import PodcastsStore from "@/components/PodcastsStore.vue";
 import { type Podcast, TagsPodcasts } from "@/types/resources";
@@ -80,5 +80,5 @@ const podcasts: Podcast[] = [
 
   <PodcastsTags client:load />
 
-  <PodcastsList client:load />
+  <PodcastsCarousel client:load />
 </section>
