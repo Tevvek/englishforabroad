@@ -1,15 +1,22 @@
-export enum TagsPodcasts {
-  English = "English Language",
-  News = "News & Current Events",
-  Stories = "Stories & Literature",
-  SelfHelp = "Self Help & Psychology",
+export enum PodcastsThemes {
   Art = "Art & Design",
-  Business = "Business & Tech",
+  Culture = "Culture & Society",
+  English = "English & Language",
+  Business = "Finance & Business",
+  Stories = "Literature & Stories",
+  Movies = "Movies & TV",
+  Music = "Music",
+  News = "News & Politics",
+  Science = "Science & Tech",
+  SelfHelp = "Self-Help & Psychology",
 }
 
 export interface Podcast {
   title: string;
-  description: string;
+  shortDescription: string;
+  longDescriptionDescription: string;
   image: string;
-  tag: TagsPodcasts;
+  theme: PodcastsThemes;
+  link: string;
+  url: string;
 }
