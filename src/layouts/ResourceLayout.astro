@@ -1,0 +1,31 @@
+---
+import Layout from "./Layout.astro";
+import Navbar from "../components/Navbar.astro";
+
+const { frontmatter } = Astro.props;
+const { title, description, image, tag } = frontmatter;
+---
+
+<Layout title="test">
+  <Navbar />
+
+  <section class="container mx-auto py-12">
+    <h1 class="text-4xl font-bold mb-4">{title}</h1>
+    <p class="text-lg text-gray-600 mb-8">{description}</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+        <img
+          src={image}
+          alt={title}
+          class="w-full h-64 object-cover object-center"
+          transition:name={title.replaceAll(" ", "")}
+        />
+        <div class="p-6">
+          <h2 class="text-2xl font-bold mb-2">{title}</h2>
+          <p class="text-gray-600">{description}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
