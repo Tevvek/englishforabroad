@@ -2,14 +2,32 @@
     <div class="flex gap-x-4 py-5 justify-end">
         <button :class="[
             'px-4 py-1 rounded-2xl transition duration-300 text-sm font-semibold shadow-md',
-            selectedTag === tag ? 'bg-cyan-800 text-white' : 'bg-white'
-        ]" v-for="(tag, key) in TagsPodcasts" :key="key" @click="selectedTag = tag">
+            buttonClass(tag)
+        ]" v-for="(tag, key) in TagsPodcasts" :key="key" @click="selectedPodcast.set(tag)">
             {{ tag }}
         </button>
     </div>
 </template>
 
 <script setup lang="ts">
-import { podcastsTag as selectedTag } from '@/components/resourcesStore';
 import { TagsPodcasts } from '@/types/resources';
+import { useStore } from '@nanostores/vue';
+import { selectedPodcast } from './nanostore';
+import { computed, onMounted, ref } from 'vue';
+
+const $selectedPodcast = useStore(selectedPodcast);
+
+const isMounted = ref(false);
+
+onMounted(() => {
+    isMounted.value = true;
+});
+
+const buttonClass = computed(() => (tag: string) => {
+    if (!isMounted.value) {
+        return 'bg-white';
+    }
+    return $selectedPodcast.value === tag ? 'bg-cyan-800 text-white' : 'bg-white';
+});
+
 </script>

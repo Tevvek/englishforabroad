@@ -1,10 +1,9 @@
 ---
 import PodcastsCarousel from "@/components/PodcastsCarousel.vue";
 import PodcastsTags from "@/components/PodcastsTags.vue";
-import PodcastsStore from "@/components/PodcastsStore.vue";
-import { type Podcast, TagsPodcasts } from "@/types/resources";
+import { TagsPodcasts, type Podcast } from "@/types/resources";
 
-const podcasts: Podcast[] = [
+let podcasts: Podcast[] = [
   {
     title: "Tech Talks Daily",
     description:
@@ -68,14 +67,21 @@ const podcasts: Podcast[] = [
     tag: TagsPodcasts.Art,
   },
 ];
+
+const podcastsMarkdowns = await Astro.glob("../pages/resources/podcasts/*.md");
+const transformedPodcasts = podcastsMarkdowns.map((markdown) => ({
+  url: markdown.url,
+  ...markdown.frontmatter,
+  tag: TagsPodcasts.English,
+}));
+
+podcasts = podcasts.concat(transformedPodcasts);
 ---
 
 <section class="bg-[#85CBCC] px-4 md:px-8 py-8 md:py-12">
   <h2 class="text-5xl">Podcasts</h2>
 
-  <PodcastsStore client:load podcasts={podcasts} transition:persist={true} />
+  <PodcastsTags client:load />
 
-  <PodcastsTags client:only="vue" />
-
-  <PodcastsCarousel client:only="vue" />
+  <PodcastsCarousel client:load podcasts={podcasts} />
 </section>
