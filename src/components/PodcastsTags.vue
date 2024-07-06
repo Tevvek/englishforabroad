@@ -3,14 +3,14 @@
         <button :class="[
             'px-4 py-1 rounded-2xl transition duration-300 text-sm font-semibold shadow-md',
             buttonClass(tag)
-        ]" v-for="(tag, key) in TagsPodcasts" :key="key" @click="selectedPodcast.set(tag)">
+        ]" v-for="(tag, key) in PodcastsThemes" :key="key" @click="selectedPodcast.set(tag)">
             {{ tag }}
         </button>
     </div>
 </template>
 
 <script setup lang="ts">
-import { TagsPodcasts } from '@/types/resources';
+import { PodcastsThemes } from '@/types/resources';
 import { useStore } from '@nanostores/vue';
 import { selectedPodcast } from './nanostore';
 import { computed, onMounted, ref } from 'vue';

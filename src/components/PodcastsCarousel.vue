@@ -14,10 +14,10 @@
                 <img :src="podcast.image" alt="podcast" class="rounded-lg" :style="{
         '--view-transition-name': podcast.title.replaceAll(' ', ''),
         'view-transition-name': 'var(--view-transition-name)',
-    }" />
+    }" loading="eager" />
                 <div class="flex flex-col gap-y-1">
                     <h3 class="font-bold">{{ podcast.title }}</h3>
-                    <p class="text-sm line-clamp-6" :title="podcast.description">{{ podcast.description }}</p>
+                    <p class="text-sm line-clamp-6" :title="podcast.shortDescription">{{ podcast.shortDescription }}</p>
                 </div>
             </a>
         </swiper-slide>
@@ -59,7 +59,7 @@ const filteredPodcasts = computed(() => {
     if (!isMounted.value) {
         return podcasts;
     }
-    return podcasts.filter((podcast) => podcast.tag === $selectedPodcast.value);
+    return podcasts.filter((podcast) => podcast.theme === $selectedPodcast.value);
 });
 
 const onSwiperInitialized = () => {
