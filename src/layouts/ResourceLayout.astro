@@ -19,10 +19,15 @@ const themedPodcasts = podcasts
 
 <script>
   import { selectedPodcast } from "@/components/nanostore";
+  import { PodcastsThemes } from "@/types/resources";
+
   const anchor = document.querySelector("a#anchor-theme");
   anchor?.addEventListener("click", (ev) => {
-    // TODO set correct
-    selectedPodcast.set("Music");
+    const themeText = anchor.textContent;
+    const theme = Object.values(PodcastsThemes).find(
+      (value) => value === themeText
+    )!;
+    selectedPodcast.set(theme);
   });
 </script>
 
