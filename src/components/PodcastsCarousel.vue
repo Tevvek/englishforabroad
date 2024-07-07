@@ -12,7 +12,7 @@
             <a :href="podcast.url"
                 class="bg-white rounded-xl p-4 h-44 flex gap-x-4 transition duration-300 hover:scale-105 shadow-lg">
                 <img :src="podcast.image" alt="podcast" class="rounded-lg" :style="{
-                    '--view-transition-name': podcast.title.replaceAll(' ', ''),
+                    '--view-transition-name': podcast.slug ? podcast.slug : podcast.title.replaceAll(' ', ''),
                     'view-transition-name': 'var(--view-transition-name)',
                 }" loading="eager" />
                 <div class="flex flex-col gap-y-1">

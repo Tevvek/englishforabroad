@@ -19,4 +19,5 @@ export interface Podcast {
   theme: PodcastsThemes;
   link: string;
   url: string;
+  slug?: string;
 }
