@@ -13,9 +13,14 @@ const podcasts = markdowns.map<Podcast>((markdown) => ({
   url: markdown.url!,
   ...(markdown.frontmatter as Omit<Podcast, "url">),
 }));
-const themedPodcasts = podcasts
+
+const currentIndex = podcasts.findIndex((pd) => pd.title === title);
+
+const similarPodcasts = podcasts
+  .slice(currentIndex + 1)
+  .concat(podcasts.slice(0, currentIndex))
   .filter((pd) => pd.theme === theme && pd.title !== title)
-  .splice(0, 3);
+  .slice(0, 3);
 ---
 
 <script>
@@ -71,7 +76,7 @@ const themedPodcasts = podcasts
       <!-- Similar -->
       <h2 class="text-3xl text-white uppercase col-span-3">Similar podcasts</h2>
       {
-        themedPodcasts.map((tpd) => (
+        similarPodcasts.map((tpd) => (
           <a
             href={tpd.url}
             class="bg-white text-cyan-800 rounded-xl p-4 h-44 flex gap-x-4 transition duration-300 hover:scale-105 shadow-lg"
