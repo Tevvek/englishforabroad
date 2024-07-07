@@ -4,20 +4,20 @@
     </div>
     <swiper v-show="isSwiperReady" :slides-per-view="3" :pagination="{ clickable: true }" :modules="modules"
         :loop="true" :style="{
-        '--swiper-pagination-color': '#155e75',
-        '--swiper-pagination-bullet-inactive-color': '#fff',
-        '--swiper-pagination-bullet-inactive-opacity': 1
-    }" wrapper-class="pb-10 pt-2" @swiper="onSwiperInitialized">
+            '--swiper-pagination-color': '#155e75',
+            '--swiper-pagination-bullet-inactive-color': '#fff',
+            '--swiper-pagination-bullet-inactive-opacity': 1
+        }" class="text-cyan-800" wrapper-class="pb-10 pt-2" @swiper="onSwiperInitialized">
         <swiper-slide v-for="podcast in filteredPodcasts" :key="podcast.title" class="px-8">
             <a :href="podcast.url"
                 class="bg-white rounded-xl p-4 h-44 flex gap-x-4 transition duration-300 hover:scale-105 shadow-lg">
                 <img :src="podcast.image" alt="podcast" class="rounded-lg" :style="{
-        '--view-transition-name': podcast.title.replaceAll(' ', ''),
-        'view-transition-name': 'var(--view-transition-name)',
-    }" loading="eager" />
+                    '--view-transition-name': podcast.title.replaceAll(' ', ''),
+                    'view-transition-name': 'var(--view-transition-name)',
+                }" loading="eager" />
                 <div class="flex flex-col gap-y-1">
                     <h3 class="font-bold">{{ podcast.title }}</h3>
-                    <p class="text-sm line-clamp-6" :title="podcast.shortDescription">{{ podcast.shortDescription }}</p>
+                    <p class="text-sm" :title="podcast.shortDescription">{{ podcast.shortDescription }}</p>
                 </div>
             </a>
         </swiper-slide>

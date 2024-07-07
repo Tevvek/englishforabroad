@@ -1,5 +1,5 @@
 <template>
-    <div class="flex gap-x-4 py-5 justify-end">
+    <div class="flex gap-x-4 py-5 justify-end text-cyan-800">
         <button :class="[
             'px-4 py-1 rounded-2xl transition duration-300 text-sm font-semibold shadow-md',
             buttonClass(tag)
