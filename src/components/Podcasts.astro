@@ -10,8 +10,20 @@ const podcasts = markdowns.map<Podcast>((markdown) => ({
 }));
 ---
 
-<section class="bg-[#85CBCC] text-white px-4 md:px-8 py-8 md:py-12">
-  <h2 class="text-5xl">Podcasts</h2>
+<section class="bg-[#85CBCC] text-white py-8 md:py-12">
+  <h2 class="text-5xl px-4 md:px-8">Podcasts</h2>
+
+  <!-- <ul>
+    <li>
+      <a href="/">Home</a>
+    </li>
+    <li>
+      <a href="/">Home</a>
+    </li>
+    <li>
+      <a href="/">Home</a>
+    </li>
+  </ul> -->
 
   <PodcastsTags client:load />
 
