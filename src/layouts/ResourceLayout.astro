@@ -44,29 +44,35 @@ const similarPodcasts = podcasts
     <section
       class="2xl:container px-4 md:px-8 py-8 md:py-12 grid grid-cols-3 gap-8"
     >
-      <h1 class="text-5xl font-bold mb-4 col-span-3 text-white">{title}</h1>
+      <h1
+        class="text-5xl font-bold mb-4 col-span-3 text-white text-center md:text-start"
+      >
+        {title}
+      </h1>
       <div
-        class="bg-white text-cyan-800 rounded-xl p-4 gap-x-4 shadow-lg col-span-3 grid grid-cols-[auto,1fr] grid-rows-[auto,auto,1fr,auto]"
+        class="bg-white text-cyan-800 rounded-xl p-4 gap-x-4 shadow-lg col-span-3 grid grid-rows-[auto,auto,auto,1fr,auto] md:grid-cols-[auto,1fr] md:grid-rows-[auto,auto,1fr,auto]"
       >
         <img
           src={image}
           alt={title}
-          class="h-64 col-start-1 row-start-1 row-span-4"
+          class="max-h-64 md:col-start-1 md:row-start-1 md:row-span-4 place-self-center mb-4 md:mb-0"
           transition:name={slug ? slug : title.replaceAll(" ", "")}
         />
         <a
           id="anchor-theme"
           href="/resources"
-          class="border border-cyan-800 py-0.5 font-semibold text-cyan-800 px-4 rounded-full text-xs transition duration-300 hover:scale-105 shadow col-start-2 row-start-1 w-fit place-self-end"
+          class="border border-cyan-800 py-0.5 font-semibold text-cyan-800 px-4 rounded-full text-xs transition duration-300 hover:scale-105 shadow md:col-start-2 md:row-start-1 w-fit place-self-end mb-4 md:mb-0 row-start-1"
           >{theme}</a
         >
-        <p class="text-sm font-bold col-start-2 row-start-2">About:</p>
-        <p class="col-start-2 row-start-3">{longDescription}</p>
+        <p class="text-sm font-bold md:col-start-2 md:row-start-2">About:</p>
+        <p class="md:col-start-2 md:row-start-3 mb-4">
+          {longDescription}
+        </p>
         <a
           href={link}
           target="_blank"
           rel="noopener noreferrer"
-          class="bg-cyan-800 text-white font-bold rounded-xl px-12 py-2 w-fit transition duration-300 hover:scale-105 shadow flex gap-x-2 col-start-2 row-start-4"
+          class="bg-cyan-800 text-white font-bold rounded-xl px-12 py-2 md:w-fit transition duration-300 hover:scale-105 shadow flex justify-center items-center gap-x-2 md:col-start-2 md:row-start-4"
           >Listen here <Volume />
         </a>
       </div>
