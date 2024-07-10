@@ -28,7 +28,7 @@ const similarPodcasts = podcasts
   import { PodcastsThemes } from "@/types/resources";
 
   const anchor = document.querySelector("a#anchor-theme");
-  anchor?.addEventListener("click", (ev) => {
+  anchor?.addEventListener("click", () => {
     const themeText = anchor.textContent;
     const theme = Object.values(PodcastsThemes).find(
       (value) => value === themeText
