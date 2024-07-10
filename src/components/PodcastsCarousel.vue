@@ -19,14 +19,14 @@
     }" class="text-cyan-800" wrapper-class="pb-10 pt-2" @swiper="onSwiperInitialized">
         <swiper-slide v-for="podcast in filteredPodcasts" :key="podcast.title" class="px-6">
             <a :href="podcast.url"
-                class="bg-white rounded-xl p-4 h-[352px] xs:h-44 grid grid-rows-[min-content,min-content,auto] xs:grid-rows-[auto,1fr] xs:grid-cols-[auto,1fr] gap-x-4 transition duration-300 hover:scale-105 shadow-lg">
+                class="bg-white rounded-xl p-4 h-80 xs:h-44 grid grid-rows-[min-content,min-content,auto] xs:grid-rows-[auto,1fr] xs:grid-cols-[auto,1fr] gap-x-4 transition duration-300 hover:scale-105 shadow-lg">
                 <h3 class="font-bold xs:col-start-2 xs:row-start-1">{{ podcast.title }}</h3>
-                <p class="text-sm line-clamp-3 xs:line-clamp-6 mb-2 xs:mb-0 xs:col-start-2 xs:row-start-2"
+                <p class="text-sm line-clamp-2 xs:line-clamp-6 mb-2 xs:mb-0 xs:col-start-2 xs:row-start-2"
                     :title="podcast.shortDescription">{{
                         podcast.shortDescription }}</p>
 
                 <div
-                    class="rounded-lg place-self-center size-full aspect-square max-w-56 xs:max-w-36 xs:col-start-1 xs:row-start-1 xs:row-span-2 bg-gray-300 relative overflow-hidden isolate shadow-xl shadow-black/5">
+                    class="self-end place-self-center aspect-square max-w-48 xs:max-w-36 xs:col-start-1 xs:row-start-1 xs:row-span-2 bg-gray-300 relative overflow-hidden isolate">
                     <div
                         class="absolute inset-0 before:absolute before:inset-0 before:-translate-y-full before:animate-[shimmer-vertical_2s_infinite] before:bg-gradient-to-b before:from-transparent before:via-gray-200 before:to-transparent">
                     </div>
@@ -35,7 +35,7 @@
                         'view-transition-name': 'var(--view-transition-name)',
                     }" loading="eager"
                         @load="(($event.target as HTMLImageElement).previousElementSibling as HTMLDivElement).style.display = 'none'"
-                        class="relative z-10 size-full object-cover" />
+                        class="z-10" />
                 </div>
             </a>
         </swiper-slide>
