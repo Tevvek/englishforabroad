@@ -53,15 +53,24 @@ const similarPodcasts = podcasts
       <div
         class="bg-white text-cyan-800 rounded-xl p-4 gap-x-4 shadow-lg md:col-span-3 grid grid-rows-[auto,auto,auto,1fr,auto] md:grid-cols-[auto,1fr] md:grid-rows-[auto,auto,1fr,auto]"
       >
-        <Image
-          src={image}
-          alt={title}
-          class="max-h-64 md:col-start-1 md:row-start-1 md:row-span-4 place-self-center mb-4 md:mb-0"
-          transition:name={slug ? slug : title.replaceAll(" ", "")}
-          loading="eager"
-          width={256}
-          height={256}
-        />
+        <div
+          class="max-h-64 md:col-start-1 md:row-start-1 md:row-span-4 place-self-center mb-4 md:mb-0 overflow-hidden isolate relative"
+        >
+          <div
+            class="absolute inset-0 before:absolute before:inset-0 before:-translate-y-full before:animate-[shimmer-vertical_2s_infinite] before:bg-gradient-to-b before:from-transparent before:via-gray-200 before:to-transparent"
+          >
+          </div>
+          <Image
+            src={image}
+            alt={title}
+            class="z-10"
+            transition:name={slug ? slug : title.replaceAll(" ", "")}
+            loading="eager"
+            width={256}
+            height={256}
+          />
+        </div>
+
         <a
           id="anchor-theme"
           href="/resources"
@@ -99,15 +108,18 @@ const similarPodcasts = podcasts
             <p class="text-sm line-clamp-2 xs:line-clamp-6 lg:line-clamp-6 md:line-clamp-2 mb-2 xs:mb-0 md:mb-2 lg:mb-0 xs:col-start-2 xs:row-start-2 md:col-start-1 md:row-start-2 lg:col-start-2 lg:row-start-2 lg:h-fit">
               {tpd.shortDescription}
             </p>
-            <Image
-              src={tpd.image}
-              alt={title}
-              transition:name={tpd.title.replaceAll(" ", "")}
-              class="self-end max-w-48 w-full xs:max-w-36 md:max-w-48 lg:max-w-36 aspect-square place-self-center xs:col-start-1 xs:row-start-1 xs:row-span-2 md:col-start-1 md:row-start-3 md:row-span-1 lg:col-start-1 lg:row-start-1 lg:row-span-2"
-              loading="eager"
-              width={192}
-              height={192}
-            />
+            <div class="self-end max-w-48 w-full xs:max-w-36 md:max-w-48 lg:max-w-36 aspect-square place-self-center xs:col-start-1 xs:row-start-1 xs:row-span-2 md:col-start-1 md:row-start-3 md:row-span-1 lg:col-start-1 lg:row-start-1 lg:row-span-2 overflow-hidden isolate relative">
+              <div class="absolute inset-0 before:absolute before:inset-0 before:-translate-y-full before:animate-[shimmer-vertical_2s_infinite] before:bg-gradient-to-b before:from-transparent before:via-gray-200 before:to-transparent" />
+              <Image
+                src={tpd.image}
+                alt={title}
+                transition:name={tpd.title.replaceAll(" ", "")}
+                class="z-10"
+                loading="eager"
+                width={192}
+                height={192}
+              />
+            </div>
           </a>
         ))
       }
