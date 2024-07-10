@@ -69,12 +69,7 @@ const tiers = [
           }`}
         >
           <div class="flex justify-between items-center">
-            <h3
-              class={`
-                    font-bold text-xl uppercase
-                    ${tier.popular && "text-cyan-800"}
-                    `}
-            >
+            <h3 class="font-bold text-xl uppercase text-cyan-800">
               {tier.name}
             </h3>
             {tier.popular && (
@@ -84,7 +79,7 @@ const tiers = [
             )}
           </div>
           <p class="mt-6">
-            <span class="text-gray-900 text-4xl font-bold">${tier.price}</span>
+            <span class="text-cyan-800 text-4xl font-bold">${tier.price}</span>
             <span class="text-gray-600 text-sm font-semibold">/class</span>
           </p>
           <p class="text-sm text-gray-600">
