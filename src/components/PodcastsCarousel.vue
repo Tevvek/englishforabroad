@@ -49,11 +49,12 @@
 
 <script setup lang="ts">
 import { Pagination } from 'swiper/modules';
+import { type Swiper as SwiperType } from 'swiper/types';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import type { Podcast } from '@/types/resources';
 import { selectedPodcast } from './nanostore';
 import { useStore } from '@nanostores/vue';
-import { computed, ref, onMounted } from 'vue';
+import { computed, ref, onMounted, watch } from 'vue';
 import Spinner from './Spinner.vue';
 
 const modules = [Pagination];
@@ -68,6 +69,7 @@ const $selectedPodcast = useStore(selectedPodcast);
 
 const isMounted = ref(false);
 const isSwiperReady = ref(false);
+const swiperInstance = ref<SwiperType | null>(null);
 
 onMounted(() => {
     isMounted.value = true;
@@ -80,7 +82,14 @@ const filteredPodcasts = computed(() => {
     return podcasts.filter((podcast) => podcast.theme === $selectedPodcast.value);
 });
 
-const onSwiperInitialized = () => {
+const onSwiperInitialized = (swiper: SwiperType) => {
     isSwiperReady.value = true;
+    swiperInstance.value = swiper;
 };
+
+watch(() => $selectedPodcast.value, () => {
+    if (swiperInstance.value) {
+        swiperInstance.value.slideTo(0);
+    }
+}); 
 </script>
