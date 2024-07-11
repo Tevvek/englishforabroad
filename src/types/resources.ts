@@ -11,6 +11,13 @@ export enum PodcastsThemes {
   SelfHelp = "Self-Help & Psychology",
 }
 
+export enum TvShowsThemes {
+  Comedy = "Comedy",
+  Drama = "Drama",
+  Documentary = "Documentary",
+  ScienceFiction = "Science Fiction",
+  Reality = "Reality & Competition",
+}
 export interface Podcast {
   title: string;
   shortDescription: string;
