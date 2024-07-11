@@ -21,9 +21,19 @@ export enum TvShowsThemes {
 export interface Podcast {
   title: string;
   shortDescription: string;
-  longDescriptionDescription: string;
+  longDescription: string;
   image: string;
   theme: PodcastsThemes;
+  link: string;
+  url: string;
+  slug?: string;
+}
+
+export interface TvShow {
+  title: string;
+  longDescription: string;
+  image: string;
+  theme: TvShowsThemes;
   link: string;
   url: string;
   slug?: string;

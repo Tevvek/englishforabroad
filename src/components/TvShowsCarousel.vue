@@ -25,18 +25,15 @@
                     :title="tvShow.longDescription">{{
                         tvShow.longDescription }}</p>
 
-                <div
-                    class="self-end place-self-center aspect-square max-w-48 xs:max-w-36 xs:col-start-1 xs:row-start-1 xs:row-span-2 bg-gray-300 relative overflow-hidden isolate">
-                    <div
-                        class="absolute inset-0 before:absolute before:inset-0 before:-translate-y-full before:animate-[shimmer-vertical_2s_infinite] before:bg-gradient-to-b before:from-transparent before:via-gray-200 before:to-transparent">
-                    </div>
+                <ImageSkeleton
+                    class="self-end place-self-center aspect-square max-w-48 xs:max-w-36 xs:col-start-1 xs:row-start-1 xs:row-span-2 bg-gray-300">
                     <img :src="tvShow.image" alt="tvShow" :style="{
                         '--view-transition-name': tvShow.slug ? tvShow.slug : tvShow.title.replaceAll(' ', ''),
                         'view-transition-name': 'var(--view-transition-name)',
                     }" loading="eager"
                         @load="(($event.target as HTMLImageElement).previousElementSibling as HTMLDivElement).style.display = 'none'"
                         class="z-10" />
-                </div>
+                </ImageSkeleton>
             </a>
         </swiper-slide>
         <swiper-slide v-if="filteredTvShows.length === 0">
@@ -56,6 +53,7 @@ import { selectedTvShow } from './nanostore';
 import { useStore } from '@nanostores/vue';
 import { computed, ref, onMounted, watch } from 'vue';
 import Spinner from './Spinner.vue';
+import ImageSkeleton from '@/components/ImageSkeleton.vue';
 
 const modules = [Pagination];
 
