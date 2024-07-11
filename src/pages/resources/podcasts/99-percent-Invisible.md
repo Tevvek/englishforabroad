@@ -1,5 +1,5 @@
 ---
-layout: ../../../layouts/ResourceLayout.astro
+layout: ../../../layouts/PodcastLayout.astro
 title: 99% Invisible
 slug: NinetyNinePercentInvisible
 shortDescription: Reveals the hidden elements of design in everyday life.

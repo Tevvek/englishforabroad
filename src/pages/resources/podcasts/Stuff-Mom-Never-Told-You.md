@@ -1,5 +1,5 @@
 ---
-layout: ../../../layouts/ResourceLayout.astro
+layout: ../../../layouts/PodcastLayout.astro
 title: Stuff Mom Never Told You
 shortDescription: Conversations on gender, feminism, and culture.
 longDescription: Stuff Mom Never Told You, hosted by Anney Reese and Samantha McVey, explores gender, feminism, and culture. The podcast delves into how these topics intersect with everyday life, offering informative and engaging discussions. Perfect for those interested in gender studies and societal issues, episodes to start with include The History of Women's Work, Understanding Intersectionality, and The Future of Feminism.
