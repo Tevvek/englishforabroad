@@ -6,6 +6,7 @@ import Footer from "@/sections/Footer.astro";
 import Volume from "@/components/Volume.astro";
 import { Image } from "astro:assets";
 import ImageSkeleton from "@/components/ImageSkeleton.astro";
+import classes from "@/utils/classes";
 
 const { frontmatter } = Astro.props;
 const { title, longDescription, image, theme, link, slug } = frontmatter;
@@ -105,7 +106,14 @@ const similarPodcasts = podcasts
               {tpd.shortDescription}
             </p>
 
-            <ImageSkeleton class="self-end max-w-48 w-full xs:max-w-36 md:max-w-48 lg:max-w-36 aspect-square place-self-center xs:col-start-1 xs:row-start-1 xs:row-span-2 md:col-start-1 md:row-start-3 md:row-span-1 lg:col-start-1 lg:row-start-1 lg:row-span-2">
+            <ImageSkeleton
+              class={classes(
+                "self-end max-w-48 w-full aspect-square place-self-center",
+                "xs:max-w-36 xs:col-start-1 xs:row-start-1 xs:row-span-2",
+                "md:max-w-48 md:col-start-1 md:row-start-3 md:row-span-1",
+                "lg:max-w-36 lg:col-start-1 lg:row-start-1 lg:row-span-2"
+              )}
+            >
               <Image
                 src={tpd.image}
                 alt={title}
