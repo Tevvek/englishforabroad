@@ -1,7 +1,7 @@
 ---
 import Layout from "./Layout.astro";
 import Navbar from "../components/Navbar.astro";
-import type { Podcast } from "@/types/resources";
+import type { TvShow } from "@/types/resources";
 import Footer from "@/sections/Footer.astro";
 import Volume from "@/components/Volume.astro";
 import { Image } from "astro:assets";
@@ -11,36 +11,36 @@ import classes from "@/utils/classes";
 const { frontmatter } = Astro.props;
 const { title, longDescription, image, theme, link, slug } = frontmatter;
 
-const markdowns = await Astro.glob("../pages/resources/podcasts/*.md");
-const podcasts = markdowns.map<Podcast>((markdown) => ({
+const markdowns = await Astro.glob("../pages/resources/tvshows/*.md");
+const tvShows = markdowns.map<TvShow>((markdown) => ({
   url: markdown.url!,
-  ...(markdown.frontmatter as Omit<Podcast, "url">),
+  ...(markdown.frontmatter as Omit<TvShow, "url">),
 }));
 
-const currentIndex = podcasts.findIndex((pd) => pd.title === title);
+const currentIndex = tvShows.findIndex((pd) => pd.title === title);
 
-const similarPodcasts = podcasts
+const similarTvShows = tvShows
   .slice(currentIndex + 1)
-  .concat(podcasts.slice(0, currentIndex))
+  .concat(tvShows.slice(0, currentIndex))
   .filter((pd) => pd.theme === theme && pd.title !== title)
   .slice(0, 3);
 ---
 
 <script>
-  import { selectedPodcast } from "@/components/nanostore";
-  import { PodcastsThemes } from "@/types/resources";
+  import { selectedTvShow } from "@/components/nanostore";
+  import { TvShowsThemes } from "@/types/resources";
 
   const anchor = document.querySelector("a#anchor-theme");
   anchor?.addEventListener("click", () => {
     const themeText = anchor.textContent;
-    const theme = Object.values(PodcastsThemes).find(
+    const theme = Object.values(TvShowsThemes).find(
       (value) => value === themeText
     )!;
-    selectedPodcast.set(theme);
+    selectedTvShow.set(theme);
   });
 </script>
 
-<Layout title=`Ali Enright ESL - ${title} Podcast`>
+<Layout title=`Ali Enright ESL - ${title} Tv Show`>
   <Navbar />
 
   <main class="bg-[#85CBCC] flex-1">
@@ -59,16 +59,16 @@ const similarPodcasts = podcasts
         )}
       >
         <ImageSkeleton
-          class="max-h-64 md:col-start-1 md:row-start-1 md:row-span-4 place-self-center mb-4 md:mb-0"
+          class="max-h-96 aspect-[2/3] md:col-start-1 md:row-start-1 md:row-span-4 place-self-center mb-4 md:mb-0"
         >
           <Image
             src={image}
             alt={title}
-            class="z-10"
+            class="z-10 h-full object-cover"
             transition:name={slug ? slug : title.replaceAll(" ", "")}
             loading="eager"
             width={256}
-            height={256}
+            height={384}
           />
         </ImageSkeleton>
         <a
@@ -101,17 +101,17 @@ const similarPodcasts = podcasts
       <h2
         class="text-3xl text-white uppercase text-center md:text-start md:col-span-3"
       >
-        Similar podcasts
+        Similar TV Shows
       </h2>
       {
-        similarPodcasts.map((tpd) => (
+        similarTvShows.map((tpd) => (
           <a
             href={tpd.url}
             class={classes(
-              "bg-white text-cyan-800 rounded-xl p-4 h-80 grid-rows-[min-content,min-content,auto] grid gap-x-4 transition duration-300 hover:scale-105 shadow-lg",
-              "xs:h-44 xs:grid-rows-[auto,1fr] xs:grid-cols-[auto,1fr]",
-              "md:h-80 md:grid-rows-[min-content,min-content,auto] md:grid-cols-1",
-              "lg:h-44 lg:grid-rows-[auto,1fr] lg:grid-cols-[auto,1fr]"
+              "bg-white text-cyan-800 rounded-xl p-4 h-[392px] grid-rows-[min-content,min-content,auto] grid gap-x-4 transition duration-300 hover:scale-105 shadow-lg",
+              "xs:h-60 xs:grid-rows-[auto,1fr] xs:grid-cols-[auto,1fr]",
+              "md:h-[392px] md:grid-rows-[min-content,min-content,auto] md:grid-cols-1",
+              "lg:h-60 lg:grid-rows-[auto,1fr] lg:grid-cols-[auto,1fr]"
             )}
           >
             <h3
@@ -132,12 +132,12 @@ const similarPodcasts = podcasts
                 "lg:mb-0 lg:line-clamp-6 lg:col-start-2 lg:row-start-2 lg:h-fit"
               )}
             >
-              {tpd.shortDescription}
+              {tpd.longDescription}
             </p>
 
             <ImageSkeleton
               class={classes(
-                "self-end max-w-48 w-full aspect-square place-self-center",
+                "self-end max-w-48 w-full place-self-center aspect-[2/3]",
                 "xs:max-w-36 xs:col-start-1 xs:row-start-1 xs:row-span-2",
                 "md:max-w-48 md:col-start-1 md:row-start-3 md:row-span-1",
                 "lg:max-w-36 lg:col-start-1 lg:row-start-1 lg:row-span-2"
@@ -147,10 +147,10 @@ const similarPodcasts = podcasts
                 src={tpd.image}
                 alt={title}
                 transition:name={tpd.title.replaceAll(" ", "")}
-                class="z-10"
+                class="z-10 h-full object-cover"
                 loading="eager"
                 width={192}
-                height={192}
+                height={288}
               />
             </ImageSkeleton>
           </a>
