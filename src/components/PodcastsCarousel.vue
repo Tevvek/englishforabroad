@@ -31,8 +31,7 @@
                         '--view-transition-name': podcast.slug ? podcast.slug : podcast.title.replaceAll(' ', ''),
                         'view-transition-name': 'var(--view-transition-name)',
                     }" loading="eager"
-                        @load="(($event.target as HTMLImageElement).previousElementSibling as HTMLDivElement).style.display = 'none'"
-                        class="z-10" />
+                        @load="(($event.target as HTMLImageElement).previousElementSibling as HTMLDivElement).style.display = 'none'" />
                 </ImageSkeleton>
             </a>
         </swiper-slide>

@@ -16,10 +16,10 @@
       slidesPerView: 5,
     },
   }" :pagination="{ clickable: true }" :modules="modules" :loop="true" :style="{
-      '--swiper-pagination-color': '#155e75',
-      '--swiper-pagination-bullet-inactive-color': '#fff',
-      '--swiper-pagination-bullet-inactive-opacity': 1,
-    }" class="text-cyan-800" wrapper-class="pb-10 pt-2" @swiper="onSwiperInitialized">
+    '--swiper-pagination-color': '#155e75',
+    '--swiper-pagination-bullet-inactive-color': '#fff',
+    '--swiper-pagination-bullet-inactive-opacity': 1,
+  }" class="text-cyan-800" wrapper-class="pb-10 pt-2" @swiper="onSwiperInitialized">
     <swiper-slide v-for="tvShow in filteredTvShows" :key="tvShow.title" class="px-6">
       <a :href="tvShow.url" :class="classes(
         'bg-white rounded-xl p-4 h-[392px] grid grid-rows-[min-content,min-content,auto] gap-x-4 transition duration-300 hover:scale-105 shadow-lg',
@@ -40,11 +40,11 @@
             '--view-transition-name': getViewTransitionName(tvShow),
             'view-transition-name': 'var(--view-transition-name)',
           }" loading="eager" @load="
-              (
-                ($event.target as HTMLImageElement)
-                  .previousElementSibling as HTMLDivElement
-              ).style.display = 'none'
-              " class="z-10 h-full object-cover" />
+            (
+              ($event.target as HTMLImageElement)
+                .previousElementSibling as HTMLDivElement
+            ).style.display = 'none'
+            " class="h-full object-cover" />
         </ImageSkeleton>
       </a>
     </swiper-slide>

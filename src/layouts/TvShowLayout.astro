@@ -64,7 +64,7 @@ const similarTvShows = tvShows
           <Image
             src={image}
             alt={title}
-            class="z-10 h-full object-cover"
+            class="h-full object-cover"
             transition:name={slug ? slug : title.replaceAll(" ", "")}
             loading="eager"
             width={256}
@@ -147,7 +147,7 @@ const similarTvShows = tvShows
                 src={tpd.image}
                 alt={title}
                 transition:name={tpd.title.replaceAll(" ", "")}
-                class="z-10 h-full object-cover"
+                class="h-full object-cover"
                 loading="eager"
                 width={192}
                 height={288}

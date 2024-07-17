@@ -64,7 +64,6 @@ const similarPodcasts = podcasts
           <Image
             src={image}
             alt={title}
-            class="z-10"
             transition:name={slug ? slug : title.replaceAll(" ", "")}
             loading="eager"
             width={256}
@@ -148,7 +147,6 @@ const similarPodcasts = podcasts
                 src={tpd.image}
                 alt={title}
                 transition:name={tpd.title.replaceAll(" ", "")}
-                class="z-10"
                 loading="eager"
                 width={192}
                 height={192}
