@@ -26,11 +26,11 @@
                         podcast.shortDescription }}</p>
 
                 <ImageSkeleton
-                    class="self-end place-self-center aspect-square max-w-48 xs:max-w-36 xs:col-start-1 xs:row-start-1 xs:row-span-2 bg-gray-300">
+                    class="self-end place-self-center aspect-square w-48 xs:w-36 xs:col-start-1 xs:row-start-1 xs:row-span-2 bg-gray-300">
                     <img :src="podcast.image" alt="podcast" :style="{
                         '--view-transition-name': podcast.slug ? podcast.slug : podcast.title.replaceAll(' ', ''),
                         'view-transition-name': 'var(--view-transition-name)',
-                    }" loading="eager"
+                    }" loading="lazy"
                         @load="(($event.target as HTMLImageElement).previousElementSibling as HTMLDivElement).style.display = 'none'" />
                 </ImageSkeleton>
             </a>

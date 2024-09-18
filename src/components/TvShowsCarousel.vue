@@ -35,11 +35,11 @@
         </p>
 
         <ImageSkeleton
-          class="self-end place-self-center xs:self-center aspect-[2/3] max-w-48 xs:max-w-36 xs:col-start-1 xs:row-start-1 xs:row-span-2 bg-gray-300">
+          class="self-end place-self-center xs:self-center aspect-[2/3] w-48 xs:w-36 xs:col-start-1 xs:row-start-1 xs:row-span-2 bg-gray-300">
           <img :src="tvShow.image" alt="tvShow" :style="{
             '--view-transition-name': getViewTransitionName(tvShow),
             'view-transition-name': 'var(--view-transition-name)',
-          }" loading="eager" @load="
+          }" loading="lazy" @load="
             (
               ($event.target as HTMLImageElement)
                 .previousElementSibling as HTMLDivElement
