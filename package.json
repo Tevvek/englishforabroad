@@ -15,7 +15,7 @@
     "@astrojs/vue": "^4.5.0",
     "@fontsource-variable/nunito": "^5.0.19",
     "@nanostores/vue": "nanostores/vue",
-    "astro": "^4.7.0",
+    "astro": "^4.15.8",
     "nanostores": "^0.10.3",
     "swiper": "^11.1.4",
     "tailwindcss": "^3.4.3",

@@ -11,19 +11,19 @@ import classes from "@/utils/classes";
 const { frontmatter } = Astro.props;
 const { title, longDescription, image, theme, link, slug } = frontmatter;
 
-const markdowns = await Astro.glob("../pages/resources/podcasts/*.md");
-const podcasts = markdowns.map<Podcast>((markdown) => ({
-  url: markdown.url!,
-  ...(markdown.frontmatter as Omit<Podcast, "url">),
-}));
+// const markdowns = await Astro.glob("../pages/resources/podcasts/*.md");
+// const podcasts = markdowns.map<Podcast>((markdown) => ({
+//   url: markdown.url!,
+//   ...(markdown.frontmatter as Omit<Podcast, "url">),
+// }));
 
-const currentIndex = podcasts.findIndex((pd) => pd.title === title);
+// const currentIndex = podcasts.findIndex((pd) => pd.title === title);
 
-const similarPodcasts = podcasts
-  .slice(currentIndex + 1)
-  .concat(podcasts.slice(0, currentIndex))
-  .filter((pd) => pd.theme === theme && pd.title !== title)
-  .slice(0, 3);
+// const similarPodcasts = podcasts
+//   .slice(currentIndex + 1)
+//   .concat(podcasts.slice(0, currentIndex))
+//   .filter((pd) => pd.theme === theme && pd.title !== title)
+//   .slice(0, 3);
 ---
 
 <script>
@@ -103,7 +103,7 @@ const similarPodcasts = podcasts
       >
         Similar podcasts
       </h2>
-      {
+      <!-- {
         similarPodcasts.map((tpd) => (
           <a
             href={tpd.url}
@@ -154,7 +154,7 @@ const similarPodcasts = podcasts
             </ImageSkeleton>
           </a>
         ))
-      }
+      } -->
     </section>
   </main>
 
