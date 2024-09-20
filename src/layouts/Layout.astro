@@ -46,16 +46,15 @@ const { title } = Astro.props;
     <ViewTransitions />
   </head>
   <body>
-    <a
-      id="Setmore_button_iframe"
-      class="fixed right-0 top-1/4 z-[20000]"
-      href="https://booking.setmore.com/scheduleappointment/90f174af-1ae5-468c-8188-4f4eeea19cfa"
-    >
-      <span
+    <div class="fixed right-0 top-1/4 z-[20000]">
+      <a
+        id="Setmore_button_iframe"
         class="rotate-[270deg] origin-bottom-right bg-[#FF9E80] text-white inline-block font-bold px-10 py-2 rounded-t-lg"
-        >Book Free Trial</span
+        href="https://booking.setmore.com/scheduleappointment/90f174af-1ae5-468c-8188-4f4eeea19cfa"
       >
-    </a>
+        Book Free Trial
+      </a>
+    </div>
     <slot />
     <style is:global>
       @font-face {
