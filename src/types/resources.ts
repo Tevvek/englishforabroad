@@ -25,8 +25,6 @@ export interface Podcast {
   image: string;
   theme: PodcastsThemes;
   link: string;
-  url: string;
-  slug?: string;
 }
 
 export interface TvShow {

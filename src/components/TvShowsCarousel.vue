@@ -20,23 +20,23 @@
     '--swiper-pagination-bullet-inactive-color': '#fff',
     '--swiper-pagination-bullet-inactive-opacity': 1,
   }" class="text-cyan-800" wrapper-class="pb-10 pt-2" @swiper="onSwiperInitialized">
-    <swiper-slide v-for="tvShow in filteredTvShows" :key="tvShow.title" class="px-6">
-      <a :href="tvShow.url" :class="classes(
+    <swiper-slide v-for="tvShow in filteredTvShows" :key="tvShow.data.title" class="px-6">
+      <a :href="`resources/tvshows/${tvShow.slug}`" :class="classes(
         'bg-white rounded-xl p-4 h-[392px] grid grid-rows-[min-content,min-content,auto] gap-x-4 transition duration-300 hover:scale-105 shadow-lg',
         'xs:h-60 xs:grid-rows-[auto,1fr] xs:grid-cols-[auto,1fr]'
       )
         ">
         <h3 class="font-bold xs:col-start-2 xs:row-start-1">
-          {{ tvShow.title }}
+          {{ tvShow.data.title }}
         </h3>
         <p class="text-sm line-clamp-2 xs:line-clamp-6 xs:h-fit mb-2 xs:mb-0 xs:col-start-2 xs:row-start-2"
-          :title="tvShow.longDescription">
-          {{ tvShow.longDescription }}
+          :title="tvShow.data.longDescription">
+          {{ tvShow.data.longDescription }}
         </p>
 
         <ImageSkeleton
           class="self-end place-self-center xs:self-center aspect-[2/3] w-48 xs:w-36 xs:col-start-1 xs:row-start-1 xs:row-span-2 bg-gray-300">
-          <img :src="tvShow.image" alt="tvShow" :style="{
+          <img :src="tvShow.data.image" alt="tvShow" :style="{
             '--view-transition-name': getViewTransitionName(tvShow),
             'view-transition-name': 'var(--view-transition-name)',
           }" loading="lazy" @load="
@@ -60,7 +60,7 @@
 import { Pagination } from "swiper/modules";
 import { type Swiper as SwiperType } from "swiper/types";
 import { Swiper, SwiperSlide } from "swiper/vue";
-import type { TvShow } from "@/types/resources";
+import type { TVShow } from "@/content/config";
 import { selectedTvShow } from "./nanostore";
 import { useStore } from "@nanostores/vue";
 import { computed, ref, onMounted, watch } from "vue";
@@ -71,7 +71,7 @@ import classes from "@/utils/classes";
 const modules = [Pagination];
 
 const props = defineProps<{
-  tvShows: TvShow[];
+  tvShows: TVShow[];
 }>();
 
 const { tvShows } = props;
@@ -90,7 +90,7 @@ const filteredTvShows = computed(() => {
   if (!isMounted.value) {
     return tvShows;
   }
-  return tvShows.filter((tvShow) => tvShow.theme === $selectedTvShow.value);
+  return tvShows.filter((tvShow) => tvShow.data.theme === $selectedTvShow.value);
 });
 
 const onSwiperInitialized = (swiper: SwiperType) => {
@@ -107,7 +107,7 @@ watch(
   }
 );
 
-function getViewTransitionName(tvShow: TvShow) {
-  return tvShow.slug ? tvShow.slug : tvShow.title.replaceAll(" ", "");
+function getViewTransitionName(tvShow: TVShow) {
+  return tvShow.slug ? tvShow.slug : tvShow.data.title.replaceAll(" ", "");
 }
 </script>
