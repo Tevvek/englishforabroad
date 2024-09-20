@@ -1,29 +1,27 @@
 ---
-import Layout from "./Layout.astro";
-import Navbar from "../components/Navbar.astro";
-import type { Podcast } from "@/types/resources";
-import Footer from "@/sections/Footer.astro";
-import Volume from "@/components/Volume.astro";
-import { Image } from "astro:assets";
 import ImageSkeleton from "@/components/ImageSkeleton.astro";
+import Volume from "@/components/Volume.astro";
+import type { Podcast } from "@/content/config";
+import Footer from "@/sections/Footer.astro";
 import classes from "@/utils/classes";
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+import Navbar from "../components/Navbar.astro";
+import Layout from "./Layout.astro";
 
 const { frontmatter } = Astro.props;
-const { title, longDescription, image, theme, link, slug } = frontmatter;
+const { data } = frontmatter as Podcast;
+const { title, longDescription, image, theme, link } = data;
 
-// const markdowns = await Astro.glob("../pages/resources/podcasts/*.md");
-// const podcasts = markdowns.map<Podcast>((markdown) => ({
-//   url: markdown.url!,
-//   ...(markdown.frontmatter as Omit<Podcast, "url">),
-// }));
+const podcasts = await getCollection("podcasts");
 
-// const currentIndex = podcasts.findIndex((pd) => pd.title === title);
+const currentIndex = podcasts.findIndex((pd) => pd.data.title === title);
 
-// const similarPodcasts = podcasts
-//   .slice(currentIndex + 1)
-//   .concat(podcasts.slice(0, currentIndex))
-//   .filter((pd) => pd.theme === theme && pd.title !== title)
-//   .slice(0, 3);
+const similarPodcasts = podcasts
+  .slice(currentIndex + 1)
+  .concat(podcasts.slice(0, currentIndex))
+  .filter((pd) => pd.data.theme === theme && pd.data.title !== title)
+  .slice(0, 3);
 ---
 
 <script>
@@ -64,7 +62,9 @@ const { title, longDescription, image, theme, link, slug } = frontmatter;
           <Image
             src={image}
             alt={title}
-            transition:name={slug ? slug : title.replaceAll(" ", "")}
+            transition:name={frontmatter.slug
+              ? frontmatter.slug
+              : title.replaceAll(" ", "")}
             loading="eager"
             width={256}
             height={256}
@@ -103,10 +103,10 @@ const { title, longDescription, image, theme, link, slug } = frontmatter;
       >
         Similar podcasts
       </h2>
-      <!-- {
+      {
         similarPodcasts.map((tpd) => (
           <a
-            href={tpd.url}
+            href={`/resources/podcasts/${tpd.slug}`}
             class={classes(
               "bg-white text-cyan-800 rounded-xl p-4 h-80 grid-rows-[min-content,min-content,auto] grid gap-x-4 transition duration-300 hover:scale-105 shadow-lg",
               "xs:h-44 xs:grid-rows-[auto,1fr] xs:grid-cols-[auto,1fr]",
@@ -122,7 +122,7 @@ const { title, longDescription, image, theme, link, slug } = frontmatter;
                 "lg:col-start-2 lg:row-start-1"
               )}
             >
-              {tpd.title}
+              {tpd.data.title}
             </h3>
             <p
               class={classes(
@@ -132,7 +132,7 @@ const { title, longDescription, image, theme, link, slug } = frontmatter;
                 "lg:mb-0 lg:line-clamp-6 lg:col-start-2 lg:row-start-2 lg:h-fit"
               )}
             >
-              {tpd.shortDescription}
+              {tpd.data.shortDescription}
             </p>
 
             <ImageSkeleton
@@ -144,9 +144,9 @@ const { title, longDescription, image, theme, link, slug } = frontmatter;
               )}
             >
               <Image
-                src={tpd.image}
+                src={tpd.data.image}
                 alt={title}
-                transition:name={tpd.title.replaceAll(" ", "")}
+                transition:name={tpd.data.title.replaceAll(" ", "")}
                 loading="eager"
                 width={192}
                 height={192}
@@ -154,7 +154,7 @@ const { title, longDescription, image, theme, link, slug } = frontmatter;
             </ImageSkeleton>
           </a>
         ))
-      } -->
+      }
     </section>
   </main>
 

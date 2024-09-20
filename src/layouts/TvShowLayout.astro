@@ -1,29 +1,27 @@
 ---
-import Layout from "./Layout.astro";
-import Navbar from "../components/Navbar.astro";
-import type { TvShow } from "@/types/resources";
-import Footer from "@/sections/Footer.astro";
-import { Image } from "astro:assets";
 import ImageSkeleton from "@/components/ImageSkeleton.astro";
-import classes from "@/utils/classes";
+import type { TVShow } from "@/content/config";
 import TV from "@/icons/TV.astro";
+import Footer from "@/sections/Footer.astro";
+import classes from "@/utils/classes";
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+import Navbar from "../components/Navbar.astro";
+import Layout from "./Layout.astro";
 
 const { frontmatter } = Astro.props;
-const { title, longDescription, image, theme, link, slug } = frontmatter;
+const { data } = frontmatter as TVShow;
+const { title, longDescription, image, theme, link } = data;
 
-// const markdowns = await Astro.glob("../pages/resources/tvshows/*.md");
-// const tvShows = markdowns.map<TvShow>((markdown) => ({
-//   url: markdown.url!,
-//   ...(markdown.frontmatter as Omit<TvShow, "url">),
-// }));
+const tvShows = await getCollection("tvshows");
 
-// const currentIndex = tvShows.findIndex((pd) => pd.title === title);
+const currentIndex = tvShows.findIndex((pd) => pd.data.title === title);
 
-// const similarTvShows = tvShows
-//   .slice(currentIndex + 1)
-//   .concat(tvShows.slice(0, currentIndex))
-//   .filter((pd) => pd.theme === theme && pd.title !== title)
-//   .slice(0, 3);
+const similarTvShows = tvShows
+  .slice(currentIndex + 1)
+  .concat(tvShows.slice(0, currentIndex))
+  .filter((pd) => pd.data.theme === theme && pd.data.title !== title)
+  .slice(0, 3);
 ---
 
 <script>
@@ -65,7 +63,9 @@ const { title, longDescription, image, theme, link, slug } = frontmatter;
             src={image}
             alt={title}
             class="h-full object-cover"
-            transition:name={slug ? slug : title.replaceAll(" ", "")}
+            transition:name={frontmatter.slug
+              ? frontmatter.slug
+              : title.replaceAll(" ", "")}
             loading="eager"
             width={256}
             height={384}
@@ -103,10 +103,10 @@ const { title, longDescription, image, theme, link, slug } = frontmatter;
       >
         Similar TV Shows
       </h2>
-      <!-- {
+      {
         similarTvShows.map((tpd) => (
           <a
-            href={tpd.url}
+            href={`/resources/tvshows/${tpd.slug}`}
             class={classes(
               "bg-white text-cyan-800 rounded-xl p-4 h-[392px] grid-rows-[min-content,min-content,auto] grid gap-x-4 transition duration-300 hover:scale-105 shadow-lg",
               "xs:h-60 xs:grid-rows-[auto,1fr] xs:grid-cols-[auto,1fr]",
@@ -122,7 +122,7 @@ const { title, longDescription, image, theme, link, slug } = frontmatter;
                 "lg:col-start-2 lg:row-start-1"
               )}
             >
-              {tpd.title}
+              {tpd.data.title}
             </h3>
             <p
               class={classes(
@@ -132,7 +132,7 @@ const { title, longDescription, image, theme, link, slug } = frontmatter;
                 "lg:mb-0 lg:line-clamp-6 lg:col-start-2 lg:row-start-2 lg:h-fit"
               )}
             >
-              {tpd.longDescription}
+              {tpd.data.longDescription}
             </p>
 
             <ImageSkeleton
@@ -144,9 +144,9 @@ const { title, longDescription, image, theme, link, slug } = frontmatter;
               )}
             >
               <Image
-                src={tpd.image}
+                src={tpd.data.image}
                 alt={title}
-                transition:name={tpd.title.replaceAll(" ", "")}
+                transition:name={tpd.data.title.replaceAll(" ", "")}
                 class="h-full object-cover"
                 loading="eager"
                 width={192}
@@ -155,7 +155,7 @@ const { title, longDescription, image, theme, link, slug } = frontmatter;
             </ImageSkeleton>
           </a>
         ))
-      } -->
+      }
     </section>
   </main>
 
