@@ -11,19 +11,19 @@ import TV from "@/icons/TV.astro";
 const { frontmatter } = Astro.props;
 const { title, longDescription, image, theme, link, slug } = frontmatter;
 
-const markdowns = await Astro.glob("../pages/resources/tvshows/*.md");
-const tvShows = markdowns.map<TvShow>((markdown) => ({
-  url: markdown.url!,
-  ...(markdown.frontmatter as Omit<TvShow, "url">),
-}));
+// const markdowns = await Astro.glob("../pages/resources/tvshows/*.md");
+// const tvShows = markdowns.map<TvShow>((markdown) => ({
+//   url: markdown.url!,
+//   ...(markdown.frontmatter as Omit<TvShow, "url">),
+// }));
 
-const currentIndex = tvShows.findIndex((pd) => pd.title === title);
+// const currentIndex = tvShows.findIndex((pd) => pd.title === title);
 
-const similarTvShows = tvShows
-  .slice(currentIndex + 1)
-  .concat(tvShows.slice(0, currentIndex))
-  .filter((pd) => pd.theme === theme && pd.title !== title)
-  .slice(0, 3);
+// const similarTvShows = tvShows
+//   .slice(currentIndex + 1)
+//   .concat(tvShows.slice(0, currentIndex))
+//   .filter((pd) => pd.theme === theme && pd.title !== title)
+//   .slice(0, 3);
 ---
 
 <script>
@@ -103,7 +103,7 @@ const similarTvShows = tvShows
       >
         Similar TV Shows
       </h2>
-      {
+      <!-- {
         similarTvShows.map((tpd) => (
           <a
             href={tpd.url}
@@ -155,7 +155,7 @@ const similarTvShows = tvShows
             </ImageSkeleton>
           </a>
         ))
-      }
+      } -->
     </section>
   </main>
 

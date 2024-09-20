@@ -1,0 +1,19 @@
+---
+import { getCollection } from "astro:content";
+import TvShowLayout from "@/layouts/TvShowLayout.astro";
+
+export async function getStaticPaths() {
+  const tvShowsEntries = await getCollection("tvshows");
+  return tvShowsEntries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<TvShowLayout frontmatter={entry.data}>
+  <Content />
+</TvShowLayout>
