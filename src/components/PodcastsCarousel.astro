@@ -1,0 +1,152 @@
+---
+// PodcastCarousel.astro
+import { Image } from "astro:assets";
+import ImageSkeleton from "./ImageSkeleton.astro";
+import Spinner from "./Spinner.astro";
+import type { Podcast } from "@/content/config";
+
+interface Props {
+  podcasts: Podcast[];
+}
+
+const { podcasts } = Astro.props;
+---
+
+<div class="podcast-carousel">
+  <div id="spinner" class="min-h-56 flex justify-center items-center">
+    <Spinner />
+  </div>
+  <div
+    id="swiper-container"
+    class="swiper text-cyan-800"
+    style="display: none;"
+  >
+    <div class="swiper-wrapper pb-10 pt-2">
+      {
+        podcasts.map((podcast) => (
+          <div class="swiper-slide px-6">
+            <a
+              href={`/resources/podcasts/${podcast.slug}`}
+              class="bg-white rounded-xl p-4 h-80 xs:h-44 grid grid-rows-[min-content,min-content,auto] xs:grid-rows-[auto,1fr] xs:grid-cols-[auto,1fr] gap-x-4 transition duration-300 hover:scale-105 shadow-lg"
+              data-theme={podcast.data.theme}
+            >
+              <h3 class="font-bold xs:col-start-2 xs:row-start-1">
+                {podcast.data.title}
+              </h3>
+              <p
+                class="text-sm line-clamp-2 xs:line-clamp-6 mb-2 xs:mb-0 xs:col-start-2 xs:row-start-2"
+                title={podcast.data.shortDescription}
+              >
+                {podcast.data.shortDescription}
+              </p>
+
+              <ImageSkeleton class="self-end place-self-center aspect-square w-48 xs:w-36 xs:col-start-1 xs:row-start-1 xs:row-span-2 bg-gray-300">
+                <Image
+                  src={podcast.data.image}
+                  alt={podcast.data.title}
+                  width={192}
+                  height={192}
+                  class="podcast-image"
+                  data-slug={podcast.slug}
+                  data-title={podcast.data.title}
+                />
+              </ImageSkeleton>
+            </a>
+          </div>
+        ))
+      }
+      {
+        podcasts.length === 0 && (
+          <div class="swiper-slide">
+            <div class="bg-white rounded-xl p-4 h-44 flex gap-x-4 shadow-lg justify-center items-center">
+              <p>Coming soon! 🚀</p>
+            </div>
+          </div>
+        )
+      }
+    </div>
+    <div class="swiper-pagination"></div>
+  </div>
+</div>
+
+<script>
+  import Swiper from "swiper";
+  import { Manipulation, Pagination } from "swiper/modules";
+  import "swiper/css";
+  import "swiper/css/manipulation";
+  import "swiper/css/pagination";
+  import { selectedPodcast } from "./nanostore";
+
+  document.addEventListener("astro:page-load", () => {
+    const spinner = document.getElementById("spinner");
+    const swiperContainer = document.getElementById("swiper-container");
+
+    const swiper = new Swiper(".swiper", {
+      modules: [Pagination, Manipulation],
+      slidesPerView: 1,
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+      loop: true,
+      breakpoints: {
+        1024: {
+          slidesPerView: 2,
+        },
+        1280: {
+          slidesPerView: 3,
+        },
+        2560: {
+          slidesPerView: 4,
+        },
+      },
+    });
+
+    // Hide spinner and show swiper
+    spinner!.style.display = "none";
+    swiperContainer!.style.display = "block";
+
+    // Handle image loading
+    document.querySelectorAll(".podcast-image").forEach((img) => {
+      img.addEventListener("load", () => {
+        const skeleton = img.closest(".bg-gray-300") as HTMLElement;
+        if (skeleton) {
+          skeleton.style.display = "none";
+        }
+      });
+
+      // Set view transition name
+      //   const slug = img.dataset.slug;
+      //   const title = img.dataset.title;
+      //   const transitionName = slug ? slug : title.replaceAll(" ", "");
+      //   img.style.setProperty("--view-transition-name", transitionName);
+      //   img.style.viewTransitionName = "var(--view-transition-name)";
+    });
+
+    // Handle theme filtering
+    const allSlides = Array.from(document.querySelectorAll(".swiper-slide"));
+
+    // Remove all slides
+    // swiperContainer!.innerHTML = "";
+
+    // Handle theme filtering
+    selectedPodcast.subscribe((theme) => {
+      const filteredSlides = allSlides.filter((slide) => {
+        const podcastTheme = slide.querySelector("a")!.dataset.theme;
+        return podcastTheme === theme;
+      });
+
+      swiper.removeAllSlides();
+      swiper.appendSlide(filteredSlides);
+      swiper.slideTo(0);
+    });
+  });
+</script>
+
+<style>
+  :root {
+    --swiper-pagination-color: #155e75;
+    --swiper-pagination-bullet-inactive-color: #fff;
+    --swiper-pagination-bullet-inactive-opacity: 1;
+  }
+</style>

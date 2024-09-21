@@ -1,5 +1,5 @@
 ---
-import PodcastsCarousel from "@/components/PodcastsCarousel.vue";
+import PodcastsCarousel from "@/components/PodcastsCarousel.astro";
 import PodcastsTags from "@/components/PodcastsTags.vue";
 import { getCollection } from "astro:content";
 import type { Podcast } from "@/content/config";
@@ -25,5 +25,5 @@ const podcasts = (await getCollection("podcasts")) as unknown as Podcast[];
 
   <PodcastsTags client:load />
 
-  <PodcastsCarousel client:load podcasts={podcasts} />
+  <PodcastsCarousel podcasts={podcasts} />
 </section>
