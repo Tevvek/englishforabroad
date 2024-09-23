@@ -1,0 +1,42 @@
+---
+export const prerender = false;
+
+import Layout from "@/layouts/Layout.astro";
+import { supabase } from "@/lib/supabase";
+
+// Layout related
+const { title } = Astro.props;
+
+// Auth related
+const { cookies, redirect } = Astro;
+
+const accessToken = cookies.get("sb-access-token");
+const refreshToken = cookies.get("sb-refresh-token");
+
+// If wrapped with this layout `SignedInLayout`, we expect the user to be signed in
+if (!accessToken || !refreshToken) {
+  return redirect("/signin");
+}
+
+// Set (udpate) session in supabase
+const { error } = await supabase.auth.setSession({
+  refresh_token: refreshToken.value,
+  access_token: accessToken.value,
+});
+
+// If something goes wrong, delete the cookies and redirect to signin
+if (error) {
+  cookies.delete("sb-access-token", {
+    path: "/",
+  });
+  cookies.delete("sb-refresh-token", {
+    path: "/",
+  });
+
+  return redirect("/signin");
+}
+---
+
+<Layout title={title}>
+  <slot />
+</Layout>

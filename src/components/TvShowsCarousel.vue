@@ -21,7 +21,7 @@
     '--swiper-pagination-bullet-inactive-opacity': 1,
   }" class="text-cyan-800" wrapper-class="pb-10 pt-2" @swiper="onSwiperInitialized">
     <swiper-slide v-for="tvShow in filteredTvShows" :key="tvShow.data.title" class="px-6">
-      <a :href="`resources/tvshows/${tvShow.slug}`" :class="classes(
+      <a :href="`resources/tvshows/${tvShow.slug}`" :class="cn(
         'bg-white rounded-xl p-4 h-[392px] grid grid-rows-[min-content,min-content,auto] gap-x-4 transition duration-300 hover:scale-105 shadow-lg',
         'xs:h-60 xs:grid-rows-[auto,1fr] xs:grid-cols-[auto,1fr]'
       )
@@ -66,7 +66,7 @@ import { useStore } from "@nanostores/vue";
 import { computed, ref, onMounted, watch } from "vue";
 import Spinner from "./Spinner.vue";
 import ImageSkeleton from "@/components/ImageSkeleton.vue";
-import classes from "@/utils/classes";
+import cn from "@/utils/classes";
 
 const modules = [Pagination];
 
