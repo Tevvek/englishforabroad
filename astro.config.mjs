@@ -6,7 +6,12 @@ import node from "@astrojs/node";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [tailwind(), vue()],
+  integrations: [
+    tailwind({
+      applyBaseStyles: false,
+    }),
+    vue(),
+  ],
   output: "static",
 
   adapter: node({

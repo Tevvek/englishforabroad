@@ -4,9 +4,9 @@ import { ref } from 'vue'
 // import GitHubLogo from '@/icons/radix-icons/github-logo'
 
 import { cn } from '@/utils/classes'
-// import { Button } from '@/components/ui/button'
-// import { Input } from '@/components/ui/input'
-// import { Label } from '@/components/ui/label'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 
 const isLoading = ref(false)
 async function onSubmit(event: Event) {
@@ -20,7 +20,7 @@ async function onSubmit(event: Event) {
 </script>
 
 <template>
-    <div :class="cn('grid gap-6', $attrs.class ?? '')">
+    <div :class="cn('grid gap-6 mt-6', $attrs.class ?? '')">
         <form @submit="onSubmit">
             <div class="grid gap-2">
                 <div class="grid gap-1">
@@ -31,7 +31,7 @@ async function onSubmit(event: Event) {
                         auto-complete="email" auto-correct="off" :disabled="isLoading" />
                 </div>
                 <Button :disabled="isLoading">
-                    <LucideSpinner v-if="isLoading" class="mr-2 h-4 w-4 animate-spin" />
+                    <!-- <LucideSpinner v-if="isLoading" class="mr-2 h-4 w-4 animate-spin" /> -->
                     Sign In with Email
                 </Button>
             </div>
