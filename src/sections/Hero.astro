@@ -6,7 +6,7 @@ import aliImage from "@/images/ali.webp";
 import BigArrowRight from "@/icons/BigArrowRight.astro";
 ---
 
-<section class="relative">
+<div class="relative">
   <!-- Hero blobs -->
   <div class="absolute bottom-0 right-0 -z-10 hidden sm:block">
     <BottomRightBlob />
@@ -16,39 +16,31 @@ import BigArrowRight from "@/icons/BigArrowRight.astro";
     <BottomLeftBlob />
   </div>
 
-  <div
-    class="px-4 md:px-8 pt-8 md:pt-12 grid gap-y-8 place-items-center place-content-center 2xl:container grid-cols-[minmax(250px,550px)] lg:grid-cols-[minmax(250px,550px),max-content] lg:pr-0 lg:grid-rows-5 lg:gap-x-20"
-  >
-    <!-- Title & Description -->
-    <div
-      class="text-center text-cyan-800 space-y-4 lg:text-start lg:row-span-4 lg:row-start-1"
-    >
-      <h1 class="text-6xl">
-        Launch your English <br /> Learning Journey
-      </h1>
-      <p class="">
-        Hi! I'm Ali, an American English teacher offering personalized ESL
-        classes. With an educational foundation from Georgetown University and
-        two master's degrees, I specialize in one-on-one classes tailored to fit
-        the goals and learning styles of students at all levels. Let's work
-        together to build your confidence and skills in English!
-      </p>
+  <section class="px-4 md:px-8 pt-8 md:pt-12 2xl:container">
+    <div class="flex flex-col lg:flex-row justify-center items-center gap-x-20">
+      <!-- Title & Description -->
+      <div class="text-center text-cyan-800 space-y-4 lg:text-start">
+        <h1 class="text-6xl">
+          Launch your English <br /> Learning Journey
+        </h1>
+        <p class="">
+          Hi! I'm Ali, an American English teacher offering personalized ESL
+          classes. With an educational foundation from Georgetown University and
+          two master's degrees, I specialize in one-on-one classes tailored to
+          fit the goals and learning styles of students at all levels. Let's
+          work together to build your confidence and skills in English!
+        </p>
+        <!-- CTA -->
+        <a
+          id="Setmore_button_iframe"
+          href="https://booking.setmore.com/scheduleappointment/90f174af-1ae5-468c-8188-4f4eeea19cfa"
+          class="bg-[#FF9E80] text-white font-bold uppercase rounded-full px-12 py-2 flex gap-x-2 w-full md:w-fit justify-center md:mx-auto lg:mx-0"
+          >Book Free Trial<BigArrowRight />
+        </a>
+      </div>
 
-      <!-- CTA -->
-      <a
-        id="Setmore_button_iframe"
-        href="https://booking.setmore.com/scheduleappointment/90f174af-1ae5-468c-8188-4f4eeea19cfa"
-        class="bg-[#FF9E80] text-white font-bold uppercase rounded-full px-12 py-2 flex gap-x-2 w-full md:w-fit justify-center md:mx-auto lg:mx-0"
-        >Book Free Trial<BigArrowRight />
-      </a>
+      <!-- Hero image -->
+      <Image src={aliImage} alt="Ali" class="max-w-xl" loading="eager" />
     </div>
-
-    <!-- Hero image -->
-    <Image
-      src={aliImage}
-      alt="Ali"
-      class="lg:row-span-4 lg:row-start-2 max-w-xl"
-      loading="eager"
-    />
-  </div>
-</section>
+  </section>
+</div>
