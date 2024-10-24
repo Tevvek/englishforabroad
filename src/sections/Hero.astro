@@ -2,7 +2,7 @@
 import { Image } from "astro:assets";
 import BottomLeftBlob from "@/components/BottomLeftBlob.astro";
 import BottomRightBlob from "@/components/BottomRightBlobk.astro";
-import aliImage from "@/images/ali.png";
+import aliImage from "@/images/ali.webp";
 import BigArrowRight from "@/icons/BigArrowRight.astro";
 ---
 
@@ -47,9 +47,7 @@ import BigArrowRight from "@/icons/BigArrowRight.astro";
     <Image
       src={aliImage}
       alt="Ali"
-      width="400"
-      height="422.25"
-      class="lg:row-span-4 lg:row-start-2"
+      class="lg:row-span-4 lg:row-start-2 max-w-xl"
       loading="eager"
     />
   </div>
