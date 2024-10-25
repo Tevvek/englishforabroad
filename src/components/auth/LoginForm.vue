@@ -1,22 +1,35 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-// import LucideSpinner from '@/icons/lucide/loader-2'
-// import GitHubLogo from '@/icons/radix-icons/github-logo'
-
+import { ref, watch } from 'vue'
 import { cn } from '@/utils/classes'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import Spinner from '../Spinner.vue'
 
 const isLoading = ref(false)
+
+const formData = ref({
+    email: '',
+    password: ''
+})
+
+
+// watch formData email
+watch(formData, (newVal, oldVal) => {
+    alert('formData.email changed')
+})
 async function onSubmit(event: Event) {
     event.preventDefault()
     isLoading.value = true
+    console.log('formData', formData.value)
 
     setTimeout(() => {
         isLoading.value = false
     }, 3000)
 }
+
+
+
 </script>
 
 <template>
@@ -30,26 +43,18 @@ async function onSubmit(event: Event) {
                     <Input id="email" placeholder="name@example.com" type="email" auto-capitalize="none"
                         auto-complete="email" auto-correct="off" :disabled="isLoading" />
                 </div>
+                <div class="grid gap-1">
+                    <Label class="sr-only" for="password">
+                        Password
+                    </Label>
+                    <Input id="password" placeholder="******" type="password" auto-capitalize="none"
+                        auto-complete="none?" auto-correct="off" :disabled="isLoading" />
+                </div>
                 <Button :disabled="isLoading">
-                    <!-- <LucideSpinner v-if="isLoading" class="mr-2 h-4 w-4 animate-spin" /> -->
+                    <Spinner v-if="isLoading" class="mr-2 h-4 w-4 animate-spin" />
                     Sign In with Email
                 </Button>
             </div>
         </form>
-        <div class="relative">
-            <div class="absolute inset-0 flex items-center">
-                <span class="w-full border-t" />
-            </div>
-            <div class="relative flex justify-center text-xs uppercase">
-                <span class="bg-background px-2 text-muted-foreground">
-                    Or continue with
-                </span>
-            </div>
-        </div>
-        <Button variant="outline" type="button" :disabled="isLoading">
-            <!-- <LucideSpinner v-if="isLoading" class="mr-2 h-4 w-4 animate-spin" />
-            <GitHubLogo v-else class="mr-2 h-4 w-4" /> -->
-            GitHub
-        </Button>
     </div>
 </template>
