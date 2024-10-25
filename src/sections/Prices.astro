@@ -3,8 +3,8 @@ import Check from "@/icons/Check.astro";
 
 const tiers = [
   {
-    name: "Single class",
-    price: 36,
+    name: "One lesson per week",
+    price: 40,
     description:
       "Get access to a single class. Perfect for those who want to try out a class before committing.",
     features: [
@@ -13,12 +13,12 @@ const tiers = [
       "Immediate feedback",
     ],
     isPackage: false,
-    total: 36,
+    total: 160,
     stripeURL: "https://buy.stripe.com/14k17AefV0JHdigdQQ",
   },
   {
-    name: "5 classes",
-    price: 34,
+    name: "Two lessons per week",
+    price: 38,
     description:
       "Save 20% with this bundle of 5 classes. Perfect for those who want to try out a few classes.",
     popular: true,
@@ -31,13 +31,13 @@ const tiers = [
       "Additional focus on ongoing evaluation and progression",
     ],
     isPackage: true,
-    singleTotal: 180,
-    total: 170,
+    singleTotal: 320,
+    total: 304,
     stripeURL: "https://buy.stripe.com/6oE6rUdbR9gd1zybIJ",
   },
   {
-    name: "10 classes",
-    price: 32,
+    name: "Three lessons per week",
+    price: 36,
     description:
       "Save 40% with this bundle of 10 classes. Perfect for those who want to commit to their practice.",
     features: [
@@ -49,8 +49,8 @@ const tiers = [
       "Additional focus on ongoing evaluation and progression",
     ],
     isPackage: true,
-    singleTotal: 360,
-    total: 320,
+    singleTotal: 480,
+    total: 432,
     stripeURL: "https://buy.stripe.com/eVacQic7N785fqo9AC",
   },
 ];
@@ -96,7 +96,7 @@ const tiers = [
                 ${tier.popular ? "bg-cyan-800 text-white" : "text-cyan-800 "}
                 `}
           >
-            {tier.isPackage ? "Buy package" : "Buy class"}
+            Purchase subscription
           </a>
           <ul class="mt-8 space-y-3 text-sm text-gray-600">
             {tier.features.map((benefit) => (
