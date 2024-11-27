@@ -11,7 +11,18 @@ const tvShows = markdowns.map<TvShow>((markdown) => ({
 ---
 
 <section class="bg-[#85CBCC] text-white py-8 md:py-12">
-  <h2 class="text-5xl px-4 md:px-8">Tv Shows</h2>
+  <div class="px-4 md:px-8">
+    <h2 class="text-5xl text-center md:text-start">Tv Shows</h2>
+
+    <p class="mt-2 text-balance">
+      If you want your English to sound more native, TV shows are the happy
+      medium between practice and play. They give you visual context and expose
+      you to different accents and cultures. Choose shows you enjoy to keep
+      yourself entertained and motivated.. Pro tip: Watch with English subtitles
+      to help you follow along and observe how characters speak. Perhaps even
+      try mimicking their phrases to practice pronunciation!
+    </p>
+  </div>
 
   <TvShowsTags client:load />
 
