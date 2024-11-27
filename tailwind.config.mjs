@@ -7,7 +7,11 @@ export default {
     container: {
       center: true,
     },
-    extend: {},
+    extend: {
+      fontFamily: {
+        title: ["BobbyJone", "sans-serif"],
+      },
+    },
     screens: {
       xs: "375px",
       ...defaultTheme.screens,
