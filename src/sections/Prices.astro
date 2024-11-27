@@ -1,71 +1,172 @@
 ---
 import Check from "@/icons/Check.astro";
 
-const tiers = [
-  {
-    name: "Single class",
-    price: 36,
-    description:
-      "Get access to a single class. Perfect for those who want to try out a class before committing.",
-    features: [
-      "One 50 minute lesson",
-      "Online lesson & activities",
-      "Immediate feedback",
-    ],
-    isPackage: false,
-    total: 36,
-    stripeURL: "https://buy.stripe.com/14k17AefV0JHdigdQQ",
-  },
-  {
-    name: "5 classes",
-    price: 34,
-    description:
-      "Save 20% with this bundle of 5 classes. Perfect for those who want to try out a few classes.",
-    popular: true,
-    features: [
-      "Five 50 minute lessons ($10 discount)",
-      "Online lesson & activities",
-      "Immediate feedback",
-      "Custom learning materials",
-      "Follow-up corrections & activities",
-      "Additional focus on ongoing evaluation and progression",
-    ],
-    isPackage: true,
-    singleTotal: 180,
-    total: 170,
-    stripeURL: "https://buy.stripe.com/6oE6rUdbR9gd1zybIJ",
-  },
-  {
-    name: "10 classes",
-    price: 32,
-    description:
-      "Save 40% with this bundle of 10 classes. Perfect for those who want to commit to their practice.",
-    features: [
-      "Ten 50 minute lessons ($40 discount)",
-      "Online lesson & activities",
-      "Immediate feedback",
-      "Custom learning materials",
-      "Follow-up corrections & activities",
-      "Additional focus on ongoing evaluation and progression",
-    ],
-    isPackage: true,
-    singleTotal: 360,
-    total: 320,
-    stripeURL: "https://buy.stripe.com/eVacQic7N785fqo9AC",
-  },
-];
+const TIERS = {
+  "25": [
+    {
+      name: "One lesson per week",
+      price: 24,
+      description:
+        "Get access to a single class. Perfect for those who want to try out a class before committing.",
+      features: [
+        "Four 25-minute lessons per month",
+        "Live paraphrasing & corrections",
+        "Personalized class materials",
+        "Custom-tailored homework",
+      ],
+      total: 96,
+      stripeURL: "https://buy.stripe.com/bIY6rUdbRcspcec004",
+    },
+    {
+      name: "Two lessons per week",
+      price: 22,
+      description:
+        "Save 20% with this bundle of 5 classes. Perfect for those who want to try out a few classes.",
+      features: [
+        "Eight 25-minute lessons per month",
+        "Live paraphrasing & corrections",
+        "Personalized class materials",
+        "Custom-tailored homework",
+      ],
+      singleTotal: 192,
+      total: 176,
+      stripeURL: "https://buy.stripe.com/eVa17AdbR2RP3HG005",
+    },
+    {
+      name: "Three lessons per week",
+      price: 20,
+      description:
+        "Save 40% with this bundle of 10 classes. Perfect for those who want to commit to their practice.",
+      features: [
+        "Twelve 25-minute lessons per month",
+        "Live paraphrasing & corrections",
+        "Personalized class materials",
+        "Custom-tailored homework",
+      ],
+      singleTotal: 288,
+      total: 240,
+      stripeURL: "https://buy.stripe.com/8wM7vYefVgIF7XW14a",
+    },
+  ],
+  "50": [
+    {
+      name: "One lesson per week",
+      price: 40,
+      description:
+        "Get access to a single class. Perfect for those who want to try out a class before committing.",
+      features: [
+        "Four 50-minute lessons per month",
+        "Live paraphrasing & corrections",
+        "Personalized class materials",
+        "Custom-tailored homework",
+      ],
+      total: 160,
+      stripeURL: "https://buy.stripe.com/aEU03w4Fl9gd4LK6ov",
+    },
+    {
+      name: "Two lessons per week",
+      price: 38,
+      description:
+        "Save 20% with this bundle of 5 classes. Perfect for those who want to try out a few classes.",
+      popular: true,
+      features: [
+        "Eight 50-minute lessons per month (5% discount)",
+        "Live paraphrasing & corrections",
+        "Personalized class materials",
+        "Custom-tailored homework ",
+      ],
+      singleTotal: 320,
+      total: 304,
+      stripeURL: "https://buy.stripe.com/9AQaIa0p5fEBa6414f",
+    },
+    {
+      name: "Three lessons per week",
+      price: 36,
+      description:
+        "Save 40% with this bundle of 10 classes. Perfect for those who want to commit to their practice.",
+      features: [
+        "Twelve 50-minute lessons per month (10% discount)",
+        "Live paraphrasing & corrections",
+        "Personalized class materials",
+        "Custom-tailored homework",
+      ],
+      singleTotal: 480,
+      total: 432,
+      stripeURL: "https://buy.stripe.com/7sI3fIefVdwt1zyeV6",
+    },
+  ],
+};
 ---
 
-<section id="pricing" class="2xl:container px-4 md:px-8 py-8 md:py-12">
-  <h2 class="text-5xl text-cyan-800 md:col-span-2 text-center">PRICING</h2>
+<script>
+  function setup() {
+    const buttonWrapper = document.getElementById("toggle-prices-button");
+    buttonWrapper?.addEventListener("click", () => {
+      const tiers25 = document.getElementById("25-min-tiers");
+      const tiers50 = document.getElementById("50-min-tiers");
 
-  <!-- Tiers -->
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 mt-10">
+      if (tiers25 && tiers50) {
+        tiers25.classList.toggle("hidden");
+        tiers25.classList.toggle("grid");
+
+        tiers50.classList.toggle("hidden");
+        tiers50.classList.toggle("grid");
+      }
+
+      const firstbutton = buttonWrapper.querySelector("span:first-child");
+      const secondbutton = buttonWrapper.querySelector("span:last-child");
+
+      firstbutton.classList.toggle("bg-white");
+      firstbutton.classList.toggle("text-cyan-800");
+      firstbutton.classList.toggle("text-white");
+      firstbutton.classList.toggle("font-bold");
+
+      secondbutton.classList.toggle("bg-white");
+      secondbutton.classList.toggle("text-cyan-800");
+      secondbutton.classList.toggle("text-white");
+      secondbutton.classList.toggle("font-bold");
+    });
+  }
+
+  document.addEventListener("astro:page-load", setup);
+</script>
+
+<section id="pricing" class="2xl:container px-4 md:px-8 py-8 md:py-12 grid">
+  <h2 class="text-5xl text-cyan-800 text-center">PRICING</h2>
+
+  <!-- Toggle Button -->
+  <div
+    id="toggle-prices-button"
+    class="relative inline-flex items-center mt-12 place-self-center"
+  >
+    <button
+      class="flex items-center justify-between w-36 h-10 p-1 rounded-full bg-cyan-800 shadow-md transition hover:-translate-y-1 focus:-translate-y-1"
+    >
+      <span
+        class="w-1/2 h-full text-sm text-center flex items-center justify-center rounded-full text-white"
+      >
+        25 mins
+      </span>
+      <span
+        class="w-1/2 h-full text-sm text-center flex items-center justify-center rounded-full bg-white text-cyan-800 font-bold"
+      >
+        50 mins
+      </span>
+    </button>
+  </div>
+
+  <!-- 25 mins tiers -->
+  <div
+    id="25-min-tiers"
+    class="hidden grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 mt-10"
+  >
     {
-      tiers.map((tier) => (
+      TIERS["25"].map((tier) => (
         <div
           class={`shadow-lg rounded-xl p-8 ${
-            tier.popular ? "border-2 border-cyan-800" : "border border-gray-200"
+            tier.popular
+              ? "border-2 border-cyan-800"
+              : "border-2 border-gray-200"
           }`}
         >
           <div class="flex justify-between items-center">
@@ -73,20 +174,20 @@ const tiers = [
               {tier.name}
             </h3>
             {tier.popular && (
-              <span class="text-white text-sm font-bold bg-[#85CBCC] px-3 py-1 rounded-full">
+              <span class="text-white text-sm font-bold bg-[#85CBCC] px-3 py-1 rounded-full text-center">
                 Most popular
               </span>
             )}
           </div>
           <p class="mt-6">
             <span class="text-cyan-800 text-4xl font-bold">${tier.price}</span>
-            <span class="text-gray-600 text-sm font-semibold">/class</span>
+            <span class="text-gray-600 text-sm font-semibold">per class</span>
           </p>
           <p class="text-sm text-gray-600">
             <span class={`line-through pr-1 ${!tier.singleTotal && "hidden"}`}>
               ${tier.singleTotal}
             </span>
-            ${tier.total} in total
+            ${tier.total} /four weeks
           </p>
           <a
             href={tier.stripeURL}
@@ -96,14 +197,73 @@ const tiers = [
                 ${tier.popular ? "bg-cyan-800 text-white" : "text-cyan-800 "}
                 `}
           >
-            {tier.isPackage ? "Buy package" : "Buy class"}
+            Purchase
           </a>
           <ul class="mt-8 space-y-3 text-sm text-gray-600">
             {tier.features.map((benefit) => (
               <li class="flex gap-x-3">
                 <span class="text-cyan-800">
                   <Check />
-                </span>{" "}
+                </span>
+                {benefit}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+
+  <!-- 50 mins tiers -->
+  <div
+    id="50-min-tiers"
+    class="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 mt-10"
+  >
+    {
+      TIERS["50"].map((tier) => (
+        <div
+          class={`shadow-lg rounded-xl p-8 ${
+            tier.popular
+              ? "border-2 border-cyan-800"
+              : "border-2 border-gray-200"
+          }`}
+        >
+          <div class="flex justify-between items-center">
+            <h3 class="font-bold text-xl uppercase text-cyan-800">
+              {tier.name}
+            </h3>
+            {tier.popular && (
+              <span class="text-white text-sm font-bold bg-[#85CBCC] px-3 py-1 rounded-full text-center">
+                Most popular
+              </span>
+            )}
+          </div>
+          <p class="mt-6">
+            <span class="text-cyan-800 text-4xl font-bold">${tier.price}</span>
+            <span class="text-gray-600 text-sm font-semibold">per class</span>
+          </p>
+          <p class="text-sm text-gray-600">
+            <span class={`line-through pr-1 ${!tier.singleTotal && "hidden"}`}>
+              ${tier.singleTotal}
+            </span>
+            ${tier.total} /four weeks
+          </p>
+          <a
+            href={tier.stripeURL}
+            rel="noopener noreferrer"
+            target="_blank"
+            class={`mt-6 shadow-sm rounded-md py-2 px-3 text-center text-sm w-full font-semibold border border-cyan-800 block
+                ${tier.popular ? "bg-cyan-800 text-white" : "text-cyan-800 "}
+                `}
+          >
+            Purchase
+          </a>
+          <ul class="mt-8 space-y-3 text-sm text-gray-600">
+            {tier.features.map((benefit) => (
+              <li class="flex gap-x-3">
+                <span class="text-cyan-800">
+                  <Check />
+                </span>
                 {benefit}
               </li>
             ))}
