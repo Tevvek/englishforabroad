@@ -1,0 +1,62 @@
+---
+import { Image } from "astro:assets";
+import Card from "@/components/Card.astro";
+import Calendar from "@/icons/Calendar.astro";
+import Certficate from "@/icons/Certificate.astro";
+import Notebook from "@/icons/Notebook.astro";
+import Writing from "@/icons/Writing.astro";
+import studentImage from "@/images/student.png";
+
+const cards = [
+  {
+    title: "Flexible Scheduling",
+    description:
+      "Choose a lesson plan that fits your schedule! I offer 25 and 50-minute sessions, 1-3 times a week, online through Zoom.",
+    icon: Calendar,
+  },
+  {
+    title: "Personalized Curriculum",
+    description:
+      "Your goals guide our lessons. Expect a customized learning plan that adapts to your interests and proficiency level.",
+    icon: Notebook,
+  },
+  {
+    title: "Continuous Feedback",
+    description:
+      "Improve with each lesson with consistent feedback. We'll use Google Docs to track changes and paraphrase your responses during class.",
+    icon: Writing,
+  },
+  {
+    title: "Content Mastery",
+    description:
+      "Master English with confidence. Our approach ensures you practice for any setting, whether it's for business, university, or travel.",
+    icon: Certficate,
+  },
+];
+---
+
+<section id="methodology" class="bg-[#F0F0F0]">
+  <div
+    class="grid md:grid-cols-[auto,1fr] gap-8 md:gap-12 px-4 md:px-8 py-8 md:py-12 2xl:container"
+  >
+    <h2 class="text-5xl text-cyan-800 md:col-span-2 text-center">
+      Discover a new way of learning
+    </h2>
+
+    <!-- Student image -->
+    <div class="hidden lg:block">
+      <Image
+        src={studentImage}
+        alt="Student"
+        width="500"
+        height="500"
+        loading="lazy"
+      />
+    </div>
+
+    <!-- Cards -->
+    <div class="grid gap-6 sm:grid-cols-2 sm:gap-8 md:col-span-2 lg:col-span-1">
+      {cards.map((card) => <Card {...card} />)}
+    </div>
+  </div>
+</section>
