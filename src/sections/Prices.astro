@@ -1,7 +1,22 @@
 ---
 import Check from "@/icons/Check.astro";
 
-const TIERS = {
+type Tier = {
+  name: string;
+  price: number;
+  description: string;
+  features: string[];
+  total: number;
+  singleTotal?: number;
+  stripeURL: string;
+  popular?: boolean;
+};
+
+type Tiers = {
+  "25": Tier[];
+  "50": Tier[];
+};
+const TIERS: Tiers = {
   "25": [
     {
       name: "One lesson per week",
@@ -116,15 +131,15 @@ const TIERS = {
       const firstbutton = buttonWrapper.querySelector("span:first-child");
       const secondbutton = buttonWrapper.querySelector("span:last-child");
 
-      firstbutton.classList.toggle("bg-white");
-      firstbutton.classList.toggle("text-cyan-800");
-      firstbutton.classList.toggle("text-white");
-      firstbutton.classList.toggle("font-bold");
+      firstbutton?.classList.toggle("bg-white");
+      firstbutton?.classList.toggle("text-cyan-800");
+      firstbutton?.classList.toggle("text-white");
+      firstbutton?.classList.toggle("font-bold");
 
-      secondbutton.classList.toggle("bg-white");
-      secondbutton.classList.toggle("text-cyan-800");
-      secondbutton.classList.toggle("text-white");
-      secondbutton.classList.toggle("font-bold");
+      secondbutton?.classList.toggle("bg-white");
+      secondbutton?.classList.toggle("text-cyan-800");
+      secondbutton?.classList.toggle("text-white");
+      secondbutton?.classList.toggle("font-bold");
     });
   }
 
