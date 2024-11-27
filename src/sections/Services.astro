@@ -1,62 +1,41 @@
 ---
-import { Image } from "astro:assets";
-import Card from "@/components/Card.astro";
-import Calendar from "@/icons/Calendar.astro";
-import Certficate from "@/icons/Certificate.astro";
-import Notebook from "@/icons/Notebook.astro";
-import Writing from "@/icons/Writing.astro";
-import studentImage from "@/images/student.png";
 
-const cards = [
-  {
-    title: "Flexible Scheduling",
-    description:
-      "Choose a lesson plan that fits your schedule! I offer 25 and 50-minute sessions, 1-3 times a week, online through Zoom.",
-    icon: Calendar,
-  },
-  {
-    title: "Personalized Curriculum",
-    description:
-      "Your goals guide our lessons. Expect a customized learning plan that adapts to your interests and proficiency level.",
-    icon: Notebook,
-  },
-  {
-    title: "Continuous Feedback",
-    description:
-      "Improve with each lesson with consistent feedback. We'll use Google Docs to track changes and paraphrase your responses during class.",
-    icon: Writing,
-  },
-  {
-    title: "Content Mastery",
-    description:
-      "Master English with confidence. Our approach ensures you practice for any setting, whether it's for business, university, or travel.",
-    icon: Certficate,
-  },
-];
 ---
 
-<section id="methodology" class="bg-[#F0F0F0]">
-  <div
-    class="grid md:grid-cols-[auto,1fr] gap-8 md:gap-12 px-4 md:px-8 py-8 md:py-12 2xl:container"
-  >
-    <h2 class="text-5xl text-cyan-800 md:col-span-2 text-center">
-      Discover a new way of learning
-    </h2>
+<section id="services" class="bg-[#F0F0F0]">
+  <div class="px-4 md:px-8 py-8 md:py-12 2xl:container space-y-4">
+    <h2 class="text-5xl text-cyan-800 text-center">Services</h2>
+    <h3 class="font-title text-3xl text-center">1:1 Custom English Coaching</h3>
+    <p class="text-balance text-center">
+      Customized lessons to help you speak fluently and naturally, tailored
+      specifically to your goals—whether you're preparing for an international
+      job, studying abroad, or traveling.
+    </p>
 
-    <!-- Student image -->
-    <div class="hidden lg:block">
-      <Image
-        src={studentImage}
-        alt="Student"
-        width="500"
-        height="500"
-        loading="lazy"
-      />
-    </div>
-
-    <!-- Cards -->
-    <div class="grid gap-6 sm:grid-cols-2 sm:gap-8 md:col-span-2 lg:col-span-1">
-      {cards.map((card) => <Card {...card} />)}
+    <div class="grid gap-6 md:grid-cols-2">
+      <!-- Card #1 25-Minute Classes -->
+      <div class="p-4 bg-[#85CBCC] rounded-lg shadow-md text-white space-y-2">
+        <h3 class="text-xl font-title text-center">25-Minute classes</h3>
+        <ul class="list-disc list-inside">
+          <li>Quick, focused sessions</li>
+          <li>Ideal for frequent check-ins and specific skills practice</li>
+          <li>
+            Brief, targeted corrections on speaking, writing, or cultural
+            discussions
+          </li>
+        </ul>
+      </div>
+      <!-- Card #2 50-Minute Classes -->
+      <div class="p-4 bg-[#85CBCC] rounded-lg shadow-md text-white space-y-2">
+        <h3 class="text-xl font-title text-center">50-Minute classes</h3>
+        <ul class="list-disc list-inside">
+          <li>Comprehensive and detailed lessons</li>
+          <li>Best for deep dives into topics with extended feedback</li>
+          <li>
+            Covers multiple areas: speaking, writing, and cultural conversations
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>
