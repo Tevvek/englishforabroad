@@ -13,7 +13,7 @@ const { frontmatter } = Astro.props;
 const { title, longDescription, image, theme, link, slug } = frontmatter;
 
 const markdowns = await getCollection("podcasts");
-const podcasts = markdowns.map<Podcast>((markdown) => ({
+const podcasts = markdowns.map<any>((markdown) => ({
   ...markdown.data,
   slug: markdown.id,
   url: `/resources/podcasts/${markdown.id}`,
