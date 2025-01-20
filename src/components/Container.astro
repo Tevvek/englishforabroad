@@ -1,0 +1,32 @@
+---
+import classes from "@/utils/classes";
+
+type Props = {
+  tag?: keyof HTMLElementTagNameMap;
+  id?: string;
+  class?: string;
+};
+const { tag: Tag = "section", id, class: className } = Astro.props;
+---
+
+<Tag
+  id={id}
+  class={classes(
+    // default spacings (mobile)
+    "px-4",
+
+    // tablet spacings
+    "md:px-8",
+
+    // desktop spacings
+    "lg:px-12",
+
+    // rest
+    className
+  )}
+>
+  <!-- we dont do responsive when 2xl screen -->
+  <div class="2xl:container mx-auto">
+    <slot />
+  </div>
+</Tag>
