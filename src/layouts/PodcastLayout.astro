@@ -7,14 +7,16 @@ import Volume from "@/components/Volume.astro";
 import { Image } from "astro:assets";
 import ImageSkeleton from "@/components/ImageSkeleton.astro";
 import classes from "@/utils/classes";
+import { getCollection } from "astro:content";
 
 const { frontmatter } = Astro.props;
 const { title, longDescription, image, theme, link, slug } = frontmatter;
 
-const markdowns = await Astro.glob("../pages/resources/podcasts/*.md");
+const markdowns = await getCollection("podcasts");
 const podcasts = markdowns.map<Podcast>((markdown) => ({
-  url: markdown.url!,
-  ...(markdown.frontmatter as Omit<Podcast, "url">),
+  ...markdown.data,
+  slug: markdown.id,
+  url: `/resources/podcasts/${markdown.id}`,
 }));
 
 const currentIndex = podcasts.findIndex((pd) => pd.title === title);

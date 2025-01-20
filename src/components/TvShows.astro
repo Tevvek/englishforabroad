@@ -2,11 +2,13 @@
 import TvShowsCarousel from "@/components/TvShowsCarousel.vue";
 import TvShowsTags from "@/components/TvShowsTags.vue";
 import { type TvShow } from "@/types/resources";
+import { getCollection } from "astro:content";
 
-const markdowns = await Astro.glob("../pages/resources/tvshows/*.md");
+const markdowns = await getCollection("tvShows");
 const tvShows = markdowns.map<TvShow>((markdown) => ({
-  url: markdown.url!,
-  ...(markdown.frontmatter as Omit<TvShow, "url">),
+  ...markdown.data,
+  slug: markdown.id,
+  url: `/resources/tvshows/${markdown.id}`,
 }));
 ---
 

@@ -2,11 +2,13 @@
 import PodcastsCarousel from "@/components/PodcastsCarousel.vue";
 import PodcastsTags from "@/components/PodcastsTags.vue";
 import { type Podcast } from "@/types/resources";
+import { getCollection } from "astro:content";
 
-const markdowns = await Astro.glob("../pages/resources/podcasts/*.md");
+const markdowns = await getCollection("podcasts");
 const podcasts = markdowns.map<Podcast>((markdown) => ({
-  url: markdown.url!,
-  ...(markdown.frontmatter as Omit<Podcast, "url">),
+  ...markdown.data,
+  slug: markdown.id,
+  url: `/resources/podcasts/${markdown.id}`,
 }));
 ---
 
