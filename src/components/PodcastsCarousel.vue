@@ -27,7 +27,7 @@
 
                 <ImageSkeleton
                     class="self-end place-self-center aspect-square w-48 xs:w-36 xs:col-start-1 xs:row-start-1 xs:row-span-2 bg-gray-300">
-                    <img :src="podcast.image" alt="podcast" :style="{
+                    <img :src="podcast.image.src" alt="podcast" :style="{
                         '--view-transition-name': podcast.slug ? podcast.slug : podcast.title.replaceAll(' ', ''),
                         'view-transition-name': 'var(--view-transition-name)',
                     }" loading="lazy"
