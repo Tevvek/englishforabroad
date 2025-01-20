@@ -5,7 +5,7 @@ import { type TvShow } from "@/types/resources";
 import { getCollection } from "astro:content";
 
 const markdowns = await getCollection("tvShows");
-const tvShows = markdowns.map<TvShow>((markdown) => ({
+const tvShows = markdowns.map<any>((markdown) => ({
   ...markdown.data,
   slug: markdown.id,
   url: `/resources/tvshows/${markdown.id}`,
