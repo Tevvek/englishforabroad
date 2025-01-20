@@ -27,7 +27,21 @@ const tvShows = defineCollection({
     }),
 });
 
+const movies = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/data/resources/movies" }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      shortDescription: z.string().optional(),
+      longDescription: z.string(),
+      theme: z.string(),
+      image: image(),
+      link: z.string().url(),
+    }),
+});
+
 export const collections = {
   podcasts,
   tvShows,
+  movies,
 };
