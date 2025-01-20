@@ -1,0 +1,30 @@
+---
+import MoviesCarousel from "@/components/MoviesCarousel.vue";
+import MoviesTags from "@/components/MoviesTags.vue";
+import { type Movie } from "@/types/resources";
+import { getCollection } from "astro:content";
+
+const markdowns = await getCollection("movies");
+const movies = markdowns.map<Movie>((markdown) => ({
+  ...markdown.data,
+  slug: markdown.id,
+  url: `/resources/movies/${markdown.id}`,
+}));
+---
+
+<section class="bg-[#85CBCC] text-white py-8 md:py-12">
+  <div class="px-4 md:px-8">
+    <h2 class="text-5xl text-center md:text-start">Movies</h2>
+
+    <p class="mt-2 text-balance">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum, fugiat
+      explicabo magni, qui sit ducimus rem ad veniam ab, labore necessitatibus
+      dignissimos libero autem iste. Vitae impedit voluptates tempore
+      asperiores!
+    </p>
+  </div>
+
+  <MoviesTags client:load />
+
+  <MoviesCarousel client:load movies={movies} />
+</section>

@@ -35,7 +35,7 @@
                 </ImageSkeleton>
             </a>
         </swiper-slide>
-        <swiper-slide v-if="filteredPodcasts.length === 0">
+        <swiper-slide v-if="filteredPodcasts.length === 0" class="px-6">
             <div class="bg-white rounded-xl p-4 h-44 flex gap-x-4 shadow-lg justify-center items-center">
                 <p>Coming soon! 🚀</p>
             </div>

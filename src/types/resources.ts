@@ -38,3 +38,13 @@ export interface TvShow {
   url: string;
   slug?: string;
 }
+
+export interface Movie {
+  title: string;
+  longDescription: string;
+  image: string;
+  theme: string;
+  link: string;
+  url: string;
+  slug?: string;
+}
