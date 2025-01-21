@@ -1,10 +1,16 @@
 ---
 import Logo from "@/components/Logo.astro";
 import Container from "./Container.astro";
-import MobileNavbar from "@/components/MobileNavbar.astro";
 ---
 
-<Container tag="header" class="py-6 hidden lg:block" data-header>
+<Container tag="header" class="py-6 block lg:hidden" data-header-mobile>
+  <!-- TODO all three -->
+  <!-- visible navbar -->
+
+  <!-- toggeable menu -->
+
+  <!-- overlay -->
+
   <nav class="grid grid-cols-[1fr,max-content,1fr] gap-x-10">
     <!-- first half -->
     <ul class="flex justify-end items-center gap-x-6">
@@ -38,5 +44,3 @@ import MobileNavbar from "@/components/MobileNavbar.astro";
     </ul>
   </nav>
 </Container>
-
-<MobileNavbar />
