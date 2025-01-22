@@ -1,46 +1,119 @@
 ---
 import Logo from "@/components/Logo.astro";
-import Container from "./Container.astro";
+import Menu from "@/icons/Menu.astro";
+import X from "@/icons/X.astro";
 ---
 
-<Container tag="header" class="py-6 block lg:hidden" data-header-mobile>
-  <!-- TODO all three -->
-  <!-- visible navbar -->
+<div data-mobile-header class="lg:hidden bg-white sticky top-0 z-50 isolate">
+  <header>
+    <!-- visible navbar -->
+    <div
+      class="grid grid-cols-[1fr,max-content,1fr] bg-white relative py-6 px-4 md:px-8 z-20"
+    >
+      <a href="/#" class="size-[100px] col-start-2">
+        <Logo />
+      </a>
 
-  <!-- toggeable menu -->
+      <div class="col-start-3 justify-self-end">
+        <button data-mobile-header-menu-button class="text-cyan-800">
+          <span data-mobile-header-menu-icon>
+            <Menu />
+          </span>
+          <span class="hidden" data-mobile-header-x-icon>
+            <X />
+          </span>
+        </button>
+      </div>
+    </div>
 
-  <!-- overlay -->
+    <!-- toggeable menu -->
+    <nav
+      class="absolute -translate-y-full z-10 transition bg-white w-full"
+      data-mobile-header-navbar
+      inert
+    >
+      <ul class="flex flex-col text-center items-center gap-y-2 py-4">
+        <li class="text-cyan-800 font-extrabold uppercase">
+          <a href="/#">HOME</a>
+        </li>
+        <li class="text-cyan-800 font-extrabold uppercase">
+          <a href="/#pricing">PRICING</a>
+        </li>
+        <li class="text-cyan-800 font-extrabold uppercase">
+          <a href="/#methodology">METHODOLOGY</a>
+        </li>
+        <li class="text-cyan-800 font-extrabold uppercase">
+          <a href="/#testimonials">TESTIMONIALS</a>
+        </li>
+        <li class="text-cyan-800 font-extrabold uppercase">
+          <a href="/resources">RESOURCES</a>
+        </li>
+        <li class="text-cyan-800 font-extrabold uppercase">
+          <a href="#contact">CONTACT</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+</div>
 
-  <nav class="grid grid-cols-[1fr,max-content,1fr] gap-x-10">
-    <!-- first half -->
-    <ul class="flex justify-end items-center gap-x-6">
-      <li class="text-cyan-800 font-extrabold uppercase">
-        <a href="/#">HOME</a>
-      </li>
-      <li class="text-cyan-800 font-extrabold uppercase">
-        <a href="/#pricing">PRICING</a>
-      </li>
-      <li class="text-cyan-800 font-extrabold uppercase">
-        <a href="/#methodology">METHODOLOGY</a>
-      </li>
-    </ul>
+<!-- overlay -->
+<div
+  data-mobile-header-overlay
+  class="lg:hidden hidden bg-black/50 absolute inset-0 min-h-full z-40"
+>
+</div>
 
-    <!-- logo -->
-    <a href="/#">
-      <Logo />
-    </a>
+<script>
+  function setup() {
+    const button = document.querySelector(
+      "[data-mobile-header-menu-button]"
+    ) as HTMLButtonElement | null;
+    button?.addEventListener("click", () => {
+      // toggle icon
+      const menuIcon = document.querySelector("[data-mobile-header-menu-icon]");
+      const xIcon = document.querySelector("[data-mobile-header-x-icon]");
 
-    <!-- second half -->
-    <ul class="flex items-center gap-x-6">
-      <li class="text-cyan-800 font-extrabold uppercase">
-        <a href="/#testimonials">TESTIMONIALS</a>
-      </li>
-      <li class="text-cyan-800 font-extrabold uppercase">
-        <a href="/resources">RESOURCES</a>
-      </li>
-      <li class="text-cyan-800 font-extrabold uppercase">
-        <a href="#contact">CONTACT</a>
-      </li>
-    </ul>
-  </nav>
-</Container>
+      menuIcon?.classList.toggle("hidden");
+      xIcon?.classList.toggle("hidden");
+
+      // toggle slideable menu
+      const nav = document.querySelector(
+        "[data-mobile-header-navbar]"
+      ) as HTMLElement | null;
+      nav?.classList.toggle("-translate-y-full");
+
+      // toggle ovleray
+      const overlay = document.querySelector("[data-mobile-header-overlay]");
+      overlay?.classList.toggle("hidden");
+
+      nav!.inert = !nav?.inert;
+
+      // make every child of body inert but div[data-mobile-header]
+      const body = document.body;
+      for (const child of body.children) {
+        if (
+          !child.hasAttribute("data-mobile-header") &&
+          !child.hasAttribute("data-mobile-header-overlay")
+        ) {
+          (child as HTMLElement).inert = !(child as HTMLElement).inert;
+        }
+      }
+    });
+
+    // when overlay clicked, close menu
+    const overlay = document.querySelector("[data-mobile-header-overlay]");
+    overlay?.addEventListener("click", () => {
+      button?.click();
+    });
+
+    // links clicked could be smooth scrolled to the same page, so we need to close the menu
+    const navbar = document.querySelector("[data-mobile-header-navbar]");
+    for (const a of navbar!.querySelectorAll("a")) {
+      a.addEventListener("click", () => {
+        button?.click();
+      });
+    }
+  }
+
+  document.addEventListener("astro:page-load", setup);
+</script>
