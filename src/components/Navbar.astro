@@ -1,17 +1,13 @@
 ---
 import Logo from "@/components/Logo.astro";
+import Container from "./Container.astro";
+import MobileNavbar from "@/components/MobileNavbar.astro";
 ---
 
-<aside class="py-6 2xl:container md:px-16 lg:px-32 2xl:px-0">
-  <nav class="">
-    <ul
-      class="flex flex-col lg:flex-row justify-between gap-y-6 lg:gap-y-0 items-center lg:gap-x-6"
-    >
-      <li class="block lg:hidden">
-        <a href="/#">
-          <Logo />
-        </a>
-      </li>
+<Container tag="header" class="py-6 hidden lg:block" data-header>
+  <nav class="grid grid-cols-[1fr,max-content,1fr] gap-x-10">
+    <!-- first half -->
+    <ul class="flex justify-end items-center gap-x-6">
       <li class="text-cyan-800 font-extrabold uppercase">
         <a href="/#">HOME</a>
       </li>
@@ -21,11 +17,15 @@ import Logo from "@/components/Logo.astro";
       <li class="text-cyan-800 font-extrabold uppercase">
         <a href="/#methodology">METHODOLOGY</a>
       </li>
-      <li class="hidden lg:block">
-        <a href="/#">
-          <Logo />
-        </a>
-      </li>
+    </ul>
+
+    <!-- logo -->
+    <a href="/#">
+      <Logo />
+    </a>
+
+    <!-- second half -->
+    <ul class="flex items-center gap-x-6">
       <li class="text-cyan-800 font-extrabold uppercase">
         <a href="/#testimonials">TESTIMONIALS</a>
       </li>
@@ -37,4 +37,6 @@ import Logo from "@/components/Logo.astro";
       </li>
     </ul>
   </nav>
-</aside>
+</Container>
+
+<MobileNavbar />
