@@ -35,15 +35,24 @@ const { title } = Astro.props;
     <meta property="og:url" content="https://www.englishforabroad.com/" />
     <meta property="og:type" content="website" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+    <!-- calendly popup -->
+    <link
+      href="https://assets.calendly.com/assets/external/widget.css"
+      rel="stylesheet"
+    />
+    <script
+      src="https://assets.calendly.com/assets/external/widget.js"
+      type="text/javascript"
+      async></script>
     <title>{title}</title>
     <ClientRouter />
   </head>
   <body>
     <a
       class="rotate-[270deg] origin-bottom-right fixed right-0 top-1/4 z-30"
-      href="https://calendly.com/englishforabroad/trial-esl-class"
-      target="_blank"
-      rel="noopener"
+      href=""
+      onclick="Calendly.initPopupWidget({url: 'https://calendly.com/englishforabroad/trial-esl-class'});return false;"
     >
       <span
         class="bg-[#FF9E80] text-white inline-block font-bold px-10 py-2 rounded-t-lg"
