@@ -48,7 +48,7 @@ const similarTvShows = tvShows
 
   <main class="bg-[#85CBCC] flex-1">
     <section
-      class="2xl:container px-4 md:px-8 py-8 md:py-12 grid grid-cols-1 md:grid-cols-3 gap-8"
+      class="2xl:container mx-auto px-4 md:px-8 py-8 md:py-12 grid grid-cols-1 md:grid-cols-3 gap-8"
     >
       <h1
         class="text-5xl font-bold mb-4 md:col-span-3 text-white text-center md:text-start"
@@ -57,8 +57,8 @@ const similarTvShows = tvShows
       </h1>
       <div
         class={classes(
-          "bg-white text-cyan-800 rounded-xl p-4 gap-x-4 shadow-lg grid grid-rows-[auto,auto,auto,1fr,auto]",
-          "md:col-span-3 md:grid-cols-[auto,1fr] md:grid-rows-[auto,auto,1fr,auto]"
+          "bg-white text-cyan-800 rounded-xl p-4 gap-x-4 shadow-lg grid grid-rows-[auto_auto_auto_1fr_auto]",
+          "md:col-span-3 md:grid-cols-[auto_1fr] md:grid-rows-[auto_auto_1fr_auto]"
         )}
       >
         <ImageSkeleton
@@ -89,7 +89,7 @@ const similarTvShows = tvShows
           {longDescription}
         </p>
         <div
-          class="md:col-start-2 md:row-start-4 grid grid-rows-3 grid-cols-1 xl:grid-rows-1 xl:grid-cols-[repeat(3,max-content)] gap-y-2 gap-x-4 place-self-center w-full md:w-fit md:place-self-start"
+          class="md:col-start-2 md:row-start-4 grid grid-rows-3 grid-cols-1 xl:grid-rows-1 xl:grid-cols-[repeat(3_max-content)] gap-y-2 gap-x-4 place-self-center w-full md:w-fit md:place-self-start"
         >
           <a
             href={link}
@@ -145,10 +145,10 @@ const similarTvShows = tvShows
           <a
             href={tpd.url}
             class={classes(
-              "bg-white text-cyan-800 rounded-xl p-4 h-[392px] grid-rows-[min-content,min-content,auto] grid gap-x-4 transition duration-300 hover:scale-105 shadow-lg",
-              "xs:h-60 xs:grid-rows-[auto,1fr] xs:grid-cols-[auto,1fr]",
-              "md:h-[392px] md:grid-rows-[min-content,min-content,auto] md:grid-cols-1",
-              "lg:h-60 lg:grid-rows-[auto,1fr] lg:grid-cols-[auto,1fr]"
+              "bg-white text-cyan-800 rounded-xl p-4 h-[392px] grid-rows-[min-content_min-content_auto] grid gap-x-4 transition duration-300 hover:scale-105 shadow-lg",
+              "xs:h-60 xs:grid-rows-[auto_1fr] xs:grid-cols-[auto_1fr]",
+              "md:h-[392px] md:grid-rows-[min-content_min-content_auto] md:grid-cols-1",
+              "lg:h-60 lg:grid-rows-[auto_1fr] lg:grid-cols-[auto_1fr]"
             )}
           >
             <h3
