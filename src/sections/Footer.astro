@@ -1,54 +1,45 @@
 ---
 import Email from "@/icons/Email.astro";
-import TikTok from "@/icons/TikTok.astro";
-import Instagram from "@/icons/Instagram.astro";
+import TikTok from "@/icons/tiktok.svg";
+import Instagram from "@/icons/instagram.svg";
+import Container from "@/components/Container.astro";
 
 const currentYear = new Date().getFullYear();
 ---
 
-<footer
-  id="contact"
-  class="bg-[#85CBCC] text-white divide-y divide-white px-4 md:px-8 py-8 md:py-12 flex flex-col gap-y-4"
->
-  <div class="space-y-4 2xl:container mx-auto text-center md:text-start">
-    <h2 class="text-2xl">Contact</h2>
-    <a class="inline-flex gap-x-2" href="mailto:ali@englishforabroad.com">
-      <Email /> ali@englishforabroad.com
-    </a>
-
-    <div
-      class="flex gap-x-2 justify-center items-center md:justify-start md:items-start"
-    >
-      <a
-        href="https://www.instagram.com/englishforabroad/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <Instagram />
-      </a>
-
-      <a
-        href="https://www.tiktok.com/@englishforabroad_"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <TikTok />
-      </a>
+<footer id="contact" class="bg-[#85CBCC] text-white">
+  <Container tag="div" class="py-8 md:py-12">
+    <div class="space-y-4">
+      <h2 class="text-2xl">Contact</h2>
+      <div class="flex gap-x-2">
+        <a
+          href="https://www.instagram.com/englishforabroad/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hover:text-cyan-800 transition focus:text-cyan-800"
+        >
+          <Instagram />
+        </a>
+        <a
+          href="https://www.tiktok.com/@englishforabroad_"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hover:text-cyan-800 transition focus:text-cyan-800"
+        >
+          <TikTok />
+        </a>
+      </div>
+      <div class="pb-4">
+        <a
+          class="underline font-bold hover:text-cyan-800 transition focus:text-cyan-800"
+          href="mailto:ali@englishforabroad.com"
+        >
+          ali@englishforabroad.com
+        </a>
+      </div>
+      <p class="text-sm border-t border-white pt-4">
+        &copy; English for Abroad. All Rights Reserved {currentYear}
+      </p>
     </div>
-  </div>
-
-  <div
-    class="gap-y-4 pt-4 flex flex-col items-center md:flex-row md:justify-between 2xl:container mx-auto"
-  >
-    <div
-      data-legal
-      class="flex flex-col gap-y-2 text-sm text-center md:text-start"
-    >
-      <a class="" href="/legal-notice">Legal notice</a>
-      <a class="" href="/privacy-policy">Privacy policy</a>
-    </div>
-    <p class="text-sm">
-      &copy; English for Abroad. All Rights Reserved {currentYear}
-    </p>
-  </div>
+  </Container>
 </footer>

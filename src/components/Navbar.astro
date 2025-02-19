@@ -1,42 +1,51 @@
 ---
 import Logo from "@/components/Logo.astro";
-import Container from "./Container.astro";
-import MobileNavbar from "@/components/MobileNavbar.astro";
+import MobileNavbar from "@/components/MobileNavbar.vue";
+import { NAV } from "@/utils/constants";
+
+const firstHalf = NAV.slice(0, Math.ceil(NAV.length / 2));
+const secondHalf = NAV.slice(Math.ceil(NAV.length / 2));
 ---
 
-<Container tag="header" class="py-6 hidden lg:block" data-header>
-  <nav class="grid grid-cols-[1fr_max-content_1fr] gap-x-10">
+<header class="p-4 hidden lg:block sticky top-0 bg-white z-navbar shadow-lg">
+  <div class="grid grid-cols-[1fr_max-content_1fr] gap-x-8 text-cyan-800">
     <!-- first half -->
-    <ul class="flex justify-end items-center gap-x-6">
-      <li class="text-cyan-800 font-extrabold uppercase">
-        <a href="/#">HOME</a>
-      </li>
-      <li class="text-cyan-800 font-extrabold uppercase">
-        <a href="/#pricing">PRICING</a>
-      </li>
-      <li class="text-cyan-800 font-extrabold uppercase">
-        <a href="/#methodology">METHODOLOGY</a>
-      </li>
-    </ul>
+    <nav class="flex justify-end items-center gap-x-4">
+      {
+        firstHalf.map((item) => (
+          <a
+            class="font-extrabold uppercase  hover:text-[#85CBCC] transition focus:text-[#85CBCC]"
+            href={item.href}
+          >
+            {item.text}
+          </a>
+        ))
+      }
+    </nav>
 
     <!-- logo -->
-    <a href="/#">
-      <Logo />
-    </a>
+    <div class="size-[100px]">
+      <a href="/#">
+        <Logo />
+      </a>
+    </div>
 
     <!-- second half -->
-    <ul class="flex items-center gap-x-6">
-      <li class="text-cyan-800 font-extrabold uppercase">
-        <a href="/#testimonials">TESTIMONIALS</a>
-      </li>
-      <li class="text-cyan-800 font-extrabold uppercase">
-        <a href="/resources">RESOURCES</a>
-      </li>
-      <li class="text-cyan-800 font-extrabold uppercase">
-        <a href="#contact">CONTACT</a>
-      </li>
-    </ul>
-  </nav>
-</Container>
+    <nav class="flex items-center gap-x-4">
+      {
+        secondHalf.map((item) => (
+          <a
+            class="font-extrabold uppercase  hover:text-[#85CBCC] transition focus:text-[#85CBCC]"
+            href={item.href}
+          >
+            {item.text}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</header>
 
-<MobileNavbar />
+<MobileNavbar client:load>
+  <Logo />
+</MobileNavbar>

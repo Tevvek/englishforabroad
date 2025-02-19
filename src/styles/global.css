@@ -13,6 +13,11 @@
 
   --font-title: "BobbyJones", sans-serif;
   --font-body: "Nunito Variable", sans-serif;
+
+  --z-index-navbar: 50;
+  --z-index-cta: 30;
+
+  --spacing-navbar: 132px;
 }
 
 @layer base {
@@ -37,5 +42,9 @@
   h1,
   h2 {
     font-family: var(--font-title);
+  }
+
+  section {
+    scroll-margin-top: var(--spacing-navbar);
   }
 }
