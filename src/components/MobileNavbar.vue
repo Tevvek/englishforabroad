@@ -7,7 +7,7 @@
                     <slot />
                 </a>
             </div>
-            <button @click="isOpen = !isOpen" class="justify-self-end self-start cursor-pointer text-cyan-800">
+            <button @click="isOpen = !isOpen" class="justify-self-end self-start text-cyan-800">
                 <component :is="isOpen ? X : Menu" />
             </button>
         </div>

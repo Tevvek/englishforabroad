@@ -47,4 +47,8 @@
   section {
     scroll-margin-top: var(--spacing-navbar);
   }
+
+  button {
+    cursor: pointer;
+  }
 }
