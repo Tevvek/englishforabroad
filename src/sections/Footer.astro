@@ -37,9 +37,26 @@ const currentYear = new Date().getFullYear();
           ali@englishforabroad.com
         </a>
       </div>
-      <p class="text-sm border-t border-white pt-4">
-        &copy; English for Abroad. All Rights Reserved {currentYear}
-      </p>
+
+      <div
+        class="border-t border-white pt-4 grid grid-cols-2 grid-rows-[auto_auto] md:grid-cols-1 gap-y-2 gap-x-4"
+      >
+        <a
+          class="text-sm underline hover:text-cyan-800 transition focus:text-cyan-800 text-right md:text-start"
+          href="/legal-notice"
+        >
+          Legal notice
+        </a>
+        <a
+          class="text-sm underline hover:text-cyan-800 transition focus:text-cyan-800"
+          href="/privacy-policy"
+        >
+          Privacy policy
+        </a>
+        <p class="text-sm col-span-2 md:col-span-1 text-center md:text-start">
+          &copy; English for Abroad. All Rights Reserved {currentYear}
+        </p>
+      </div>
     </div>
   </Container>
 </footer>
