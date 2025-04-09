@@ -15,7 +15,13 @@ const { title } = Astro.props;
 
 <html lang="en">
   <head>
+    <!-- BASE -->
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <title>{title}</title>
+    <ClientRouter />
+
+    <!-- SEO -->
     <meta
       name="description"
       content="English for Abroad offers private, personalized online English lessons, catering to both children and adult students from Korea to Spain. Class offerings range from conversation and business English to writing tutoring and test prep. Each session is tailored to your individual learning goals. Classes also integrate advanced paraphrasing tools to enhance your learning growth. Enjoy focused instruction adjusted for all proficiency levels, whether you're a beginner or advanced. Benefit from my professional guidance as an experienced teacher dedicated to your success. Launch your learning journey and enroll in your first class today!"
@@ -25,6 +31,8 @@ const { title } = Astro.props;
       content="ESL Classes, Online Lessons, Business English, English Tutoring, Conversation Course"
     />
     <meta name="viewport" content="width=device-width" />
+
+    <!-- SOCIAL MEDIA -->
     <meta property="og:title" content={title} />
     <meta
       property="og:description"
@@ -36,7 +44,8 @@ const { title } = Astro.props;
     />
     <meta property="og:url" content="https://www.englishforabroad.com/" />
     <meta property="og:type" content="website" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+    <!-- REST -->
     <slot name="head" />
 
     <!-- calendly popup -->
@@ -48,8 +57,13 @@ const { title } = Astro.props;
       src="https://assets.calendly.com/assets/external/widget.js"
       type="text/javascript"
       async></script>
-    <title>{title}</title>
-    <ClientRouter />
+
+    <!-- Google Recaptcha -->
+    <script
+      is:inline
+      src={`https://www.google.com/recaptcha/api.js?render=${import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY}`}
+      async
+      defer></script>
   </head>
   <body>
     <Navbar />
