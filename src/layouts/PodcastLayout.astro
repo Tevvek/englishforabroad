@@ -6,7 +6,7 @@ import Footer from "@/sections/Footer.astro";
 import Volume from "@/components/Volume.astro";
 import { Image } from "astro:assets";
 import ImageSkeleton from "@/components/ImageSkeleton.astro";
-import classes from "@/utils/classes";
+import cn from "@/utils/cn";
 import { getCollection } from "astro:content";
 
 const { frontmatter } = Astro.props;
@@ -53,7 +53,7 @@ const similarPodcasts = podcasts
         {title}
       </h1>
       <div
-        class={classes(
+        class={cn(
           "bg-white text-cyan-800 rounded-xl p-4 gap-x-4 shadow-lg grid grid-rows-[auto_auto_auto_1fr_auto]",
           "md:col-span-3 md:grid-cols-[auto_1fr] md:grid-rows-[auto_auto_1fr_auto]"
         )}
@@ -74,7 +74,7 @@ const similarPodcasts = podcasts
         <a
           id="anchor-theme"
           href="/resources"
-          class={classes(
+          class={cn(
             "border border-cyan-800 py-0.5 font-semibold text-cyan-800 px-4 rounded-full text-xs transition duration-300 hover:scale-105 shadow w-fit place-self-end mb-4 row-start-1",
             "md:col-start-2 md:row-start-1 md:mb-0"
           )}
@@ -89,7 +89,7 @@ const similarPodcasts = podcasts
           href={link}
           target="_blank"
           rel="noopener noreferrer"
-          class={classes(
+          class={cn(
             "bg-cyan-800 text-white font-bold rounded-full px-12 py-2 transition duration-300 hover:scale-105 shadow flex justify-center items-center gap-x-2",
             "md:w-fit md:col-start-2 md:row-start-4"
           )}
@@ -107,7 +107,7 @@ const similarPodcasts = podcasts
         similarPodcasts.map((tpd) => (
           <a
             href={tpd.url}
-            class={classes(
+            class={cn(
               "bg-white text-cyan-800 rounded-xl p-4 h-80 grid-rows-[min-content_min-content_auto] grid gap-x-4 transition duration-300 hover:scale-105 shadow-lg",
               "xs:h-44 xs:grid-rows-[auto_1fr] xs:grid-cols-[auto_1fr]",
               "md:h-80 md:grid-rows-[min-content_min-content_auto] md:grid-cols-1",
@@ -115,7 +115,7 @@ const similarPodcasts = podcasts
             )}
           >
             <h3
-              class={classes(
+              class={cn(
                 "font-bold line-clamp-2",
                 "xs:col-start-2 xs:row-start-1",
                 "md:col-start-1 md:row-start-1 ",
@@ -125,7 +125,7 @@ const similarPodcasts = podcasts
               {tpd.title}
             </h3>
             <p
-              class={classes(
+              class={cn(
                 "text-sm line-clamp-2 mb-2",
                 "xs:mb-0 xs:line-clamp-6 xs:col-start-2 xs:row-start-2",
                 "md:line-clamp-2 md:mb-2 md:col-start-1 md:row-start-2",
@@ -136,7 +136,7 @@ const similarPodcasts = podcasts
             </p>
 
             <ImageSkeleton
-              class={classes(
+              class={cn(
                 "self-end max-w-48 w-full aspect-square place-self-center",
                 "xs:max-w-36 xs:col-start-1 xs:row-start-1 xs:row-span-2",
                 "md:max-w-48 md:col-start-1 md:row-start-3 md:row-span-1",

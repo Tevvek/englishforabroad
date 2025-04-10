@@ -1,12 +1,12 @@
 ---
-import classes from "@/utils/classes";
+import cn from "@/utils/cn";
 
 const { class: className } = Astro.props;
 ---
 
 <a
   id="calendly-cta"
-  class={classes(
+  class={cn(
     "rotate-[270deg] origin-bottom-right fixed right-0 top-1/6 z-cta",
     className
   )}

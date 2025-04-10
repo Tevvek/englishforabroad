@@ -39,7 +39,7 @@
       <a
         :href="movie.url"
         :class="
-          classes(
+          cn(
             'bg-white rounded-xl p-4 h-[392px] grid grid-rows-[min-content_min-content_auto] gap-x-4 transition duration-300 hover:scale-105 shadow-lg',
             'xs:h-60 xs:grid-rows-[auto_1fr] xs:grid-cols-[auto_1fr]'
           )
@@ -97,7 +97,7 @@ import { useStore } from "@nanostores/vue";
 import { computed, ref, onMounted, watch } from "vue";
 import Spinner from "./Spinner.vue";
 import ImageSkeleton from "@/components/ImageSkeleton.vue";
-import classes from "@/utils/classes";
+import cn from "@/utils/cn";
 
 const modules = [Pagination];
 

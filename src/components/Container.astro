@@ -1,5 +1,5 @@
 ---
-import classes from "@/utils/classes";
+import cn from "@/utils/cn";
 
 type Props = {
   tag?: keyof HTMLElementTagNameMap;
@@ -11,7 +11,7 @@ const { tag: Tag = "section", id, class: className } = Astro.props;
 
 <Tag
   id={id}
-  class={classes(
+  class={cn(
     // default spacings (mobile)
     "px-4",
 
