@@ -8,7 +8,7 @@ import Footer from "@/sections/Footer.astro";
 import classes from "@/utils/classes";
 import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
-import Layout from "./Layout.astro";
+import RestLayout from "./RestLayout.astro";
 
 const { frontmatter } = Astro.props;
 const { title, longDescription, image, theme, link, slug } = frontmatter;
@@ -43,7 +43,7 @@ const similarTvShows = tvShows
   });
 </script>
 
-<Layout title=`English for Abroad - ${title} Tv Show`>
+<RestLayout title=`English for Abroad - ${title} Tv Show`>
   <main class="bg-[#85CBCC] flex-1">
     <section
       class="2xl:container mx-auto px-4 md:px-8 py-8 md:py-12 grid grid-cols-1 md:grid-cols-3 gap-8"
@@ -196,4 +196,4 @@ const similarTvShows = tvShows
   </main>
 
   <Footer />
-</Layout>
+</RestLayout>

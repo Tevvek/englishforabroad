@@ -1,0 +1,21 @@
+---
+import classes from "@/utils/classes";
+
+const { class: className } = Astro.props;
+---
+
+<a
+  id="calendly-cta"
+  class={classes(
+    "rotate-[270deg] origin-bottom-right fixed right-0 top-1/6 z-cta",
+    className
+  )}
+  href=""
+  onclick="Calendly.initPopupWidget({url: 'https://calendly.com/englishforabroad/trial-esl-class'});return false;"
+>
+  <span
+    class="bg-[#FF9E80] text-white inline-block font-bold px-10 py-2 rounded-t-lg uppercase"
+  >
+    Book Discovery Call
+  </span>
+</a>

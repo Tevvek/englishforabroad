@@ -1,5 +1,5 @@
 ---
-import Layout from "./Layout.astro";
+import RestLayout from "./RestLayout.astro";
 import Navbar from "@/components/Navbar.astro";
 import type { Podcast } from "@/types/resources";
 import Footer from "@/sections/Footer.astro";
@@ -42,7 +42,7 @@ const similarPodcasts = podcasts
   });
 </script>
 
-<Layout title=`English for Abroad - ${title} Podcast`>
+<RestLayout title=`English for Abroad - ${title} Podcast`>
   <main class="bg-[#85CBCC] flex-1">
     <section
       class="2xl:container mx-auto px-4 md:px-8 py-8 md:py-12 grid grid-cols-1 md:grid-cols-3 gap-8"
@@ -159,4 +159,4 @@ const similarPodcasts = podcasts
   </main>
 
   <Footer />
-</Layout>
+</RestLayout>

@@ -5,6 +5,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "@/styles/global.css";
 import Navbar from "@/components/Navbar.astro";
+import FixedCTA from "@/components/FixedCTA.astro";
 
 interface Props {
   title: string;
@@ -68,17 +69,8 @@ const { title } = Astro.props;
   <body class="flex flex-col min-h-screen">
     <Navbar />
 
-    <a
-      class="rotate-[270deg] origin-bottom-right fixed right-0 top-1/4 z-cta"
-      href=""
-      onclick="Calendly.initPopupWidget({url: 'https://calendly.com/englishforabroad/trial-esl-class'});return false;"
-    >
-      <span
-        class="bg-[#FF9E80] text-white inline-block font-bold px-10 py-2 rounded-t-lg"
-      >
-        Book Discovery Call
-      </span>
-    </a>
+    <slot name="fixed-cta" />
+
     <slot />
   </body>
 </html>
