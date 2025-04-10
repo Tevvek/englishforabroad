@@ -33,6 +33,7 @@
   html {
     font-family: var(--font-body);
     scroll-behavior: smooth;
+    @apply bg-[#85CBCC];
   }
 
   body {
