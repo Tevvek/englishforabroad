@@ -31,3 +31,28 @@ import Testimonials from "@/sections/Testimonials.astro";
 
   <Footer />
 </Layout>
+
+<script>
+  const cta = document.querySelector("#calendly-cta");
+  const hero = document.querySelector("section#hero");
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        // Hero is in view → hide CTA
+        cta.classList.add("opacity-0", "pointer-events-none");
+      } else {
+        // Hero is out of view → show CTA
+        cta.classList.remove("opacity-0", "pointer-events-none");
+      }
+    },
+    {
+      root: null,
+      threshold: 0.4, // small threshold means even a little bit of hero showing will count as visible
+    }
+  );
+
+  if (hero) {
+    observer.observe(hero);
+  }
+</script>

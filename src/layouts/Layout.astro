@@ -69,7 +69,8 @@ const { title } = Astro.props;
     <Navbar />
 
     <a
-      class="rotate-[270deg] origin-bottom-right fixed right-0 top-1/4 z-cta"
+      id="calendly-cta"
+      class="rotate-[270deg] origin-bottom-right fixed right-0 top-1/4 z-cta transition-all opacity-0"
       href=""
       onclick="Calendly.initPopupWidget({url: 'https://calendly.com/englishforabroad/trial-esl-class'});return false;"
     >
