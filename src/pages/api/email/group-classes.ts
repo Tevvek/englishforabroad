@@ -3,17 +3,15 @@ export const prerender = false;
 import {
   extractAndValidateFormData,
   sendEmailNotification,
-  validateRecaptcha,
 } from "@/utils/email";
+import { validateRecaptcha } from "@/utils/recaptcha";
 import type { APIRoute } from "astro";
 
 export const POST: APIRoute = async ({ request }) => {
   const formData = await request.formData();
 
   // 1. Validate reCAPTCHA
-  const recaptchaValid = await validateRecaptcha(
-    formData.get("g-recaptcha-response")
-  );
+  const recaptchaValid = await validateRecaptcha(formData);
   if (!recaptchaValid) {
     return new Response(
       JSON.stringify({ error: "reCAPTCHA validation failed." }),

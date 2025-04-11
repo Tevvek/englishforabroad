@@ -27,23 +27,6 @@ export const generateMailOptionsGroupClassesNotification = (email: string) => {
   };
 };
 
-const RECAPTCHA_VERIFY_URL = "https://www.google.com/recaptcha/api/siteverify";
-
-export async function validateRecaptcha(token: FormDataEntryValue | null) {
-  if (!token || typeof token !== "string") return false;
-
-  const response = await fetch(RECAPTCHA_VERIFY_URL, {
-    method: "POST",
-    body: new URLSearchParams({
-      secret: import.meta.env.RECAPTCHA_SECRET_KEY,
-      response: token,
-    }),
-  });
-
-  const data = await response.json();
-  return data.success === true;
-}
-
 export interface FormValidationResult {
   email: string;
   accept: boolean;
