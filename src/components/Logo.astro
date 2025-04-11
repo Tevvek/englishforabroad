@@ -1,6 +1,9 @@
 ---
 import { Image } from "astro:assets";
 import logoImage from "@/images/logo.webp";
+import cn from "@/utils/cn";
+
+const { class: className } = Astro.props;
 ---
 
 <Image
@@ -9,4 +12,5 @@ import logoImage from "@/images/logo.webp";
   height="150"
   alt="English for Abroad logo"
   loading="eager"
+  class={cn("aspect-square", className)}
 />
