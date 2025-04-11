@@ -1,5 +1,6 @@
 import { defineMiddleware } from "astro:middleware";
 import fetchApi from "./lib/strapi";
+import type { User } from "@/types/user";
 
 const protectedRoutes = ["/dashboard", "/me"];
 const guestOnlyRoutes = ["/login", "/register"];
@@ -19,11 +20,11 @@ export const onRequest = defineMiddleware(
     }
 
     const token = cookies.get("english-for-abroad-token")?.value;
-    let user = null;
+    let user: User | null = null;
 
     if (token) {
       try {
-        user = await fetchApi({
+        user = await fetchApi<User>({
           endpoint: "users/me",
           authToken: token,
         });

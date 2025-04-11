@@ -1,6 +1,8 @@
 /// <reference path="../.astro/types.d.ts" />
 /// <reference types="astro/client" />
 
+import { type User } from "./types/user";
+
 interface ImportMetaEnv {
   readonly PUBLIC_RECAPTCHA_SITE_KEY: string;
   readonly RECAPTCHA_SECRET_KEY: string;
@@ -12,4 +14,12 @@ interface ImportMetaEnv {
 
 interface ImportMeta {
   readonly env: ImportMetaEnv;
+}
+
+declare global {
+  namespace App {
+    interface Locals extends Record<string, any> {
+      user: User;
+    }
+  }
 }
