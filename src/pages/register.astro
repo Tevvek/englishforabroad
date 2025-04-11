@@ -1,0 +1,131 @@
+---
+import Logo from "@/components/Logo.astro";
+import Layout from "@/layouts/Layout.astro";
+---
+
+<Layout title="English for Abroad - Register">
+  <main class="bg-white min-h-full">
+    <div class="flex flex-col justify-center px-6 py-12 lg:px-8 min-h-screen">
+      <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+        <a href="/">
+          <Logo class="w-20 mx-auto" />
+        </a>
+        <h2
+          class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-cyan-800"
+        >
+          Register an account
+        </h2>
+      </div>
+      <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <form id="register-form" class="space-y-6">
+          <div>
+            <label for="email" class="block text-sm/6 font-medium text-cyan-800"
+              >Email address</label
+            >
+            <div class="mt-2">
+              <input
+                type="email"
+                name="email"
+                id="email"
+                autocomplete="email"
+                required
+                class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-cyan-800 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-cyan-800 sm:text-sm/6"
+              />
+            </div>
+          </div>
+          <div>
+            <label
+              for="password"
+              class="block text-sm/6 font-medium text-cyan-800">Password</label
+            >
+            <div class="mt-2">
+              <input
+                type="password"
+                name="password"
+                id="password"
+                autocomplete="current-password"
+                required
+                class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-cyan-800 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-cyan-800 sm:text-sm/6"
+              />
+            </div>
+          </div>
+          <div>
+            <label
+              for="repeat-password"
+              class="block text-sm/6 font-medium text-cyan-800"
+              >Repeat password</label
+            >
+            <div class="mt-2">
+              <input
+                type="password"
+                name="repeat-password"
+                id="repeat-password"
+                autocomplete=""
+                required
+                class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-cyan-800 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-cyan-800 sm:text-sm/6"
+              />
+            </div>
+          </div>
+
+          <div>
+            <button
+              type="submit"
+              class="flex w-full justify-center rounded-md bg-cyan-800 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-[#85CBCC] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-800"
+              >Register</button
+            >
+          </div>
+        </form>
+        <p class="mt-10 text-center text-sm/6 text-gray-500">
+          Already a member?
+          <a
+            href="/login"
+            class="font-semibold text-cyan-800 hover:text-[#85CBCC]"
+            >Log in instead</a
+          >
+        </p>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  function setup() {
+    const form = document.getElementById("register-form") as HTMLFormElement;
+    form.addEventListener("submit", handleSubmit);
+
+    async function handleSubmit(event: Event) {
+      console.log("clicked");
+      event.preventDefault();
+
+      grecaptcha.ready(async function () {
+        const token = await grecaptcha.execute(
+          import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY,
+          {
+            action: "submit",
+          }
+        );
+
+        const formData = new FormData(form);
+        formData.append("g-recaptcha-response", token);
+
+        try {
+          const response = await fetch("/api/register", {
+            method: "POST",
+            body: formData,
+          });
+
+          const result = await response.json();
+          if (response.ok) {
+            alert(result.success);
+          } else {
+            alert(result.error);
+          }
+        } catch (error) {
+          alert("An error occurred. Please try again later.");
+        }
+      });
+    }
+  }
+
+  document.addEventListener("astro:page-load", setup);
+</script>

@@ -1,6 +1,7 @@
 ---
 import FixedCTA from "@/components/FixedCTA.astro";
 import Layout from "./Layout.astro";
+import Navbar from "@/components/Navbar.astro";
 
 interface Props {
   title: string;
@@ -10,6 +11,8 @@ const { title } = Astro.props;
 ---
 
 <Layout title={title}>
+  <Navbar slot="navbar" />
+
   <FixedCTA
     slot="fixed-cta"
     class="opacity-0 transition-opacity duration-500"

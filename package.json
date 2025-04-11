@@ -7,7 +7,8 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@astrojs/check": "0.9.4",
@@ -28,5 +29,8 @@
     "vite-svg-loader": "^5.1.0",
     "vue": "^3.4.31",
     "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.51.1"
   }
 }

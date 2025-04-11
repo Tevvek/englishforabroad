@@ -6,6 +6,8 @@ interface ImportMetaEnv {
   readonly RECAPTCHA_SECRET_KEY: string;
   readonly GMAIL_APP_EMAIL: string;
   readonly GMAIL_APP_PASSWORD: string;
+  readonly STRAPI_URL: string;
+  readonly STRAPI_API_TOKEN: string;
 }
 
 interface ImportMeta {
