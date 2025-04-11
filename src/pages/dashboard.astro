@@ -2,6 +2,10 @@
 export const prerender = false;
 
 import Layout from "@/layouts/Layout.astro";
+
+const user = Astro.locals.user;
 ---
 
-<Layout title="English for Abroad - Dashboard"> This is the dashboard </Layout>
+<Layout title="English for Abroad - Dashboard">
+  <p>{user.email}</p>
+</Layout>
