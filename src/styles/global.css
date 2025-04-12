@@ -33,11 +33,12 @@
   html {
     font-family: var(--font-body);
     scroll-behavior: smooth;
-    @apply bg-[#85CBCC];
+    @apply bg-[#85CBCC] h-full;
   }
 
   body {
     position: relative;
+    @apply h-full flex flex-col;
   }
 
   h1,
