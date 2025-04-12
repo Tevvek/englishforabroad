@@ -36,6 +36,14 @@
                                             <DashboardNav />
                                         </ul>
                                     </li>
+                                    <li class="-mx-6 mt-auto">
+                                        <a href="/dashboard/settings"
+                                            class="flex items-center gap-x-4 px-6 py-3 text-sm/6 font-semibold text-gray-700 hover:bg-gray-50 hover:text-primary transition">
+                                            <Cog class="size-6" />
+                                            <span class="sr-only">Your profile</span>
+                                            <span aria-hidden="true">john@example.com</span>
+                                        </a>
+                                    </li>
 
                                 </ul>
                             </nav>
@@ -55,6 +63,7 @@ import {
 import DashboardNav from './DashboardNav.vue';
 import { useStore } from '@nanostores/vue';
 import { sidebarOpen } from './dashboard.nanostore'
+import Cog from '@/icons/cog.svg?component';
 
 const $sidebarOpen = useStore(sidebarOpen);
 </script>
