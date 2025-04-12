@@ -12,7 +12,7 @@ import Layout from "@/layouts/Layout.astro";
         <Logo class="w-20 mx-auto" />
       </a>
       <h2
-        class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-cyan-800"
+        class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-primary"
       >
         Register an account
       </h2>
@@ -20,7 +20,7 @@ import Layout from "@/layouts/Layout.astro";
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
       <form id="register-form" class="space-y-6">
         <div>
-          <label for="email" class="block text-sm/6 font-medium text-cyan-800"
+          <label for="email" class="block text-sm/6 font-medium text-primary"
             >Email address</label
           >
           <div class="mt-2">
@@ -30,14 +30,13 @@ import Layout from "@/layouts/Layout.astro";
               id="email"
               autocomplete="email"
               required
-              class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-cyan-800 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-cyan-800 sm:text-sm/6"
+              class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-primary outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-primary sm:text-sm/6"
             />
           </div>
         </div>
         <div>
-          <label
-            for="password"
-            class="block text-sm/6 font-medium text-cyan-800">Password</label
+          <label for="password" class="block text-sm/6 font-medium text-primary"
+            >Password</label
           >
           <div class="mt-2">
             <input
@@ -46,14 +45,14 @@ import Layout from "@/layouts/Layout.astro";
               id="password"
               autocomplete="current-password"
               required
-              class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-cyan-800 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-cyan-800 sm:text-sm/6"
+              class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-primary outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-primary sm:text-sm/6"
             />
           </div>
         </div>
         <div>
           <label
             for="repeat-password"
-            class="block text-sm/6 font-medium text-cyan-800"
+            class="block text-sm/6 font-medium text-primary"
             >Repeat password</label
           >
           <div class="mt-2">
@@ -63,7 +62,7 @@ import Layout from "@/layouts/Layout.astro";
               id="repeat-password"
               autocomplete=""
               required
-              class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-cyan-800 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-cyan-800 sm:text-sm/6"
+              class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-primary outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-primary sm:text-sm/6"
             />
           </div>
         </div>
@@ -71,16 +70,14 @@ import Layout from "@/layouts/Layout.astro";
         <div>
           <button
             type="submit"
-            class="flex w-full justify-center rounded-md bg-cyan-800 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-[#85CBCC] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-800"
+            class="flex w-full justify-center rounded-md bg-primary px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
             >Register</button
           >
         </div>
       </form>
       <p class="mt-10 text-center text-sm/6 text-gray-500">
         Already a member?
-        <a
-          href="/login"
-          class="font-semibold text-cyan-800 hover:text-[#85CBCC]"
+        <a href="/login" class="font-semibold text-primary hover:text-accent"
           >Log in instead</a
         >
       </p>

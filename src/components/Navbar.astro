@@ -8,13 +8,13 @@ const secondHalf = NAV.slice(Math.ceil(NAV.length / 2));
 ---
 
 <header class="p-4 hidden lg:block sticky top-0 bg-white z-navbar shadow-lg">
-  <div class="grid grid-cols-[1fr_max-content_1fr] gap-x-8 text-cyan-800">
+  <div class="grid grid-cols-[1fr_max-content_1fr] gap-x-8 text-primary">
     <!-- first half -->
     <nav class="flex justify-end items-center gap-x-4">
       {
         firstHalf.map((item) => (
           <a
-            class="font-extrabold uppercase  hover:text-[#85CBCC] transition focus:text-[#85CBCC]"
+            class="font-extrabold uppercase  hover:text-accent transition focus:text-accent"
             href={item.href}
           >
             {item.text}
@@ -35,7 +35,7 @@ const secondHalf = NAV.slice(Math.ceil(NAV.length / 2));
       {
         secondHalf.map((item) => (
           <a
-            class="font-extrabold uppercase  hover:text-[#85CBCC] transition focus:text-[#85CBCC]"
+            class="font-extrabold uppercase  hover:text-accent transition focus:text-accent"
             href={item.href}
           >
             {item.text}

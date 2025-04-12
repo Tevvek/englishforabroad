@@ -18,6 +18,11 @@
   --z-index-cta: 30;
 
   --spacing-navbar: 132px;
+
+  --color-primary: var(--color-cyan-800);
+  --color-accent: #85cbcc;
+  --color-surface: #f0f0f0;
+  --color-peach: #ff9e80;
 }
 
 @layer base {
@@ -33,7 +38,7 @@
   html {
     font-family: var(--font-body);
     scroll-behavior: smooth;
-    @apply bg-[#85CBCC] h-full;
+    @apply bg-accent h-full;
   }
 
   body {

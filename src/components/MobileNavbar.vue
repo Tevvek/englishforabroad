@@ -7,7 +7,7 @@
                     <slot />
                 </a>
             </div>
-            <button @click="isOpen = !isOpen" class="justify-self-end self-start text-cyan-800">
+            <button @click="isOpen = !isOpen" class="justify-self-end self-start text-primary">
                 <component :is="isOpen ? X : Menu" />
             </button>
         </div>
@@ -15,28 +15,28 @@
         <!-- Slide Transition -->
         <transition name="slide">
             <div v-if="isOpen"
-                class="mobile-sliding-navbar absolute top-full left-0 w-full bg-white shadow-lg py-8 text-cyan-800 pl-8 pr-4 flex flex-col gap-y-4 z-10 h-screen">
+                class="mobile-sliding-navbar absolute top-full left-0 w-full bg-white shadow-lg py-8 text-primary pl-8 pr-4 flex flex-col gap-y-4 z-10 h-screen">
                 <nav class="contents">
                     <template v-for="item in NAV">
                         <a @click="isOpen = false" :href="item.href"
-                            class="font-extrabold uppercase text-lg hover:text-[#85CBCC] transition focus:text-[#85CBCC]">
+                            class="font-extrabold uppercase text-lg hover:text-accent transition focus:text-accent">
                             {{ item.text }}
                         </a>
                     </template>
                 </nav>
 
-                <div class="flex gap-x-4 border-t border-cyan-800 pt-4">
-                    <a class="hover:text-[#85CBCC] transition focus:text-[#85CBCC]"
+                <div class="flex gap-x-4 border-t border-primary pt-4">
+                    <a class="hover:text-accent transition focus:text-accent"
                         href="https://www.instagram.com/englishforabroad/" target="_blank" rel="noopener noreferrer">
                         <Instagram />
                     </a>
-                    <a class="hover:text-[#85CBCC] transition focus:text-[#85CBCC]"
+                    <a class="hover:text-accent transition focus:text-accent"
                         href="https://www.tiktok.com/@englishforabroad_" target="_blank" rel="noopener noreferrer">
                         <Tiktok />
                     </a>
                 </div>
 
-                <a class="hover:text-[#85CBCC] transition focus:text-[#85CBCC] text-lg font-extrabold underline"
+                <a class="hover:text-accent transition focus:text-accent text-lg font-extrabold underline"
                     href="mailto:ali@englishforabroad.com">
                     ali@englishforabroad.com
                 </a>

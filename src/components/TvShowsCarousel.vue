@@ -27,7 +27,7 @@
       '--swiper-pagination-bullet-inactive-color': '#fff',
       '--swiper-pagination-bullet-inactive-opacity': 1,
     }"
-    class="text-cyan-800"
+    class="text-primary"
     wrapper-class="pb-10 pt-2"
     @swiper="onSwiperInitialized"
   >

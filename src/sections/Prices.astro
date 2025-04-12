@@ -132,12 +132,12 @@ const TIERS: Tiers = {
       const secondbutton = buttonWrapper.querySelector("span:last-child");
 
       firstbutton?.classList.toggle("bg-white");
-      firstbutton?.classList.toggle("text-cyan-800");
+      firstbutton?.classList.toggle("text-primary");
       firstbutton?.classList.toggle("text-white");
       firstbutton?.classList.toggle("font-bold");
 
       secondbutton?.classList.toggle("bg-white");
-      secondbutton?.classList.toggle("text-cyan-800");
+      secondbutton?.classList.toggle("text-primary");
       secondbutton?.classList.toggle("text-white");
       secondbutton?.classList.toggle("font-bold");
     });
@@ -150,7 +150,7 @@ const TIERS: Tiers = {
   id="pricing"
   class="2xl:container mx-auto px-4 md:px-8 py-8 md:py-12 grid"
 >
-  <h2 class="text-5xl text-cyan-800 text-center">PRICING</h2>
+  <h2 class="text-5xl text-primary text-center">PRICING</h2>
 
   <!-- Toggle Button -->
   <div
@@ -158,7 +158,7 @@ const TIERS: Tiers = {
     class="relative inline-flex items-center mt-12 place-self-center"
   >
     <button
-      class="flex items-center justify-between w-36 h-10 p-1 rounded-full bg-cyan-800 shadow-md transition hover:-translate-y-1 focus:-translate-y-1"
+      class="flex items-center justify-between w-36 h-10 p-1 rounded-full bg-primary shadow-md transition hover:-translate-y-1 focus:-translate-y-1"
     >
       <span
         class="w-1/2 h-full text-sm text-center flex items-center justify-center rounded-full text-white"
@@ -166,7 +166,7 @@ const TIERS: Tiers = {
         25 mins
       </span>
       <span
-        class="w-1/2 h-full text-sm text-center flex items-center justify-center rounded-full bg-white text-cyan-800 font-bold"
+        class="w-1/2 h-full text-sm text-center flex items-center justify-center rounded-full bg-white text-primary font-bold"
       >
         50 mins
       </span>
@@ -183,22 +183,22 @@ const TIERS: Tiers = {
         <div
           class={`shadow-lg rounded-xl p-8 ${
             tier.popular
-              ? "border-2 border-cyan-800"
+              ? "border-2 border-primary"
               : "border-2 border-gray-200"
           }`}
         >
           <div class="flex justify-between items-center">
-            <h3 class="font-bold text-xl uppercase text-cyan-800">
+            <h3 class="font-bold text-xl uppercase text-primary">
               {tier.name}
             </h3>
             {tier.popular && (
-              <span class="text-white text-sm font-bold bg-[#85CBCC] px-3 py-1 rounded-full text-center">
+              <span class="text-white text-sm font-bold bg-accent px-3 py-1 rounded-full text-center">
                 Most popular
               </span>
             )}
           </div>
           <p class="mt-6">
-            <span class="text-cyan-800 text-4xl font-bold">${tier.price}</span>
+            <span class="text-primary text-4xl font-bold">${tier.price}</span>
             <span class="text-gray-600 text-sm font-semibold">per class</span>
           </p>
           <p class="text-sm text-gray-600">
@@ -211,8 +211,8 @@ const TIERS: Tiers = {
             href={tier.stripeURL}
             rel="noopener noreferrer"
             target="_blank"
-            class={`mt-6 shadow-sm rounded-md py-2 px-3 text-center text-sm w-full font-semibold border border-cyan-800 block
-                ${tier.popular ? "bg-cyan-800 text-white" : "text-cyan-800 "}
+            class={`mt-6 shadow-sm rounded-md py-2 px-3 text-center text-sm w-full font-semibold border border-primary block
+                ${tier.popular ? "bg-primary text-white" : "text-primary "}
                 `}
           >
             Purchase
@@ -220,7 +220,7 @@ const TIERS: Tiers = {
           <ul class="mt-8 space-y-3 text-sm text-gray-600">
             {tier.features.map((benefit) => (
               <li class="flex gap-x-3">
-                <span class="text-cyan-800">
+                <span class="text-primary">
                   <Check />
                 </span>
                 {benefit}
@@ -242,22 +242,22 @@ const TIERS: Tiers = {
         <div
           class={`shadow-lg rounded-xl p-8 ${
             tier.popular
-              ? "border-2 border-cyan-800"
+              ? "border-2 border-primary"
               : "border-2 border-gray-200"
           }`}
         >
           <div class="flex justify-between items-center">
-            <h3 class="font-bold text-xl uppercase text-cyan-800">
+            <h3 class="font-bold text-xl uppercase text-primary">
               {tier.name}
             </h3>
             {tier.popular && (
-              <span class="text-white text-sm font-bold bg-[#85CBCC] px-3 py-1 rounded-full text-center">
+              <span class="text-white text-sm font-bold bg-accent px-3 py-1 rounded-full text-center">
                 Most popular
               </span>
             )}
           </div>
           <p class="mt-6">
-            <span class="text-cyan-800 text-4xl font-bold">${tier.price}</span>
+            <span class="text-primary text-4xl font-bold">${tier.price}</span>
             <span class="text-gray-600 text-sm font-semibold">per class</span>
           </p>
           <p class="text-sm text-gray-600">
@@ -270,8 +270,8 @@ const TIERS: Tiers = {
             href={tier.stripeURL}
             rel="noopener noreferrer"
             target="_blank"
-            class={`mt-6 shadow-sm rounded-md py-2 px-3 text-center text-sm w-full font-semibold border border-cyan-800 block
-                ${tier.popular ? "bg-cyan-800 text-white" : "text-cyan-800 "}
+            class={`mt-6 shadow-sm rounded-md py-2 px-3 text-center text-sm w-full font-semibold border border-primary block
+                ${tier.popular ? "bg-primary text-white" : "text-primary "}
                 `}
           >
             Purchase
@@ -279,7 +279,7 @@ const TIERS: Tiers = {
           <ul class="mt-8 space-y-3 text-sm text-gray-600">
             {tier.features.map((benefit) => (
               <li class="flex gap-x-3">
-                <span class="text-cyan-800">
+                <span class="text-primary">
                   <Check />
                 </span>
                 {benefit}
