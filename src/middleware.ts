@@ -2,7 +2,7 @@ import { defineMiddleware } from "astro:middleware";
 import fetchApi from "./lib/strapi";
 import type { User } from "@/types/user";
 
-const protectedRoutes = ["/dashboard", "/me"];
+const protectedRoutes = ["/dashboard", "/me", "/dashboard/settings"];
 const guestOnlyRoutes = ["/login", "/register"];
 
 export const onRequest = defineMiddleware(

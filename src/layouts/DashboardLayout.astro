@@ -1,0 +1,36 @@
+---
+export const prerender = false;
+
+import Layout from "@/layouts/Layout.astro";
+import MobileMenu from "@/components/dashboard/MobileMenu.vue";
+import MobileTopBar from "@/components/dashboard/MobileTopBar.vue";
+import Logo from "@/components/Logo.astro";
+import StaticSidebarDesktop from "@/components/dashboard/StaticSidebarDesktop.astro";
+
+const { title } = Astro.props;
+---
+
+<Layout title={title}>
+  <div class="bg-surface h-full">
+    <!-- Mobile menu -->
+    <MobileMenu client:load>
+      <Logo slot="logo" class="h-8 w-auto" />
+    </MobileMenu>
+
+    <!-- Mobile top bar -->
+    <MobileTopBar client:load />
+
+    <!-- Static sidebar for desktop -->
+    <StaticSidebarDesktop>
+      <Logo slot="logo" class="h-8 w-auto" />
+    </StaticSidebarDesktop>
+
+    <!-- Main -->
+    <main class="py-10 lg:pl-72">
+      <div class="px-4 sm:px-6 lg:px-8">
+        <!-- Your content -->
+        <slot />
+      </div>
+    </main>
+  </div>
+</Layout>
