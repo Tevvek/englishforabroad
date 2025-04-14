@@ -4,12 +4,10 @@ export const prerender = false;
 import DashboardDesktopSidebar from "@/components/dashboard/DashboardDesktopSidebar.astro";
 import DashboardLogo from "@/components/dashboard/DashboardLogo.astro";
 import DashboardMobileSidebar from "@/components/dashboard/DashboardMobileSidebar.vue";
-import DashboardTopBar from "@/components/dashboard/DashboardTopBar.vue";
+import DashboardTopBar from "@/components/dashboard/DashboardTopBar.astro";
 import Layout from "@/layouts/Layout.astro";
 
 const { title } = Astro.props;
-
-const { user } = Astro.locals;
 ---
 
 <Layout title={title}>
@@ -26,7 +24,7 @@ const { user } = Astro.locals;
 
     <!-- Main -->
     <div class="lg:pl-72">
-      <DashboardTopBar client:load user={user} />
+      <DashboardTopBar />
 
       <main class="py-10">
         <div class="px-4 sm:px-6 lg:px-8">
