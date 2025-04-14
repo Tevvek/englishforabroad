@@ -3,6 +3,7 @@ export const prerender = false;
 
 import Logo from "@/components/Logo.astro";
 import Layout from "@/layouts/Layout.astro";
+import { MODE } from "astro:env/client";
 ---
 
 <Layout title="English for Abroad - Register">
@@ -23,7 +24,7 @@ import Layout from "@/layouts/Layout.astro";
       <form
         id="register-form"
         class="space-y-6"
-        novalidate={import.meta.env.MODE === "development"}
+        novalidate={MODE === "development"}
       >
         <div>
           <label for="email" class="block text-sm/6 font-medium text-primary"
@@ -92,6 +93,8 @@ import Layout from "@/layouts/Layout.astro";
 </Layout>
 
 <script>
+  import { PUBLIC_RECAPTCHA_SITE_KEY } from "astro:env/client";
+
   function setup() {
     const form = document.getElementById("register-form") as HTMLFormElement;
     form.addEventListener("submit", handleSubmit);
@@ -100,12 +103,9 @@ import Layout from "@/layouts/Layout.astro";
       event.preventDefault();
 
       grecaptcha.ready(async function () {
-        const token = await grecaptcha.execute(
-          import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY,
-          {
-            action: "submit",
-          }
-        );
+        const token = await grecaptcha.execute(PUBLIC_RECAPTCHA_SITE_KEY, {
+          action: "submit",
+        });
 
         const formData = new FormData(form);
         formData.append("g-recaptcha-response", token);

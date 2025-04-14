@@ -1,3 +1,5 @@
+import { RECAPTCHA_SECRET_KEY } from "astro:env/server";
+
 export const RECAPTCHA_VERIFY_URL =
   "https://www.google.com/recaptcha/api/siteverify";
 
@@ -11,7 +13,7 @@ export async function validateRecaptcha(form: FormData | null) {
   const response = await fetch(RECAPTCHA_VERIFY_URL, {
     method: "POST",
     body: new URLSearchParams({
-      secret: import.meta.env.RECAPTCHA_SECRET_KEY,
+      secret: RECAPTCHA_SECRET_KEY,
       response: token,
     }),
   });

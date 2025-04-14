@@ -1,3 +1,5 @@
+import { STRAPI_URL, STRAPI_API_TOKEN } from "astro:env/server";
+
 interface Props {
   endpoint: string;
   method?: "GET" | "POST";
@@ -21,7 +23,7 @@ export default async function fetchApi<T>({
     endpoint = endpoint.slice(1);
   }
 
-  const url = new URL(`${import.meta.env.STRAPI_URL}/api/${endpoint}`);
+  const url = new URL(`${STRAPI_URL}/api/${endpoint}`);
 
   if (query) {
     Object.entries(query).forEach(([key, value]) => {
@@ -33,10 +35,8 @@ export default async function fetchApi<T>({
     "Content-Type": "application/json",
   };
 
-  if (authToken || import.meta.env.STRAPI_API_TOKEN) {
-    headers.Authorization = `Bearer ${
-      authToken || import.meta.env.STRAPI_API_TOKEN
-    }`;
+  if (authToken || STRAPI_API_TOKEN) {
+    headers.Authorization = `Bearer ${authToken || STRAPI_API_TOKEN}`;
   }
 
   const res = await fetch(url.toString(), {

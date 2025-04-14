@@ -90,6 +90,8 @@
 </section>
 
 <script>
+  import { PUBLIC_RECAPTCHA_SITE_KEY } from "astro:env/client";
+
   function setup() {
     const form = document.getElementById(
       "group-classes-notification-form"
@@ -100,12 +102,9 @@
       event.preventDefault();
 
       grecaptcha.ready(async function () {
-        const token = await grecaptcha.execute(
-          import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY,
-          {
-            action: "submit",
-          }
-        );
+        const token = await grecaptcha.execute(PUBLIC_RECAPTCHA_SITE_KEY, {
+          action: "submit",
+        });
 
         const formData = new FormData(form);
         formData.append("g-recaptcha-response", token);
