@@ -1,6 +1,6 @@
 import { defineMiddleware } from "astro:middleware";
 import fetchApi from "./lib/strapi";
-import type { User } from "@/types/user";
+import type { User } from "@/types/auth";
 
 const protectedRoutes = ["/dashboard", "/me", "/dashboard/settings"];
 const guestOnlyRoutes = ["/login", "/register"];

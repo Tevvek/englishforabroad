@@ -1,6 +1,7 @@
 export const prerender = false;
 
 import fetchApi from "@/lib/strapi";
+import { type Auth } from "@/types/auth";
 import { validateRecaptcha } from "@/utils/recaptcha";
 import type { APIRoute } from "astro";
 import { z } from "zod";
@@ -34,7 +35,7 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
 
   // 3. Attempt login
   try {
-    const loginResponse = await fetchApi({
+    const loginResponse = await fetchApi<Auth>({
       endpoint: "auth/local",
       method: "POST",
       body: values,

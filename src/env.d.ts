@@ -1,7 +1,7 @@
 /// <reference path="../.astro/types.d.ts" />
 /// <reference types="astro/client" />
 
-import { type User } from "./types/user";
+import { type User } from "./types/auth";
 
 interface ImportMetaEnv {
   readonly PUBLIC_RECAPTCHA_SITE_KEY: string;
