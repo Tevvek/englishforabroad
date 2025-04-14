@@ -1,11 +1,11 @@
 ---
 export const prerender = false;
 
-import Layout from "@/layouts/Layout.astro";
+import DashboardDesktopSidebar from "@/components/dashboard/DashboardDesktopSidebar.astro";
+import DashboardLogo from "@/components/dashboard/DashboardLogo.astro";
 import MobileMenu from "@/components/dashboard/MobileMenu.vue";
-import MobileTopBar from "@/components/dashboard/MobileTopBar.vue";
-import Logo from "@/components/Logo.astro";
-import StaticSidebarDesktop from "@/components/dashboard/StaticSidebarDesktop.astro";
+import TopBarVue from "@/components/dashboard/TopBarVue.vue";
+import Layout from "@/layouts/Layout.astro";
 
 const { title } = Astro.props;
 ---
@@ -14,23 +14,24 @@ const { title } = Astro.props;
   <div class="bg-surface h-full">
     <!-- Mobile menu -->
     <MobileMenu client:load>
-      <Logo slot="logo" class="h-8 w-auto" />
+      <DashboardLogo slot="logo" />
     </MobileMenu>
 
-    <!-- Mobile top bar -->
-    <MobileTopBar client:load />
-
-    <!-- Static sidebar for desktop -->
-    <StaticSidebarDesktop>
-      <Logo slot="logo" class="h-8 w-auto" />
-    </StaticSidebarDesktop>
+    <!-- Desktop sidebar -->
+    <DashboardDesktopSidebar>
+      <DashboardLogo slot="logo" />
+    </DashboardDesktopSidebar>
 
     <!-- Main -->
-    <main class="py-10 lg:pl-72">
-      <div class="px-4 sm:px-6 lg:px-8">
-        <!-- Your content -->
-        <slot />
-      </div>
-    </main>
+    <div class="lg:pl-72">
+      <TopBarVue client:load />
+
+      <main class="py-10">
+        <div class="px-4 sm:px-6 lg:px-8">
+          <!-- Your content -->
+          <slot />
+        </div>
+      </main>
+    </div>
   </div>
 </Layout>

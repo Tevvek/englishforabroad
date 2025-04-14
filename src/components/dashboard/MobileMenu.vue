@@ -41,7 +41,7 @@
                                             class="flex items-center gap-x-4 px-6 py-3 text-sm/6 font-semibold text-gray-700 hover:bg-gray-50 hover:text-primary transition">
                                             <Cog class="size-6" />
                                             <span class="sr-only">Your profile</span>
-                                            <span aria-hidden="true">john@example.com</span>
+                                            <span aria-hidden="true">Settings</span>
                                         </a>
                                     </li>
 
@@ -62,7 +62,7 @@ import {
 } from '@heroicons/vue/24/outline';
 import DashboardNav from './DashboardNav.vue';
 import { useStore } from '@nanostores/vue';
-import { sidebarOpen } from './dashboard.nanostore'
+import { sidebarOpen } from './dashboard-store'
 import Cog from '@/icons/cog.svg?component';
 
 const $sidebarOpen = useStore(sidebarOpen);

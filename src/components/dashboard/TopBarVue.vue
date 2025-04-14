@@ -47,9 +47,17 @@
                         <MenuItems
                             class="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-hidden">
                             <MenuItem v-for="item in userNavigation" :key="item.name" v-slot="{ active }">
-                            <a :href="item.href"
-                                :class="[active ? 'bg-gray-50 outline-hidden' : '', 'block px-3 py-1 text-sm/6 text-gray-900']">{{
-                                    item.name }}</a>
+                            <template v-if="item.href">
+                                <a :href="item.href"
+                                    :class="cn('block text-start w-full px-3 py-1 text-sm/6 text-gray-900', { 'bg-gray-50 outline-hidden': active })">{{
+                                        item.name }}</a>
+                            </template>
+
+                            <template v-else-if="item.action">
+                                <button type="button" @click="item.action"
+                                    :class="cn('block text-start w-full px-3 py-1 text-sm/6 text-gray-900', { 'bg-gray-50 outline-hidden': active })">{{
+                                        item.name }}</button>
+                            </template>
                             </MenuItem>
                         </MenuItems>
                     </transition>
@@ -72,10 +80,24 @@ import {
     Bars3Icon,
     BellIcon
 } from '@heroicons/vue/24/outline'
-import { sidebarOpen } from './dashboard.nanostore'
+import { sidebarOpen } from './dashboard-store'
+import cn from '@/utils/cn'
 
 const userNavigation = [
     { name: 'Your profile', href: '#' },
-    { name: 'Sign out', href: '#' },
+    { name: 'Log out', action: handleLogout }
 ]
+
+async function handleLogout() {
+    try {
+        const response = await fetch('/api/logout');
+        if (response.redirected) {
+            window.location.href = response.url;
+            return;
+        }
+    } catch (error) {
+        console.error('Logout failed:', error);
+        alert('Logout failed. Please try again.');
+    }
+}
 </script>
