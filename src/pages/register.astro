@@ -1,4 +1,6 @@
 ---
+export const prerender = false;
+
 import Logo from "@/components/Logo.astro";
 import Layout from "@/layouts/Layout.astro";
 ---
@@ -18,7 +20,11 @@ import Layout from "@/layouts/Layout.astro";
       </h2>
     </div>
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <form id="register-form" class="space-y-6">
+      <form
+        id="register-form"
+        class="space-y-6"
+        novalidate={import.meta.env.MODE === "development"}
+      >
         <div>
           <label for="email" class="block text-sm/6 font-medium text-primary"
             >Email address</label
@@ -91,7 +97,6 @@ import Layout from "@/layouts/Layout.astro";
     form.addEventListener("submit", handleSubmit);
 
     async function handleSubmit(event: Event) {
-      console.log("clicked");
       event.preventDefault();
 
       grecaptcha.ready(async function () {
@@ -111,11 +116,16 @@ import Layout from "@/layouts/Layout.astro";
             body: formData,
           });
 
-          const result = await response.json();
-          if (response.ok) {
-            alert(result.success);
+          if (response.redirected) {
+            window.location.href = response.url;
+            return;
           } else {
-            alert(result.error);
+            const result = await response.json();
+            if (response.ok) {
+              alert(result.success);
+            } else {
+              alert(result.error);
+            }
           }
         } catch (error) {
           alert("An error occurred. Please try again later.");

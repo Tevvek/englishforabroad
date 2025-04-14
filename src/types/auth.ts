@@ -10,3 +10,8 @@ export type User = {
   updatedAt: string;
   publishedAt: string;
 };
+
+export type Auth = {
+  jwt: string;
+  user: User;
+};

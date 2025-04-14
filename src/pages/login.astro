@@ -87,7 +87,6 @@ import Layout from "@/layouts/Layout.astro";
     form.addEventListener("submit", handleSubmit);
 
     async function handleSubmit(event: Event) {
-      console.log("clicked");
       event.preventDefault();
 
       grecaptcha.ready(async function () {

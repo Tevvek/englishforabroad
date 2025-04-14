@@ -10,7 +10,7 @@ export default defineConfig({
     baseURL: "http://localhost:4321", // or your Astro dev URL
     browserName: "chromium",
     trace: "on-first-retry",
-    headless: true,
+    headless: false,
   },
   projects: [
     {

@@ -1,6 +1,6 @@
 interface Props {
   endpoint: string;
-  method?: "GET" | "POST";
+  method?: "GET" | "POST" | "DELETE";
   query?: Record<string, string>;
   body?: Record<string, unknown>;
   wrappedByKey?: string;
