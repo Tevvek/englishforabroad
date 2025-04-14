@@ -33,7 +33,7 @@
                                 <ul role="list" class="flex flex-1 flex-col gap-y-7">
                                     <li>
                                         <ul role="list" class="-mx-2 space-y-1">
-                                            <DashboardNav />
+                                            <DashboardMenu />
                                         </ul>
                                     </li>
                                     <li class="-mx-6 mt-auto">
@@ -60,7 +60,7 @@ import { Dialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessu
 import {
     XMarkIcon
 } from '@heroicons/vue/24/outline';
-import DashboardNav from './DashboardNav.vue';
+import DashboardMenu from './DashboardMenu.vue';
 import { useStore } from '@nanostores/vue';
 import { sidebarOpen } from './dashboard-store'
 import Cog from '@/icons/cog.svg?component';
