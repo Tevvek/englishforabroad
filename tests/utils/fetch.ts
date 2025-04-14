@@ -1,5 +1,6 @@
-import { STRAPI_URL, STRAPI_API_TOKEN } from "astro:env/server";
-
+/**
+ * WARNING! This function should only be used in the tests.
+ */
 export default async function fetchApi<T>({
   endpoint,
   method = "GET",
@@ -13,7 +14,7 @@ export default async function fetchApi<T>({
     endpoint = endpoint.slice(1);
   }
 
-  const url = new URL(`${STRAPI_URL}/api/${endpoint}`);
+  const url = new URL(`${process.env.STRAPI_URL}/api/${endpoint}`);
 
   if (query) {
     Object.entries(query).forEach(([key, value]) => {
@@ -25,8 +26,10 @@ export default async function fetchApi<T>({
     "Content-Type": "application/json",
   };
 
-  if (authToken || STRAPI_API_TOKEN) {
-    headers.Authorization = `Bearer ${authToken || STRAPI_API_TOKEN}`;
+  if (authToken || process.env.STRAPI_API_TOKEN) {
+    headers.Authorization = `Bearer ${
+      authToken || process.env.STRAPI_API_TOKEN
+    }`;
   }
 
   const res = await fetch(url.toString(), {

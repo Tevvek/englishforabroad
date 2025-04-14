@@ -1,4 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export default defineConfig({
   testDir: "./tests",
@@ -18,4 +21,5 @@ export default defineConfig({
       use: { ...devices["Desktop Chrome"] },
     },
   ],
+  globalTeardown: "./tests/global-teardown.ts",
 });
