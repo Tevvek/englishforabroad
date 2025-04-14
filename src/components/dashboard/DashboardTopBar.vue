@@ -34,8 +34,9 @@
                         <UserIcon />
 
                         <span class="hidden lg:flex lg:items-center">
-                            <span class="ml-4 text-sm/6 font-semibold text-gray-900"
-                                aria-hidden="true">john@example.com</span>
+                            <span class="ml-4 text-sm/6 font-semibold text-gray-900" aria-hidden="true">
+                                {{ user.email }}
+                            </span>
                             <ChevronDownIcon class="ml-2 size-5 text-gray-400" aria-hidden="true" />
                         </span>
                     </MenuButton>
@@ -83,6 +84,11 @@ import {
 import { sidebarOpen } from './dashboard-store'
 import cn from '@/utils/cn'
 import UserIcon from '@/icons/user.svg?component';
+import type { User } from '@/types/auth'
+
+defineProps<{
+    user: User
+}>();
 
 const userNavigation = [
     { name: 'Your profile', href: '#' },

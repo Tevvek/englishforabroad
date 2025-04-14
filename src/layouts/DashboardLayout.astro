@@ -8,6 +8,8 @@ import DashboardTopBar from "@/components/dashboard/DashboardTopBar.vue";
 import Layout from "@/layouts/Layout.astro";
 
 const { title } = Astro.props;
+
+const { user } = Astro.locals;
 ---
 
 <Layout title={title}>
@@ -24,7 +26,7 @@ const { title } = Astro.props;
 
     <!-- Main -->
     <div class="lg:pl-72">
-      <DashboardTopBar client:load />
+      <DashboardTopBar client:load user={user} />
 
       <main class="py-10">
         <div class="px-4 sm:px-6 lg:px-8">
