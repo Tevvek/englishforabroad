@@ -2,7 +2,7 @@ export const prerender = false;
 
 import fetchApi from "@/lib/strapi";
 import { type Auth } from "@/types/auth";
-import { validateRecaptcha } from "@/utils/recaptcha";
+import { validateRecaptcha } from "@/utils/recaptcha/recaptcha.server";
 import type { APIRoute } from "astro";
 import { z } from "zod";
 

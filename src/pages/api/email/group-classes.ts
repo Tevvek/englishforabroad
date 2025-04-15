@@ -4,7 +4,7 @@ import {
   extractAndValidateFormData,
   sendEmailNotification,
 } from "@/utils/email";
-import { validateRecaptcha } from "@/utils/recaptcha";
+import { validateRecaptcha } from "@/utils/recaptcha/recaptcha.server";
 import type { APIRoute } from "astro";
 
 export const POST: APIRoute = async ({ request }) => {

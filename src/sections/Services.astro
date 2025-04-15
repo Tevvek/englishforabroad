@@ -90,6 +90,7 @@
 </section>
 
 <script>
+  import { RECAPTCHA_KEY } from "@/utils/recaptcha/recaptcha.constants";
   import { PUBLIC_RECAPTCHA_SITE_KEY } from "astro:env/client";
 
   function setup() {
@@ -107,7 +108,7 @@
         });
 
         const formData = new FormData(form);
-        formData.append("g-recaptcha-response", token);
+        formData.append(RECAPTCHA_KEY, token);
 
         try {
           const response = await fetch("/api/email/group-classes", {
