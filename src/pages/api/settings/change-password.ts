@@ -1,18 +1,10 @@
 export const prerender = false;
 
+import fetchApi from "@/lib/strapi";
 import type { APIRoute } from "astro";
 import { z } from "zod";
-import fetchApi from "@/lib/strapi";
 
-export const POST: APIRoute = async ({ request, cookies }) => {
-  const token = cookies.get("english-for-abroad-token")?.value;
-
-  if (!token) {
-    return new Response(JSON.stringify({ error: "Not authenticated." }), {
-      status: 401,
-    });
-  }
-
+export const POST: APIRoute = async ({ locals, request }) => {
   const formData = await request.formData();
   const data = {
     password: formData.get("new-password")?.toString() || "",
@@ -31,7 +23,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     await fetchApi({
       endpoint: "auth/change-password",
       method: "POST",
-      authToken: token,
+      authToken: locals.jwt,
       body: {
         currentPassword: result.data.currentPassword,
         password: result.data.password,

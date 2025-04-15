@@ -1,12 +1,10 @@
 /// <reference path="../.astro/types.d.ts" />
 /// <reference types="astro/client" />
 
-import { type User } from "./types/auth";
+import { type Auth } from "./types/auth";
 
 declare global {
   namespace App {
-    interface Locals extends Record<string, any> {
-      user: User;
-    }
+    interface Locals extends Auth {}
   }
 }

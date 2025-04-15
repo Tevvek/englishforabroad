@@ -4,6 +4,7 @@ import type { User } from "@/types/auth";
 
 const protectedRoutes = ["/dashboard", "/me", "/dashboard/settings"];
 const guestOnlyRoutes = ["/login", "/register"];
+const protectedApiRoutes = ["/api/settings/change-password"];
 
 export const onRequest = defineMiddleware(
   async ({ locals, cookies, url, redirect }, next) => {
@@ -13,9 +14,12 @@ export const onRequest = defineMiddleware(
       pathname.startsWith(route)
     );
     const isGuestOnly = guestOnlyRoutes.includes(pathname);
+    const isProtectedApi = protectedApiRoutes.some((route) =>
+      pathname.startsWith(route)
+    );
 
     // 🚀 Early return if public route
-    if (!isProtected && !isGuestOnly) {
+    if (!isProtected && !isGuestOnly && !isProtectedApi) {
       return next(); // skip token logic entirely
     }
 
@@ -29,13 +33,20 @@ export const onRequest = defineMiddleware(
           authToken: token,
         });
         locals.user = user;
+        locals.jwt = token;
       } catch {
         cookies.delete("english-for-abroad-token");
       }
     }
 
     // 🛡️ Redirect if not logged in and accessing protected route
-    if (isProtected && !user) {
+    if ((isProtected || isProtectedApi) && !user) {
+      // Redirect for protected pages
+      if (pathname.startsWith("/api")) {
+        return new Response(JSON.stringify({ error: "Not authenticated." }), {
+          status: 401,
+        });
+      }
       return redirect("/login");
     }
 
