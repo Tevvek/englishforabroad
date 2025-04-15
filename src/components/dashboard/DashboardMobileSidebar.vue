@@ -33,12 +33,14 @@
                                 <ul role="list" class="flex flex-1 flex-col gap-y-7">
                                     <li>
                                         <ul role="list" class="-mx-2 space-y-1">
-                                            <DashboardMenu />
+                                            <DashboardMenu :pathname="pathname" />
                                         </ul>
                                     </li>
                                     <li class="-mx-6 mt-auto">
-                                        <a href="/dashboard/settings"
-                                            class="flex items-center gap-x-4 px-6 py-3 text-sm/6 font-semibold text-gray-700 hover:bg-gray-50 hover:text-primary transition">
+                                        <a href="/dashboard/settings" :class="cn('flex items-center gap-x-4 px-6 py-3 text-sm/6 font-semibold text-gray-700 hover:bg-gray-50 hover:text-primary transition',
+                                            {
+                                                'bg-gray-50 text-primary': settingsActive
+                                            })">
                                             <Cog class="size-6" />
                                             <span class="sr-only">Your profile</span>
                                             <span aria-hidden="true">Settings</span>
@@ -64,6 +66,13 @@ import DashboardMenu from './DashboardMenu.vue';
 import { useStore } from '@nanostores/vue';
 import { sidebarOpen } from './dashboard-store'
 import Cog from '@/icons/cog.svg?component';
+import cn from '@/utils/cn';
 
 const $sidebarOpen = useStore(sidebarOpen);
+
+const props = defineProps<{
+    pathname: string;
+}>();
+
+const settingsActive = props.pathname === '/dashboard/settings';
 </script>

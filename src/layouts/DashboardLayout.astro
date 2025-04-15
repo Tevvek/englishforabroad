@@ -8,12 +8,14 @@ import DashboardTopBar from "@/components/dashboard/DashboardTopBar.astro";
 import Layout from "@/layouts/Layout.astro";
 
 const { title } = Astro.props;
+
+const currentPathname = Astro.url.pathname;
 ---
 
 <Layout title={title}>
   <div class="bg-surface h-full">
     <!-- Mobile menu -->
-    <DashboardMobileSidebar client:load>
+    <DashboardMobileSidebar client:load pathname={currentPathname}>
       <DashboardLogo slot="logo" />
     </DashboardMobileSidebar>
 

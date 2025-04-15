@@ -3,11 +3,15 @@
         <a :href="item.href" :class="cn(
             'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-gray-700 transition',
             ' hover:bg-gray-50 hover:text-primary',
-            { 'bg-gray-50 text-primary': item.current },
+            {
+                'bg-gray-50 text-primary': item.active
+            },
         )">
             <component :is="item.icon" :class="cn(
                 'size-6 shrink-0 text-gray-700 group-hover:text-primary',
-                { 'text-primary': item.current },
+                {
+                    'text-primary': item.active
+                },
             )" aria-hidden="true" />
             {{ item.name }}
         </a>
@@ -21,8 +25,17 @@ import {
 } from '@heroicons/vue/24/outline';
 import cn from '@/utils/cn';
 
+
+const props = defineProps<{
+    pathname: string;
+}>();
+
 const navigation = [
-    { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
-    { name: 'Classes', href: '#', icon: CalendarIcon, current: false },
-]
+    { name: 'Dashboard', href: '/dashboard', icon: HomeIcon },
+    { name: 'Classes', href: '/dashboard/classes', icon: CalendarIcon },
+].map((item) => ({
+    ...item,
+    active: props.pathname === item.href,
+}));
+
 </script>
