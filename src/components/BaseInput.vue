@@ -18,7 +18,7 @@ const form = inject<{
 const field = form?.registerField(props.name);
 
 const showError = computed(() => {
-    return field?.touched && field?.everTyped && !!field?.error;
+    return field?.validatedOnce && !!field?.error;
 });
 </script>
 
@@ -36,6 +36,6 @@ const showError = computed(() => {
                     },
                 )" />
         </div>
-        <p v-if="showError" class="mt-2 text-sm text-red-600">{{ field.error }}</p>
+        <p v-if="showError" class="mt-2 text-sm text-red-600" :data-testid="`${name}-error`">{{ field.error }}</p>
     </div>
 </template>

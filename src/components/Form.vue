@@ -8,6 +8,7 @@ type Field = {
   touched: boolean;
   dirty: boolean;
   everTyped: boolean;
+  validatedOnce: boolean;
   onInput: () => void;
   onBlur: () => void;
 };
@@ -31,16 +32,24 @@ function registerField(name: string) {
     touched: false,
     dirty: false,
     everTyped: false,
+    validatedOnce: false,
     onInput() {
       field.dirty = true;
       if (!field.everTyped && field.value.length > 0) {
         field.everTyped = true;
       }
-      validate(name);
+
+      // only validate on input if user had previously blurred after typing
+      if (field.validatedOnce) {
+        validate(name);
+      }
     },
     onBlur() {
       field.touched = true;
-      validate(name);
+      if (field.everTyped) {
+        field.validatedOnce = true;
+        validate(name);
+      }
     },
   });
 
