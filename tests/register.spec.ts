@@ -37,7 +37,7 @@ test.describe("Register Flow", () => {
       await page.goto("/api/logout");
 
       await page.goto("/register");
-      await page.fill('input[name="email"]', duplicateEmail);
+      await page.fill('input[name="identifier"]', duplicateEmail);
       await page.fill('input[name="password"]', testPassword);
       await page.fill('input[name="repeat-password"]', testPassword);
 
@@ -74,7 +74,7 @@ test.describe("Register Flow", () => {
 
     test("Missing password shows error", async ({ page }) => {
       await page.goto("/register");
-      await page.fill('input[name="email"]', email);
+      await page.fill('input[name="identifier"]', email);
       await page.fill('input[name="repeat-password"]', testPassword);
 
       await Promise.all([
@@ -91,7 +91,7 @@ test.describe("Register Flow", () => {
 
     test("Password mismatch shows error", async ({ page }) => {
       await page.goto("/register");
-      await page.fill('input[name="email"]', email);
+      await page.fill('input[name="identifier"]', email);
       await page.fill('input[name="password"]', testPassword);
       await page.fill('input[name="repeat-password"]', "mismatch");
 
@@ -109,7 +109,7 @@ test.describe("Register Flow", () => {
 
     test("Invalid email format shows error", async ({ page }) => {
       await page.goto("/register");
-      await page.fill('input[name="email"]', "invalid-email");
+      await page.fill('input[name="identifier"]', "invalid-email");
       await page.fill('input[name="password"]', testPassword);
       await page.fill('input[name="repeat-password"]', testPassword);
 
@@ -127,7 +127,7 @@ test.describe("Register Flow", () => {
 
     test("Password too short shows error", async ({ page }) => {
       await page.goto("/register");
-      await page.fill('input[name="email"]', email);
+      await page.fill('input[name="identifier"]', email);
       await page.fill('input[name="password"]', "123");
       await page.fill('input[name="repeat-password"]', "123");
 

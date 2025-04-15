@@ -1,10 +1,10 @@
 export const prerender = false;
 
 import fetchApi from "@/lib/strapi";
+import { RegisterSchema } from "@/schemas/register.schema";
 import { type Auth } from "@/types/auth";
 import { validateRecaptcha } from "@/utils/recaptcha/recaptcha.server";
 import type { APIRoute } from "astro";
-import { z } from "zod";
 
 export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   const formData = await request.formData();
@@ -21,7 +21,7 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
 
   // 2. Validate form data
   const data = {
-    email: formData.get("email")?.toString() || "",
+    identifier: formData.get("identifier")?.toString() || "",
     password: formData.get("password")?.toString() || "",
     repeatPassword: formData.get("repeat-password")?.toString() || "",
   };
@@ -33,7 +33,7 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
     return new Response(JSON.stringify({ error: firstError }), { status: 400 });
   }
 
-  const { email, password } = result.data;
+  const { identifier: email, password } = result.data;
 
   // 3. Attempt registration
   try {
@@ -65,14 +65,3 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
     });
   }
 };
-
-const RegisterSchema = z
-  .object({
-    email: z.string().email("Invalid email address."),
-    password: z.string().min(6, "Password must be at least 6 characters long."),
-    repeatPassword: z.string(),
-  })
-  .refine((data) => data.password === data.repeatPassword, {
-    message: "Passwords do not match.",
-    path: ["repeatPassword"],
-  });
