@@ -26,3 +26,5 @@ pnpm-debug.log*
 TODO.md
 
 .vercel
+
+.last-run.json
