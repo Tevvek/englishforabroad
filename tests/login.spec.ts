@@ -35,7 +35,7 @@ test.describe("Auth Flow", () => {
   test.describe("❌ Failed login", () => {
     test("Shows error when credentials are wrong", async ({ page }) => {
       await page.goto("/login");
-      await page.fill('input[name="email"]', "nonexistent@example.com");
+      await page.fill('input[name="identifier"]', "nonexistent@example.com");
       await page.fill('input[name="password"]', "wrongpassword");
 
       await Promise.all([
@@ -68,7 +68,7 @@ test.describe("Auth Flow", () => {
 
     test("Shows error when password is missing", async ({ page }) => {
       await page.goto("/login");
-      await page.fill('input[name="email"]', "test@example.com");
+      await page.fill('input[name="identifier"]', "test@example.com");
 
       await Promise.all([
         page.waitForResponse(async (res) => {
@@ -85,7 +85,7 @@ test.describe("Auth Flow", () => {
 
     test("Shows error for invalid email format", async ({ page }) => {
       await page.goto("/login");
-      await page.fill('input[name="email"]', "not-an-email");
+      await page.fill('input[name="identifier"]', "not-an-email");
       await page.fill('input[name="password"]', "validPassword");
 
       await Promise.all([
@@ -102,7 +102,7 @@ test.describe("Auth Flow", () => {
 
     test("Shows error when password is too short", async ({ page }) => {
       await page.goto("/login");
-      await page.fill('input[name="email"]', "test@example.com");
+      await page.fill('input[name="identifier"]', "test@example.com");
       await page.fill('input[name="password"]', "123");
 
       await Promise.all([

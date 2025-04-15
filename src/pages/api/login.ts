@@ -1,10 +1,10 @@
 export const prerender = false;
 
 import fetchApi from "@/lib/strapi";
+import { LoginSchema } from "@/schemas/login.schema";
 import { type Auth } from "@/types/auth";
 import { validateRecaptcha } from "@/utils/recaptcha/recaptcha.server";
 import type { APIRoute } from "astro";
-import { z } from "zod";
 
 export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   const formData = await request.formData();
@@ -21,7 +21,7 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
 
   // 2. Validate form data
   const data = {
-    identifier: formData.get("email")?.toString() || "",
+    identifier: formData.get("identifier")?.toString() || "",
     password: formData.get("password")?.toString() || "",
   };
   const result = LoginSchema.safeParse(data);
@@ -59,8 +59,3 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
     });
   }
 };
-
-const LoginSchema = z.object({
-  identifier: z.string().email("Invalid email address."),
-  password: z.string().min(6, "Password must be at least 6 characters long."),
-});
