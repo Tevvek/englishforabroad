@@ -23,7 +23,7 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   const data = {
     identifier: formData.get("identifier")?.toString() || "",
     password: formData.get("password")?.toString() || "",
-    repeatPassword: formData.get("repeat-password")?.toString() || "",
+    repeatPassword: formData.get("repeatPassword")?.toString() || "",
   };
 
   const result = RegisterSchema.safeParse(data);

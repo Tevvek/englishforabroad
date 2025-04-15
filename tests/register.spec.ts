@@ -39,7 +39,7 @@ test.describe("Register Flow", () => {
       await page.goto("/register");
       await page.fill('input[name="identifier"]', duplicateEmail);
       await page.fill('input[name="password"]', testPassword);
-      await page.fill('input[name="repeat-password"]', testPassword);
+      await page.fill('input[name="repeatPassword"]', testPassword);
 
       await Promise.all([
         page.waitForResponse(async (res) => {
@@ -58,7 +58,7 @@ test.describe("Register Flow", () => {
     test("Missing email shows error", async ({ page }) => {
       await page.goto("/register");
       await page.fill('input[name="password"]', testPassword);
-      await page.fill('input[name="repeat-password"]', testPassword);
+      await page.fill('input[name="repeatPassword"]', testPassword);
 
       await Promise.all([
         page.waitForResponse(async (res) => {
@@ -75,7 +75,7 @@ test.describe("Register Flow", () => {
     test("Missing password shows error", async ({ page }) => {
       await page.goto("/register");
       await page.fill('input[name="identifier"]', email);
-      await page.fill('input[name="repeat-password"]', testPassword);
+      await page.fill('input[name="repeatPassword"]', testPassword);
 
       await Promise.all([
         page.waitForResponse(async (res) => {
@@ -93,7 +93,7 @@ test.describe("Register Flow", () => {
       await page.goto("/register");
       await page.fill('input[name="identifier"]', email);
       await page.fill('input[name="password"]', testPassword);
-      await page.fill('input[name="repeat-password"]', "mismatch");
+      await page.fill('input[name="repeatPassword"]', "mismatch");
 
       await Promise.all([
         page.waitForResponse(async (res) => {
@@ -111,7 +111,7 @@ test.describe("Register Flow", () => {
       await page.goto("/register");
       await page.fill('input[name="identifier"]', "invalid-email");
       await page.fill('input[name="password"]', testPassword);
-      await page.fill('input[name="repeat-password"]', testPassword);
+      await page.fill('input[name="repeatPassword"]', testPassword);
 
       await Promise.all([
         page.waitForResponse(async (res) => {
@@ -129,7 +129,7 @@ test.describe("Register Flow", () => {
       await page.goto("/register");
       await page.fill('input[name="identifier"]', email);
       await page.fill('input[name="password"]', "123");
-      await page.fill('input[name="repeat-password"]', "123");
+      await page.fill('input[name="repeatPassword"]', "123");
 
       await Promise.all([
         page.waitForResponse(async (res) => {

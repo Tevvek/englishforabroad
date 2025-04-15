@@ -1,20 +1,11 @@
 <script setup lang="ts">
+import type { Field } from "@/types/form";
 import { provide, reactive } from "vue";
 import type { ZodSchema } from "zod";
 
-type Field = {
-  value: string;
-  error: string;
-  touched: boolean;
-  dirty: boolean;
-  everTyped: boolean;
-  validatedOnce: boolean;
-  onInput: () => void;
-  onBlur: () => void;
-};
-
 const props = defineProps<{
   schema: ZodSchema<any>;
+  customValidators?: Record<string, (value: string, allFields: Record<string, Field>) => string>;
   class?: string;
   novalidate?: boolean;
 }>();
@@ -59,6 +50,18 @@ function registerField(name: string) {
 
 function validate(name: string) {
   const value = fields[name].value;
+
+  // ✅ 1. Check custom validator first (if provided)
+  if (props.customValidators?.[name]) {
+    const customError = props.customValidators[name](value, fields);
+    if (customError) {
+      fields[name].error = customError;
+      return;
+    }
+  }
+
+
+  // ✅ 2. Fallback to default Zod field-level validation
   const result = props.schema.safeParse({ [name]: value });
   if (result.success) {
     fields[name].error = "";

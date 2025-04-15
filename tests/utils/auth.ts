@@ -38,7 +38,7 @@ export async function register(page: Page, email: string, password: string) {
 
   await page.fill('input[name="identifier"]', email);
   await page.fill('input[name="password"]', password);
-  await page.fill('input[name="repeat-password"]', password);
+  await page.fill('input[name="repeatPassword"]', password);
 
   await Promise.all([
     page.waitForURL("/dashboard"),

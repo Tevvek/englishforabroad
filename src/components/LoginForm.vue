@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { LoginSchema } from "@/schemas/login.schema";
-import Form from "@/components/Form.vue";
-import BaseInput from "@/components/BaseInput.vue";
+import { LoginSchema, type LoginFormData } from "@/schemas/login.schema";
+import Form from "@/components/form/Form.vue";
+import BaseInput from "@/components/form/BaseInput.vue";
 import { appendRecaptchaToForm } from "@/utils/recaptcha/recaptcha.client";
+import type { Field } from "@/types/form";
 
 const MODE = import.meta.env.MODE;
 
-async function handleSubmit(fields: Record<string, any>) {
+async function handleSubmit(fields: Record<keyof LoginFormData, Field>) {
     const formData = new FormData();
     formData.append("identifier", fields.identifier.value);
     formData.append("password", fields.password.value);
