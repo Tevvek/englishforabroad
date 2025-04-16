@@ -8,6 +8,7 @@ const props = defineProps<{
     type?: string;
     placeholder?: string;
     autocomplete?: string;
+    class?: string;
 }>();
 
 const form = inject<{
@@ -23,7 +24,7 @@ const showError = computed(() => {
 </script>
 
 <template>
-    <div>
+    <div :class="props.class">
         <label :for="name" class="block text-sm/6 font-medium text-primary">{{ label }}</label>
         <div class="mt-2 grid grid-cols-1">
             <input :type="type || 'text'" :id="name" :name="name" v-model="field.value" @input="field.onInput"
