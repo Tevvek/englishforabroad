@@ -1,6 +1,7 @@
 import { defineMiddleware } from "astro:middleware";
 import fetchApi from "./lib/strapi";
 import type { User } from "@/types/auth";
+import { to } from "./utils/to";
 
 const protectedRoutes = ["/dashboard", "/me", "/dashboard/settings"];
 const guestOnlyRoutes = ["/login", "/register"];
@@ -27,15 +28,19 @@ export const onRequest = defineMiddleware(
     let user: User | null = null;
 
     if (token) {
-      try {
-        user = await fetchApi<User>({
+      const [error, fetchedUser] = await to(
+        fetchApi<User>({
           endpoint: "users/me",
           authToken: token,
-        });
+        })
+      );
+
+      if (error || !fetchedUser) {
+        cookies.delete("english-for-abroad-token");
+      } else {
+        user = fetchedUser;
         locals.user = user;
         locals.jwt = token;
-      } catch {
-        cookies.delete("english-for-abroad-token");
       }
     }
 

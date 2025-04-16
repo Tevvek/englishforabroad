@@ -43,6 +43,7 @@
 </template>
 
 <script setup lang="ts">
+import { to } from '@/utils/to';
 import { ref } from 'vue';
 
 const formRef = ref<HTMLFormElement | null>(null);
@@ -55,24 +56,20 @@ const form = ref({
 
 async function handleFormSubmit() {
     if (!formRef.value) return;
-    try {
-        const formData = new FormData(formRef.value);
+    const formData = new FormData(formRef.value);
 
-        const res = await fetch('/api/settings/change-password', {
-            method: 'POST',
-            body: formData,
-        });
+    const [error, res] = await to(fetch('/api/settings/change-password', {
+        method: 'POST',
+        body: formData,
+    }));
 
-        const result = await res.json();
-
-        if (res.ok) {
-            alert('Password changed successfully.');
-        } else {
-            console.error('❌ Change password error:', result);
-            alert("Something went wrong.");
-        }
-    } catch (err) {
-        console.error('❌ Change password error:', err);
+    if (error || !res) {
+        console.error('❌ Change password error:', error);
+        alert("An error occurred. Please try again.");
+        return;
     }
+
+    const result = await res.json();
+    alert(result.ok && result.success || result.error);
 }
 </script>

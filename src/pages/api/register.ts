@@ -4,6 +4,7 @@ import fetchApi from "@/lib/strapi";
 import { RegisterSchema } from "@/schemas/register.schema";
 import { type Auth } from "@/types/auth";
 import { validateRecaptcha } from "@/utils/recaptcha/recaptcha.server";
+import { to } from "@/utils/to";
 import type { APIRoute } from "astro";
 
 export const POST: APIRoute = async ({ request, cookies, redirect }) => {
@@ -36,8 +37,8 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   const { identifier: email, password } = result.data;
 
   // 3. Attempt registration
-  try {
-    const registerResponse = await fetchApi<Auth>({
+  const [error, registerResponse] = await to(
+    fetchApi<Auth>({
       endpoint: "auth/local/register",
       method: "POST",
       body: {
@@ -45,23 +46,25 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
         password,
         username: email,
       },
-    });
+    })
+  );
 
-    // 4. Set JWT cookie
-    cookies.set("english-for-abroad-token", registerResponse.jwt, {
-      path: "/",
-      httpOnly: true,
-      secure: true,
-      sameSite: "strict",
-      maxAge: 60 * 60 * 24 * 7, // 1 week
-    });
-
-    console.log("✅ Registration successful:", registerResponse);
-    return redirect("/dashboard");
-  } catch (error) {
+  if (error || !registerResponse) {
     console.error("❌ Registration failed:", error);
     return new Response(JSON.stringify({ error: "Registration failed." }), {
       status: 500,
     });
   }
+
+  // 4. Set JWT cookie
+  cookies.set("english-for-abroad-token", registerResponse.jwt, {
+    path: "/",
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict",
+    maxAge: 60 * 60 * 24 * 7, // 1 week
+  });
+
+  console.log("✅ Registration successful:", registerResponse);
+  return redirect("/dashboard");
 };

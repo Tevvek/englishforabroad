@@ -1,6 +1,7 @@
 export const prerender = false;
 
 import fetchApi from "@/lib/strapi";
+import { to } from "@/utils/to";
 import type { APIRoute } from "astro";
 import { z } from "zod";
 
@@ -19,8 +20,8 @@ export const POST: APIRoute = async ({ locals, request }) => {
     return new Response(JSON.stringify({ error: firstError }), { status: 400 });
   }
 
-  try {
-    await fetchApi({
+  const [error] = await to(
+    fetchApi({
       endpoint: "auth/change-password",
       method: "POST",
       authToken: locals.jwt,
@@ -29,17 +30,19 @@ export const POST: APIRoute = async ({ locals, request }) => {
         password: result.data.password,
         passwordConfirmation: result.data.passwordConfirmation, // same as password
       },
-    });
+    })
+  );
 
-    return new Response(JSON.stringify({ success: "Password changed." }), {
-      status: 200,
-    });
-  } catch (error) {
+  if (error) {
     console.error("❌ Password change failed:", error);
     return new Response(JSON.stringify({ error: "Password change failed." }), {
       status: 500,
     });
   }
+
+  return new Response(JSON.stringify({ success: "Password changed." }), {
+    status: 200,
+  });
 };
 
 const PasswordSchema = z

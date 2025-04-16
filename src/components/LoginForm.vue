@@ -27,7 +27,7 @@ async function handleSubmit(fields: Record<keyof LoginFormData, Field>) {
     }
 
     const res = await result.json();
-    alert(res.ok && res.success || res.error);
+    alert((res.ok && res.success) || res.error);
     return;
 }
 </script>

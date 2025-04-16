@@ -90,8 +90,8 @@
 </section>
 
 <script>
-  import { RECAPTCHA_KEY } from "@/utils/recaptcha/recaptcha.constants";
-  import { PUBLIC_RECAPTCHA_SITE_KEY } from "astro:env/client";
+  import { appendRecaptchaToForm } from "@/utils/recaptcha/recaptcha.client";
+  import { to } from "@/utils/to";
 
   function setup() {
     const form = document.getElementById(
@@ -102,30 +102,23 @@
     async function handleSubmit(event: Event) {
       event.preventDefault();
 
-      grecaptcha.ready(async function () {
-        const token = await grecaptcha.execute(PUBLIC_RECAPTCHA_SITE_KEY, {
-          action: "submit",
-        });
+      const formData = new FormData(form);
+      const enriched = await appendRecaptchaToForm(formData);
 
-        const formData = new FormData(form);
-        formData.append(RECAPTCHA_KEY, token);
+      const [error, response] = await to(
+        fetch("/api/email/group-classes", {
+          method: "POST",
+          body: enriched,
+        })
+      );
 
-        try {
-          const response = await fetch("/api/email/group-classes", {
-            method: "POST",
-            body: formData,
-          });
+      if (error || !response) {
+        alert("An error occurred. Please try again later.");
+        return;
+      }
 
-          const result = await response.json();
-          if (response.ok) {
-            alert(result.success);
-          } else {
-            alert(result.error);
-          }
-        } catch (error) {
-          alert("An error occurred. Please try again later.");
-        }
-      });
+      const result = await response.json();
+      alert((result.ok && result.success) || result.error);
     }
   }
   setup();

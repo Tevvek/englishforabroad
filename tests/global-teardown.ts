@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { deleteUserByEmail } from "./utils/auth";
+import { to } from "@/utils/to";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const registeredEmailsPath = path.resolve(
@@ -17,12 +18,11 @@ export default async function globalTeardown() {
   );
 
   for (const email of emails) {
-    try {
-      await deleteUserByEmail(email);
-      console.log(`🧹 Deleted test user: ${email}`);
-    } catch (err) {
-      console.warn(`⚠️ Failed to delete ${email}:`, err);
+    const [error] = await to(deleteUserByEmail(email));
+    if (error) {
+      console.warn(`⚠️ Failed to delete ${email}:`, error);
     }
+    console.log(`🧹 Deleted test user: ${email}`);
   }
 
   // Cleanup the file

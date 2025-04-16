@@ -46,6 +46,7 @@ import { ChevronDownIcon } from '@heroicons/vue/20/solid';
 import UserIcon from '@/icons/user.svg?component';
 import cn from '@/utils/cn';
 import type { User } from '@/types/auth';
+import { to } from '@/utils/to';
 
 defineProps<{
     user: User
@@ -59,15 +60,18 @@ const userNavigation = [
 
 
 async function handleLogout() {
-    try {
-        const response = await fetch('/api/logout');
-        if (response.redirected) {
-            window.location.href = response.url;
-            return;
-        }
-    } catch (error) {
+    const [error, response] = await to(fetch('/api/logout'))
+
+    if (error || !response) {
         console.error('Logout failed:', error);
         alert('Logout failed. Please try again.');
+        return;
+    }
+
+
+    if (response.redirected) {
+        window.location.href = response.url;
+        return;
     }
 }
 </script>

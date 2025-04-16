@@ -5,6 +5,7 @@ import {
   sendEmailNotification,
 } from "@/utils/email";
 import { validateRecaptcha } from "@/utils/recaptcha/recaptcha.server";
+import { to } from "@/utils/to";
 import type { APIRoute } from "astro";
 
 export const POST: APIRoute = async ({ request }) => {
@@ -26,15 +27,16 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   // 3. Send email
-  try {
-    await sendEmailNotification(values.email);
-    return new Response(JSON.stringify({ success: "Email sent!" }), {
-      status: 200,
-    });
-  } catch (error) {
+  const [error] = await to(sendEmailNotification(values.email));
+
+  if (error) {
     console.error("❌ Email sending failed:", error);
     return new Response(JSON.stringify({ error: "Failed to send email." }), {
       status: 500,
     });
   }
+
+  return new Response(JSON.stringify({ success: "Email sent!" }), {
+    status: 200,
+  });
 };

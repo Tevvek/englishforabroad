@@ -4,6 +4,7 @@ import fetchApi from "@/lib/strapi";
 import { LoginSchema } from "@/schemas/login.schema";
 import { type Auth } from "@/types/auth";
 import { validateRecaptcha } from "@/utils/recaptcha/recaptcha.server";
+import { to } from "@/utils/to";
 import type { APIRoute } from "astro";
 
 export const POST: APIRoute = async ({ request, cookies, redirect }) => {
@@ -34,28 +35,30 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   const { data: values } = result;
 
   // 3. Attempt login
-  try {
-    const loginResponse = await fetchApi<Auth>({
+  const [error, loginResponse] = await to(
+    fetchApi<Auth>({
       endpoint: "auth/local",
       method: "POST",
       body: values,
-    });
+    })
+  );
 
-    cookies.set("english-for-abroad-token", loginResponse.jwt, {
-      path: "/",
-      httpOnly: true,
-      secure: true,
-      sameSite: "strict",
-      maxAge: 60 * 60 * 24 * 7, // 1 week
-    });
-
-    // 4. Redirect to dashboard
-    console.log("✅ Login successful:", loginResponse);
-    return redirect("/dashboard");
-  } catch (error) {
+  if (error || !loginResponse) {
     console.error("❌ Login failed:", error);
     return new Response(JSON.stringify({ error: "Login failed." }), {
       status: 500,
     });
   }
+
+  cookies.set("english-for-abroad-token", loginResponse.jwt, {
+    path: "/",
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict",
+    maxAge: 60 * 60 * 24 * 7, // 1 week
+  });
+
+  // 4. Redirect to dashboard
+  console.log("✅ Login successful:", loginResponse);
+  return redirect("/dashboard");
 };
