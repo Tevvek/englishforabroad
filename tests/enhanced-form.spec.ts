@@ -29,7 +29,7 @@ test.describe("Login form validation (reward early, punish late)", () => {
   }) => {
     await page.fill('input[name="identifier"]', "not-an-email");
     await page.locator('input[name="identifier"]').blur();
-    const error = await page.locator("[data-testid='identifier-error']");
+    const error = page.locator("[data-testid='identifier-error']");
     await expect(error).toBeVisible();
     await expect(error).toHaveText("Invalid email address.");
   });
