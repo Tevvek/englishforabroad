@@ -73,6 +73,12 @@ async function handleFormSubmit() {
     const result = await res.json();
     if (result.error) {
         toast.error(result.error);
+        return;
+    }
+
+    if (result.success) {
+        toast.success(result.success);
+        return;
     }
 }
 </script>
