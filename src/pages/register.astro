@@ -4,9 +4,12 @@ export const prerender = false;
 import Logo from "@/components/Logo.astro";
 import Layout from "@/layouts/Layout.astro";
 import RegisterForm from "@/components/RegisterForm.vue";
+import RecaptchaScript from "@/components/RecaptchaScript.astro";
 ---
 
 <Layout title="English for Abroad - Register">
+  <RecaptchaScript slot="recaptcha" />
+
   <main
     class="flex flex-col justify-center px-6 py-12 lg:px-8 bg-white min-h-full"
   >

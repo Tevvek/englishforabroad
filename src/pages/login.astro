@@ -3,10 +3,13 @@ export const prerender = false;
 
 import LoginForm from "@/components/LoginForm.vue";
 import Logo from "@/components/Logo.astro";
+import RecaptchaScript from "@/components/RecaptchaScript.astro";
 import Layout from "@/layouts/Layout.astro";
 ---
 
 <Layout title="English for Abroad - Login">
+  <RecaptchaScript slot="recaptcha" />
+
   <main
     class="flex flex-col justify-center px-6 py-12 lg:px-8 min-h-full bg-white"
   >
