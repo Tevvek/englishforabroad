@@ -6,6 +6,7 @@ import type { CustomValidatorMap, Field } from "@/types/form";
 import { appendRecaptchaToForm } from "@/utils/recaptcha/recaptcha.client";
 import { to } from "@/utils/to";
 import SubmitButton from "./form/SubmitButton.vue";
+import { toast } from "vue-sonner";
 
 const MODE = import.meta.env.MODE;
 
@@ -19,7 +20,7 @@ async function handleSubmit(fields: Record<keyof RegisterFormData, Field>) {
     const [error, result] = await to(fetch("/api/register", { method: "POST", body: enriched }));
 
     if (error || !result) {
-        alert("An error occurred. Please try again.");
+        toast.error("An error occurred. Please try again.");
         return;
     }
 
@@ -29,8 +30,10 @@ async function handleSubmit(fields: Record<keyof RegisterFormData, Field>) {
     }
 
     const res = await result.json();
-    alert(result.ok && res.success || res.error);
-    return;
+    if (res.error) {
+        toast.error(res.error);
+        return;
+    }
 }
 
 const customValidators: CustomValidatorMap<RegisterFormData> = {

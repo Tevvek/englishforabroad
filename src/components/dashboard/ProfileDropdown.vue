@@ -47,6 +47,7 @@ import UserIcon from '@/icons/user.svg?component';
 import cn from '@/utils/cn';
 import type { User } from '@/types/auth';
 import { to } from '@/utils/to';
+import { toast } from 'vue-sonner';
 
 defineProps<{
     user: User
@@ -64,7 +65,7 @@ async function handleLogout() {
 
     if (error || !response) {
         console.error('Logout failed:', error);
-        alert('Logout failed. Please try again.');
+        toast.error('Logout failed. Please try again.');
         return;
     }
 

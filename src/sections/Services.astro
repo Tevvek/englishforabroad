@@ -92,7 +92,7 @@
 <script>
   import { appendRecaptchaToForm } from "@/utils/recaptcha/recaptcha.client";
   import { to } from "@/utils/to";
-
+  import { toast } from "vue-sonner";
   function setup() {
     const form = document.getElementById(
       "group-classes-notification-form"
@@ -113,12 +113,15 @@
       );
 
       if (error || !response) {
-        alert("An error occurred. Please try again later.");
+        toast.error("An error occurred. Please try again later.");
         return;
       }
 
       const result = await response.json();
-      alert((result.ok && result.success) || result.error);
+      if (result.error) {
+        toast.error(result.error);
+        return;
+      }
     }
   }
   setup();
