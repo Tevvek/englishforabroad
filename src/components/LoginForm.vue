@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { LoginSchema, type LoginFormData } from "@/schemas/login.schema";
-import Form from "@/components/form/Form.vue";
 import BaseInput from "@/components/form/BaseInput.vue";
-import { appendRecaptchaToForm } from "@/utils/recaptcha/recaptcha.client";
+import Form from "@/components/form/Form.vue";
+import { LoginSchema, type LoginFormData } from "@/schemas/login.schema";
 import type { Field } from "@/types/form";
+import { appendRecaptchaToForm } from "@/utils/recaptcha/recaptcha.client";
 import { to } from "@/utils/to";
+import { toast } from 'vue-sonner';
 import SubmitButton from "./form/SubmitButton.vue";
-import { toast, Toaster } from 'vue-sonner';
 
 const MODE = import.meta.env.MODE;
 

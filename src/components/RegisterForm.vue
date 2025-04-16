@@ -49,9 +49,8 @@ const customValidators: CustomValidatorMap<RegisterFormData> = {
         :customValidators>
         <BaseInput name="identifier" label="Email address" type="email" autocomplete="email"
             placeholder="you@example.com" />
-        <BaseInput name="password" label="Password" type="password" autocomplete="current-password"
-            placeholder="••••••" />
-        <BaseInput name="repeatPassword" label="Repeat password" type="password" autocomplete="current-password"
+        <BaseInput name="password" label="Password" type="password" autocomplete="new-password" placeholder="••••••" />
+        <BaseInput name="repeatPassword" label="Repeat password" type="password" autocomplete="new-password"
             placeholder="••••••" />
         <SubmitButton type="submit">Register</SubmitButton>
     </Form>
