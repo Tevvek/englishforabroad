@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Field } from "@/types/form";
-import { provide, reactive } from "vue";
+import { computed, provide, reactive } from "vue";
 import type { ZodSchema } from "zod";
 
 const props = defineProps<{
@@ -15,6 +15,17 @@ const emit = defineEmits<{
 }>();
 
 const fields = reactive<Record<string, Field>>({});
+
+const isFormInvalid = computed(() => {
+  return Object.values(fields).some((field) => !!field.error);
+});
+
+const isFormIncomplete = computed(() => {
+  return Object.values(fields).some(
+    (field) =>
+      !field.everTyped && !field.touched // hasn't interacted yet
+  );
+});
 
 function registerField(name: string) {
   const field: Field = reactive({
@@ -71,7 +82,7 @@ function validate(name: string) {
   }
 }
 
-provide("form", { fields, registerField });
+provide("form", { fields, registerField, isFormInvalid, isFormIncomplete });
 </script>
 
 <template>

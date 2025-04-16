@@ -5,6 +5,7 @@ import BaseInput from "@/components/form/BaseInput.vue";
 import { appendRecaptchaToForm } from "@/utils/recaptcha/recaptcha.client";
 import type { Field } from "@/types/form";
 import { to } from "@/utils/to";
+import SubmitButton from "./form/SubmitButton.vue";
 
 const MODE = import.meta.env.MODE;
 
@@ -38,8 +39,6 @@ async function handleSubmit(fields: Record<keyof LoginFormData, Field>) {
             placeholder="you@example.com" />
         <BaseInput name="password" label="Password" type="password" autocomplete="current-password"
             placeholder="••••••" />
-        <button type="submit"
-            class="flex w-full justify-center rounded-md bg-primary px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">Sign
-            in</button>
+        <SubmitButton>Sign in</SubmitButton>
     </Form>
 </template>

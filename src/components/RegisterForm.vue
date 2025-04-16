@@ -5,6 +5,7 @@ import { RegisterSchema, type RegisterFormData } from "@/schemas/register.schema
 import type { CustomValidatorMap, Field } from "@/types/form";
 import { appendRecaptchaToForm } from "@/utils/recaptcha/recaptcha.client";
 import { to } from "@/utils/to";
+import SubmitButton from "./form/SubmitButton.vue";
 
 const MODE = import.meta.env.MODE;
 
@@ -49,8 +50,6 @@ const customValidators: CustomValidatorMap<RegisterFormData> = {
             placeholder="••••••" />
         <BaseInput name="repeatPassword" label="Repeat password" type="password" autocomplete="current-password"
             placeholder="••••••" />
-        <button type="submit"
-            class="flex w-full justify-center rounded-md bg-primary px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">Sign
-            in</button>
+        <SubmitButton>Register</SubmitButton>
     </Form>
 </template>
