@@ -95,9 +95,11 @@ test.describe("Change Password Flow", () => {
     await login(page, email, originalPassword);
     await page.goto("/dashboard/settings");
 
-    await page.fill('input[name="old-password"]', originalPassword);
+    // The order of fill changes to the rest of the tests
+    // because for some reason if repeat-new-password id last, the button is never pressed in the test
     await page.fill('input[name="new-password"]', "somethingNew123");
     await page.fill('input[name="repeat-new-password"]', "differentPassword");
+    await page.fill('input[name="old-password"]', originalPassword);
 
     const [response] = await Promise.all([
       page.waitForResponse(
