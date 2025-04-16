@@ -4,13 +4,17 @@
         { 'hover:bg-accent': !disabled },
         { 'opacity-50 cursor-not-allowed': disabled }
     )" :disabled="MODE === 'production' && disabled">
-        <slot />
+        <SpinIcon v-if="form.isSubmitting.value" />
+        <template v-else>
+            <slot />
+        </template>
     </button>
 </template>
 
 <script setup lang="ts">
 import cn from "@/utils/cn";
 import { inject, computed, type Ref } from "vue";
+import SpinIcon from "@/icons/spin.svg?component";
 
 defineProps<{
     type?: "submit" | "button";
