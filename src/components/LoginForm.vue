@@ -4,6 +4,7 @@ import Form from "@/components/form/Form.vue";
 import BaseInput from "@/components/form/BaseInput.vue";
 import { appendRecaptchaToForm } from "@/utils/recaptcha/recaptcha.client";
 import type { Field } from "@/types/form";
+import { to } from "@/utils/to";
 
 const MODE = import.meta.env.MODE;
 
@@ -12,20 +13,22 @@ async function handleSubmit(fields: Record<keyof LoginFormData, Field>) {
     formData.append("identifier", fields.identifier.value);
     formData.append("password", fields.password.value);
 
-    try {
-        const enriched = await appendRecaptchaToForm(formData);
-        const res = await fetch("/api/login", { method: "POST", body: enriched });
+    const enriched = await appendRecaptchaToForm(formData);
+    const [error, result] = await to(fetch("/api/login", { method: "POST", body: enriched }));
 
-        if (res.redirected) {
-            window.location.href = res.url;
-            return;
-        }
-
-        const result = await res.json();
-        alert(res.ok && result.success || result.error);
-    } catch {
+    if (error || !result) {
         alert("An error occurred. Please try again.");
+        return;
     }
+
+    if (result.redirected) {
+        window.location.href = result.url;
+        return;
+    }
+
+    const res = await result.json();
+    alert(res.ok && res.success || res.error);
+    return;
 }
 </script>
 

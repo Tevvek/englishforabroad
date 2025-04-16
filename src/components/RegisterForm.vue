@@ -4,6 +4,7 @@ import Form from "@/components/form/Form.vue";
 import { RegisterSchema, type RegisterFormData } from "@/schemas/register.schema";
 import type { CustomValidatorMap, Field } from "@/types/form";
 import { appendRecaptchaToForm } from "@/utils/recaptcha/recaptcha.client";
+import { to } from "@/utils/to";
 
 const MODE = import.meta.env.MODE;
 
@@ -13,20 +14,22 @@ async function handleSubmit(fields: Record<keyof RegisterFormData, Field>) {
     formData.append("password", fields.password.value);
     formData.append("repeatPassword", fields["repeatPassword"].value);
 
-    try {
-        const enriched = await appendRecaptchaToForm(formData);
-        const res = await fetch("/api/register", { method: "POST", body: enriched });
+    const enriched = await appendRecaptchaToForm(formData);
+    const [error, result] = await to(fetch("/api/register", { method: "POST", body: enriched }));
 
-        if (res.redirected) {
-            window.location.href = res.url;
-            return;
-        }
-
-        const result = await res.json();
-        alert(res.ok && result.success || result.error);
-    } catch {
+    if (error || !result) {
         alert("An error occurred. Please try again.");
+        return;
     }
+
+    if (result.redirected) {
+        window.location.href = result.url;
+        return;
+    }
+
+    const res = await result.json();
+    alert(result.ok && res.success || res.error);
+    return;
 }
 
 const customValidators: CustomValidatorMap<RegisterFormData> = {
