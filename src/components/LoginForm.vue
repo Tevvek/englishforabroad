@@ -34,11 +34,11 @@ async function handleSubmit(fields: Record<keyof LoginFormData, Field>) {
 </script>
 
 <template>
-    <Form :schema="LoginSchema" class="space-y-6" :novalidate="MODE === 'development'" @submit="handleSubmit">
+    <Form :schema="LoginSchema" class="space-y-6" :novalidate="MODE === 'development'" :onSubmit="handleSubmit">
         <BaseInput name="identifier" label="Email address" type="email" autocomplete="email"
             placeholder="you@example.com" />
         <BaseInput name="password" label="Password" type="password" autocomplete="current-password"
             placeholder="••••••" />
-        <SubmitButton>Sign in</SubmitButton>
+        <SubmitButton type="submit">Sign in</SubmitButton>
     </Form>
 </template>

@@ -42,7 +42,7 @@ const customValidators: CustomValidatorMap<RegisterFormData> = {
 </script>
 
 <template>
-    <Form :schema="RegisterSchema" class="space-y-6" :novalidate="MODE === 'development'" @submit="handleSubmit"
+    <Form :schema="RegisterSchema" class="space-y-6" :novalidate="MODE === 'development'" :onSubmit="handleSubmit"
         :customValidators>
         <BaseInput name="identifier" label="Email address" type="email" autocomplete="email"
             placeholder="you@example.com" />
@@ -50,6 +50,6 @@ const customValidators: CustomValidatorMap<RegisterFormData> = {
             placeholder="••••••" />
         <BaseInput name="repeatPassword" label="Repeat password" type="password" autocomplete="current-password"
             placeholder="••••••" />
-        <SubmitButton>Register</SubmitButton>
+        <SubmitButton type="submit">Register</SubmitButton>
     </Form>
 </template>

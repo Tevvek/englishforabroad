@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Field } from "@/types/form";
-import { computed, provide, reactive } from "vue";
+import { computed, provide, reactive, ref } from "vue";
 import type { ZodSchema } from "zod";
 
 const props = defineProps<{
@@ -8,13 +8,11 @@ const props = defineProps<{
   customValidators?: Record<string, (value: string, allFields: Record<string, Field>) => string>;
   class?: string;
   novalidate?: boolean;
-}>();
-
-const emit = defineEmits<{
-  (e: "submit", fields: Record<string, Field>): void;
+  onSubmit: (fields: Record<string, Field>) => Promise<void>;
 }>();
 
 const fields = reactive<Record<string, Field>>({});
+const isSubmitting = ref(false);
 
 const isFormInvalid = computed(() => {
   return Object.values(fields).some((field) => !!field.error);
@@ -82,11 +80,19 @@ function validate(name: string) {
   }
 }
 
-provide("form", { fields, registerField, isFormInvalid, isFormIncomplete });
-</script>
+async function handleInternalSubmit() {
+  if (isSubmitting.value) return;
 
+  isSubmitting.value = true;
+  await props.onSubmit(fields);
+  isSubmitting.value = false;
+}
+
+provide("form", { fields, registerField, isFormInvalid, isFormIncomplete, isSubmitting });
+
+</script>
 <template>
-  <form :class="props.class" :novalidate="props.novalidate" @submit.prevent="emit('submit', fields)">
+  <form :class="props.class" :novalidate="props.novalidate" @submit.prevent="handleInternalSubmit">
     <slot />
   </form>
 </template>
