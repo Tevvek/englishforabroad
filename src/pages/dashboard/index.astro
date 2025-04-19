@@ -1,51 +1,20 @@
 ---
 export const prerender = false;
 
-import Card from "@/components/Card.astro";
+import ProgressTracker from "@/components/dashboard/cards/ProgressTracker.astro";
 import DashboardLayout from "@/layouts/DashboardLayout.astro";
-import ProgressBar from "@/components/ProgressBar.astro";
 
 const classes = [
-  { name: "#1", completed: true },
-  { name: "#2", completed: true },
-  { name: "#3", completed: false },
-  { name: "#4", completed: false },
+  { name: "Class #1" },
+  { name: "Class #2", missed: true },
+  { name: "Class #3", completed: true },
+  { name: "Class #4" },
 ];
 ---
 
 <DashboardLayout title="English for Abroad - Dashboard">
   <div class="grid grid-rows-2 gap-6">
-    <Card>
-      <h2 class="text-lg font-medium leading-6 text-gray-900">
-        Classes completed
-      </h2>
-      <p class="mt-1 max-w-2xl text-sm text-gray-500">
-        In this card you can see how many classes you have left.
-      </p>
-
-      <ProgressBar items={classes} />
-    </Card>
-
-    <Card>
-      <div
-        slot="header"
-        class="-mt-2 -ml-4 flex flex-wrap items-center justify-between sm:flex-nowrap"
-      >
-        <div class="mt-2 ml-4">
-          <h3 class="text-base font-semibold text-gray-900">Job Postings</h3>
-        </div>
-        <div class="mt-2 ml-4 shrink-0">
-          <button
-            type="button"
-            class="relative inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >Create new job</button
-          >
-        </div>
-      </div>
-      <h2 class="text-lg font-medium leading-6 text-gray-900">Statistics</h2>
-      <p class="mt-1 max-w-2xl text-sm text-gray-500">
-        Here you can find your statistics and progress.
-      </p>
-    </Card>
+    <!-- #1 No classes purchased -->
+    <ProgressTracker items={classes} />
   </div>
 </DashboardLayout>

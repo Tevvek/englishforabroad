@@ -1,0 +1,19 @@
+---
+import ProgressBar from "@/components/ProgressBar.astro";
+import Card from "@/components/Card.astro";
+
+const { items } = Astro.props;
+---
+
+<Card>
+  <div slot="header">
+    <h2 class="text-lg font-medium leading-6 text-gray-900">
+      Progress tracker
+    </h2>
+    <p class="mt-1 max-w-2xl text-sm text-gray-500">
+      Track your progress and see how many classes you've completed.
+    </p>
+  </div>
+
+  <ProgressBar items={items} />
+</Card>

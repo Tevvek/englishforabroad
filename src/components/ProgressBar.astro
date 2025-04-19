@@ -1,34 +1,34 @@
 ---
 import cn from "@/utils/cn";
 import Check from "@/icons/check.svg";
+import X from "@/icons/x.svg";
 
 type Props = {
   checkmarks?: boolean;
   items: {
     name: string;
     completed?: boolean;
+    missed?: boolean;
   }[];
 };
 
 const { checkmarks = true, items } = Astro.props;
 
 function getProgressPercent(i: number, totalSteps: number): number {
-  if (i === 0) return 0;
-  if (i === totalSteps - 1) return 100;
-
+  if (i === -1) return 0;
   const stepWidth = 100 / totalSteps;
-  const halfStep = stepWidth / 2;
-  const centeredPosition = i * stepWidth + halfStep;
-
-  return centeredPosition;
+  return stepWidth * (i + 1);
 }
 
-const lastCompletedIdx = Math.max(
-  items.findLastIndex((cls) => cls.completed),
-  0
-);
+const lastCompletedIdx = items.findLastIndex((cls) => cls.completed);
 
 const progressWidth = getProgressPercent(lastCompletedIdx, items.length);
+
+// Potentially one a single item will have the completed arg
+const processedItems = items.map((cls, idx) => ({
+  ...cls,
+  completed: cls.completed || idx <= lastCompletedIdx,
+}));
 ---
 
 <div>
@@ -42,7 +42,6 @@ const progressWidth = getProgressPercent(lastCompletedIdx, items.length);
   }
 
   <!-- HEADER -->
-
   {
     Astro.slots.has("header") && (
       <p class="text-sm font-medium text-gray-900">
@@ -53,36 +52,30 @@ const progressWidth = getProgressPercent(lastCompletedIdx, items.length);
 
   <!-- BAR -->
   <div class="mt-6" aria-hidden="true">
-    <!-- PROGRESS -->
     <div class="rounded-full bg-gray-200 relative">
+      <!-- PROGRESS -->
       <div class="h-2 rounded-full bg-primary" style=`width: ${progressWidth}%`>
       </div>
 
+      <!-- CHECKMARKS -->
       {
         checkmarks && (
           <div
             class="grid text-sm font-medium text-gray-600 absolute w-full top-1/2 left-0 -translate-y-1/2"
-            style={`grid-template-columns: repeat(${items.length}, 1fr)`}
+            style={`grid-template-columns: repeat(${processedItems.length * 2}, 1fr)`}
           >
-            {items.map((cls) => (
-              <div
-                class={cn(
-                  "flex first:justify-start last:justify-end justify-center",
-                  {
-                    "text-primary": cls.completed,
-                  }
-                )}
-              >
+            {processedItems.map((item) => (
+              <div class="first:col-start-2 col-span-2 last:col-span-1 flex justify-center last:justify-end last:-mr-2.5">
                 <div
                   class={cn(
                     "flex items-center justify-center size-5 rounded-full p-1",
                     {
-                      "bg-primary text-white": cls.completed,
-                      "bg-gray-200 text-gray-400": !cls.completed,
+                      "bg-primary text-white": item.completed,
+                      "bg-gray-200 text-gray-400": !item.completed,
                     }
                   )}
                 >
-                  <Check />
+                  {item.missed ? <X /> : <Check />}
                 </div>
               </div>
             ))}
@@ -94,16 +87,19 @@ const progressWidth = getProgressPercent(lastCompletedIdx, items.length);
     <!-- ITEMS -->
     <div
       class="mt-6 hidden text-sm font-medium text-gray-600 sm:grid"
-      style={`grid-template-columns: repeat(${items.length}, 1fr)`}
+      style={`grid-template-columns: repeat(${processedItems.length * 2}, 1fr)`}
     >
       {
-        items.map((cls) => (
+        processedItems.map((item) => (
           <div
-            class={cn("first:text-start text-center last:text-right", {
-              "text-primary": cls.completed,
-            })}
+            class={cn(
+              "first:col-start-2 col-span-2 text-center last:text-right last:col-span-1 last:-mr-2.5",
+              {
+                "text-primary": item.completed,
+              }
+            )}
           >
-            {cls.name}
+            {item.name}
           </div>
         ))
       }
