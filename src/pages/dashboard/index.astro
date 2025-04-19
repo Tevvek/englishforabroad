@@ -2,6 +2,7 @@
 export const prerender = false;
 
 import ProgressTracker from "@/components/dashboard/cards/ProgressTracker.astro";
+import PurchaseClasses from "@/components/dashboard/cards/PurchaseClasses.astro";
 import DashboardLayout from "@/layouts/DashboardLayout.astro";
 
 const classes = [
@@ -16,5 +17,7 @@ const classes = [
   <div class="grid grid-rows-2 gap-6">
     <!-- #1 No classes purchased -->
     <ProgressTracker items={classes} />
+
+    <PurchaseClasses />
   </div>
 </DashboardLayout>

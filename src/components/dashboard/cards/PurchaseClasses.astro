@@ -1,0 +1,34 @@
+---
+import Card from "@/components/Card.astro";
+import Calendar from "@/components/dashboard/Calendar.vue";
+---
+
+<Card>
+  <div
+    slot="header"
+    class="-mt-2 -ml-4 flex flex-wrap items-center justify-between sm:flex-nowrap"
+  >
+    <div class="mt-2 ml-4">
+      <h2 class="text-lg font-medium leading-6 text-gray-900">
+        Purchase classes
+      </h2>
+      <p class="mt-1 max-w-2xl text-sm text-gray-500">
+        You can purchase classes here. If you haven't purchased any classes yet,
+        you can do so by clicking on the button to the right.
+      </p>
+    </div>
+    <div class="mt-2 ml-4 shrink-0">
+      <button
+        type="button"
+        class="transition relative inline-flex items-center rounded-md bg-primary px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+        >Purchase classes</button
+      >
+    </div>
+  </div>
+
+  <!-- <p class="mt-1 max-w-2xl text-sm text-gray-500">
+    You will be able to select your classes after you purchase them.
+  </p> -->
+
+  <Calendar client:load />
+</Card>
