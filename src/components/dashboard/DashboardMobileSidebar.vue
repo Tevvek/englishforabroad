@@ -20,7 +20,7 @@
                             <div class="absolute top-0 left-full flex w-16 justify-center pt-5">
                                 <button type="button" class="-m-2.5 p-2.5" @click="sidebarOpen.set(false)">
                                     <span class="sr-only">Close sidebar</span>
-                                    <XMarkIcon class="size-6 text-white" aria-hidden="true" />
+                                    <X class="size-6 text-white" aria-hidden="true" />
                                 </button>
                             </div>
                         </TransitionChild>
@@ -59,13 +59,12 @@
 
 <script setup lang="ts">
 import { Dialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessui/vue';
-import {
-    XMarkIcon
-} from '@heroicons/vue/24/outline';
+
 import DashboardMenu from './DashboardMenu.vue';
 import { useStore } from '@nanostores/vue';
 import { sidebarOpen } from './dashboard-store'
 import Cog from '@/icons/cog.svg?component';
+import X from '@/icons/x.svg?component';
 import cn from '@/utils/cn';
 
 const $sidebarOpen = useStore(sidebarOpen);
