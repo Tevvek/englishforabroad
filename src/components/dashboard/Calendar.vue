@@ -144,113 +144,122 @@ watch(
   },
   { deep: true }
 );
+function resetSelectedDates() {
+  selectedDates.value = [];
+}
+
 </script>
 
 
 <template>
 
-  <!-- CALENDAR -->
-  <div>
-    <div class="flex items-center">
-      <h2 class="flex-auto text-sm font-semibold text-gray-900">{{ monthYear }}</h2>
-      <button type="button" @click="goToPreviousMonth"
-        class="-my-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500">
-        <span class="sr-only">Previous month</span>
-        <ChevronLeftIcon class="size-5" aria-hidden="true" />
-      </button>
-      <button type="button" @click="goToNextMonth"
-        class="-my-1.5 -mr-1.5 ml-2 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500">
-        <span class="sr-only">Next month</span>
-        <ChevronRightIcon class="size-5" aria-hidden="true" />
-      </button>
-    </div>
-    <div class="mt-10 grid grid-cols-7 text-center text-xs/6 text-gray-500">
-      <div>M</div>
-      <div>T</div>
-      <div>W</div>
-      <div>T</div>
-      <div>F</div>
-      <div>S</div>
-      <div>S</div>
-    </div>
-    <div class="mt-2 grid grid-cols-7 text-sm">
-      <div v-for="(day, dayIdx) in daysInCalendar" :key="day.date"
-        :class="cn('py-2', { 'border-t border-gray-200': dayIdx > 6 })">
-        <button type="button" :class="cn(
-          'mx-auto flex size-8 items-center justify-center rounded-full',
-          { 'text-white': day.isSelected },
-          { 'text-primary': !day.isSelected && day.isToday },
-          {
-            'text-gray-900':
-              !day.isSelected && !day.isToday && day.isCurrentMonth,
-          },
-          {
-            'text-gray-400':
-              !day.isSelected && !day.isToday && !day.isCurrentMonth,
-          },
-          { 'bg-primary': day.isSelected && day.isToday },
-          { 'bg-gray-900': day.isSelected && !day.isToday },
-          { 'hover:bg-gray-200': !day.isSelected },
-          { 'font-semibold': day.isSelected || day.isToday },
-          { 'bg-primary ': day.isSelected }
-        )" @click="onCalendarDayClick(day)">
-          <time :datetime="day.date">
-            {{ day.date.split("-").pop()?.replace(/^0/, "") }}
-          </time>
+  <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-8">
+    <!-- CALENDAR -->
+    <div class="lg:col-start-1">
+      <div class="flex items-center ">
+        <h2 class="flex-auto text-sm font-semibold text-gray-900">{{ monthYear }}</h2>
+        <button type="button" @click="goToPreviousMonth"
+          class="-my-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500">
+          <span class="sr-only">Previous month</span>
+          <ChevronLeftIcon class="size-5" aria-hidden="true" />
+        </button>
+        <button type="button" @click="goToNextMonth"
+          class="-my-1.5 -mr-1.5 ml-2 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500">
+          <span class="sr-only">Next month</span>
+          <ChevronRightIcon class="size-5" aria-hidden="true" />
         </button>
       </div>
-    </div>
-  </div>
-
-  <!-- SELECTED CLASSES -->
-  <p class="text-sm text-gray-500 text-right">
-    {{ selectedDates.length }} of {{ packageLimit }} sessions selected
-  </p>
-
-  <!-- GROUP WEEKLY INPUT -->
-  <div class="flex gap-3 pt-4">
-    <div class="flex h-6 shrink-0 items-center">
-      <div class="group grid size-4 grid-cols-1">
-        <input id="groupWeekly" aria-describedby="groupWeekly" name="groupWeekly" type="checkbox" v-model="groupWeekly"
-          class="cursor-pointer col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-primary checked:bg-primary indeterminate:border-primary indeterminate:bg-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto" />
-        <Check
-          class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25" />
+      <div class="mt-10 grid grid-cols-7 text-center text-xs/6 text-gray-500">
+        <div>M</div>
+        <div>T</div>
+        <div>W</div>
+        <div>T</div>
+        <div>F</div>
+        <div>S</div>
+        <div>S</div>
+      </div>
+      <div class="mt-2 grid grid-cols-7 text-sm">
+        <div v-for="(day, dayIdx) in daysInCalendar" :key="day.date"
+          :class="cn('py-2', { 'border-t border-gray-200': dayIdx > 6 })">
+          <button type="button" :class="cn(
+            'mx-auto flex size-8 items-center justify-center rounded-full',
+            { 'text-white': day.isSelected },
+            { 'text-primary': !day.isSelected && day.isToday },
+            {
+              'text-gray-900':
+                !day.isSelected && !day.isToday && day.isCurrentMonth,
+            },
+            {
+              'text-gray-400':
+                !day.isSelected && !day.isToday && !day.isCurrentMonth,
+            },
+            { 'bg-primary': day.isSelected && day.isToday },
+            { 'bg-gray-900': day.isSelected && !day.isToday },
+            { 'hover:bg-gray-200': !day.isSelected },
+            { 'font-semibold': day.isSelected || day.isToday },
+            { 'bg-primary ': day.isSelected }
+          )" @click="onCalendarDayClick(day)">
+            <time :datetime="day.date">
+              {{ day.date.split("-").pop()?.replace(/^0/, "") }}
+            </time>
+          </button>
+        </div>
       </div>
     </div>
-    <div class="text-sm/6">
-      <label for="groupWeekly" class="font-medium text-gray-900">Group as weekly class schedule</label>
-      {{ ' ' }}
-      <span id="groupWeekly" class="text-gray-500"><span class="sr-only">Group as weekly class schedule </span> will
-        automatically select {{ packageLimit }} sessions, one per week, from the date you choose.
-      </span>
+    <!-- SELECTED CLASSES -->
+    <p class="text-sm text-gray-500 text-right lg:row-start-2">
+      {{ selectedDates.length }} of {{ packageLimit }} sessions selected
+    </p>
+    <!-- GROUP WEEKLY INPUT -->
+    <div class="flex gap-3 pt-4 lg:row-start-3 lg:col-span-2">
+      <div class="flex h-6 shrink-0 items-center">
+        <div class="group grid size-4 grid-cols-1">
+          <input id="groupWeekly" aria-describedby="groupWeekly" name="groupWeekly" type="checkbox"
+            v-model="groupWeekly"
+            class="cursor-pointer col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-primary checked:bg-primary indeterminate:border-primary indeterminate:bg-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto" />
+          <Check
+            class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25" />
+        </div>
+      </div>
+      <div class="text-sm/6">
+        <label for="groupWeekly" class="font-medium text-gray-900">Group as weekly class schedule</label>
+        {{ ' ' }}
+        <span id="groupWeekly" class="text-gray-500"><span class="sr-only">Group as weekly class schedule </span> will
+          automatically select {{ packageLimit }} sessions, one per week, from the date you choose.
+        </span>
+      </div>
+    </div>
+    <!-- DIVIDER -->
+    <div class="w-full border-t border-gray-300 mt-6 lg:hidden"></div>
+    <!-- SELECTED CLASSES -->
+    <div class="mt-6 space-y-2 lg:col-start-2">
+      <h3 class="text-sm font-semibold text-gray-700">Your selected classes</h3>
+      <ul class="relative" ref="selectedDatesRef">
+        <TransitionGroup name="fade-slide">
+          <!-- DATES -->
+          <li v-for="date in selectedDates" :key="date"
+            class="w-full text-sm text-gray-600 flex items-center justify-between py-1">
+            <span>{{ formatDate(date) }}</span>
+            <button @click="toggleSelectedDate(date)" class="text-xs text-red-500 hover:underline">
+              Remove
+            </button>
+          </li>
+          <!-- MESSAGE -->
+          <li v-if="selectedDates.length === 0" class="text-sm text-gray-500 py-1">
+            No classes selected
+          </li>
+        </TransitionGroup>
+      </ul>
+    </div>
+    <div class="flex items-center justify-end gap-x-6 border-t border-gray-300 pt-4 mt-6 lg:row-start-4 lg:col-span-2">
+      <button @click="resetSelectedDates" type="button" :class="cn('text-sm/6 font-semibold text-gray-900 transition', {
+        'opacity-50 cursor-not-allowed': selectedDates.length === 0,
+      })">Reset</button>
+      <button type="submit" data-testid="change-password-submit"
+        class="transition rounded-md bg-primary px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">Save</button>
     </div>
   </div>
 
-  <!-- DIVIDER -->
-  <div class="w-full border-t border-gray-300 mt-6"></div>
-
-  <!-- SELECTED CLASSES -->
-  <div class="mt-6 space-y-2">
-    <h3 class="text-sm font-semibold text-gray-700">Your selected classes</h3>
-
-    <ul class="relative" ref="selectedDatesRef">
-      <TransitionGroup name="fade-slide">
-        <!-- DATES -->
-        <li v-for="date in selectedDates" :key="date"
-          class="w-full text-sm text-gray-600 flex items-center justify-between py-1">
-          <span>{{ formatDate(date) }}</span>
-          <button @click="toggleSelectedDate(date)" class="text-xs text-red-500 hover:underline">
-            Remove
-          </button>
-        </li>
-
-        <!-- MESSAGE -->
-        <li v-if="selectedDates.length === 0" class="text-sm text-gray-500 py-1">
-          No classes selected
-        </li>
-      </TransitionGroup>
-    </ul>
-  </div>
 </template>
 
 <style scoped>
