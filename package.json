@@ -25,6 +25,7 @@
     "clsx": "^2.1.1",
     "nanostores": "^0.10.3",
     "nodemailer": "^6.10.0",
+    "pinia": "^3.0.2",
     "swiper": "^11.1.4",
     "tailwind-merge": "^3.0.1",
     "tailwindcss": "^4.0.7",

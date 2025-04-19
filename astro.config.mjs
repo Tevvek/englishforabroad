@@ -8,7 +8,7 @@ import vercel from "@astrojs/vercel";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [vue()],
+  integrations: [vue({ appEntrypoint: "/src/pages/_app" })],
 
   vite: {
     plugins: [tailwindcss(), svgLoader()],
