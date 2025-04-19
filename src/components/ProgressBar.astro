@@ -1,0 +1,112 @@
+---
+import cn from "@/utils/cn";
+import Check from "@/icons/check.svg";
+
+type Props = {
+  checkmarks?: boolean;
+  items: {
+    name: string;
+    completed?: boolean;
+  }[];
+};
+
+const { checkmarks = true, items } = Astro.props;
+
+function getProgressPercent(i: number, totalSteps: number): number {
+  if (i === 0) return 0;
+  if (i === totalSteps - 1) return 100;
+
+  const stepWidth = 100 / totalSteps;
+  const halfStep = stepWidth / 2;
+  const centeredPosition = i * stepWidth + halfStep;
+
+  return centeredPosition;
+}
+
+const lastCompletedIdx = Math.max(
+  items.findLastIndex((cls) => cls.completed),
+  0
+);
+
+const progressWidth = getProgressPercent(lastCompletedIdx, items.length);
+---
+
+<div>
+  <!-- TITLE -->
+  {
+    Astro.slots.has("title") && (
+      <h4 class="sr-only">
+        <slot name="title" />
+      </h4>
+    )
+  }
+
+  <!-- HEADER -->
+
+  {
+    Astro.slots.has("header") && (
+      <p class="text-sm font-medium text-gray-900">
+        <slot name="header" />
+      </p>
+    )
+  }
+
+  <!-- BAR -->
+  <div class="mt-6" aria-hidden="true">
+    <!-- PROGRESS -->
+    <div class="rounded-full bg-gray-200 relative">
+      <div class="h-2 rounded-full bg-primary" style=`width: ${progressWidth}%`>
+      </div>
+
+      {
+        checkmarks && (
+          <div
+            class="grid text-sm font-medium text-gray-600 absolute w-full top-1/2 left-0 -translate-y-1/2"
+            style={`grid-template-columns: repeat(${items.length}, 1fr)`}
+          >
+            {items.map((cls) => (
+              <div
+                class={cn(
+                  "flex first:justify-start last:justify-end justify-center",
+                  {
+                    "text-primary": cls.completed,
+                  }
+                )}
+              >
+                <div
+                  class={cn(
+                    "flex items-center justify-center size-5 rounded-full p-1",
+                    {
+                      "bg-primary text-white": cls.completed,
+                      "bg-gray-200 text-gray-400": !cls.completed,
+                    }
+                  )}
+                >
+                  <Check />
+                </div>
+              </div>
+            ))}
+          </div>
+        )
+      }
+    </div>
+
+    <!-- ITEMS -->
+    <div
+      class="mt-6 hidden text-sm font-medium text-gray-600 sm:grid"
+      style={`grid-template-columns: repeat(${items.length}, 1fr)`}
+    >
+      {
+        items.map((cls) => (
+          <div
+            class={cn("first:text-start text-center last:text-right", {
+              "text-primary": cls.completed,
+            })}
+          >
+            {cls.name}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</div>

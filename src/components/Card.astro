@@ -1,17 +1,21 @@
 ---
-interface Props {
-  title: string;
-  description: string;
-  icon: any;
-}
-
-const { title, description, icon: Icon } = Astro.props;
+import cn from "@/utils/cn";
 ---
 
 <div
-  class="hover:scale-105 sm:hover:scale-110 transition relative flex flex-col gap-y-2 rounded-xl border border-accent text-primary p-4 bg-white shadow-lg"
+  class={cn("overflow-hidden rounded-lg bg-white shadow-sm", {
+    "divide-y divide-gray-200": Astro.slots.has("header"),
+  })}
 >
-  <Icon />
-  <h3 class="text-lg font-bold">{title}</h3>
-  <p>{description}</p>
+  {
+    Astro.slots.has("header") && (
+      <div class="px-4 py-5 sm:px-6 ">
+        <slot name="header" />
+      </div>
+    )
+  }
+
+  <div class="px-4 py-5 sm:p-6">
+    <slot />
+  </div>
 </div>
