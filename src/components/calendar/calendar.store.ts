@@ -9,6 +9,12 @@ export type CalendarDay = {
   isSelected: boolean;
 };
 
+export type SelectedDate = {
+  date: string;
+  locked?: boolean;
+  isWiggling?: boolean;
+};
+
 const TOTAL_CALENDAR_CELLS = 42;
 
 export const useCalendarStore = defineStore("calendar", () => {
@@ -16,7 +22,7 @@ export const useCalendarStore = defineStore("calendar", () => {
 
   // 🌟 State
   const currentDate = ref(new Date(today.getFullYear(), today.getMonth(), 1));
-  const selectedDates = ref<string[]>([]);
+  const selectedDates = ref<SelectedDate[]>([]);
   const groupWeekly = ref(true);
   const packageLimit = ref(5);
 
@@ -46,7 +52,9 @@ export const useCalendarStore = defineStore("calendar", () => {
         date: dateString,
         isCurrentMonth: current.getMonth() === month,
         isToday: current.toDateString() === new Date().toDateString(),
-        isSelected: selectedDates.value.includes(dateString),
+        isSelected: selectedDates.value.some(
+          (selected) => selected.date === dateString
+        ),
       });
     }
 
@@ -72,19 +80,31 @@ export const useCalendarStore = defineStore("calendar", () => {
 
   // ✅ Selection logic
   function addDate(date: string) {
-    selectedDates.value.push(date);
+    selectedDates.value.push({
+      date,
+    });
     selectedDates.value.sort(
-      (a, b) => new Date(a).getTime() - new Date(b).getTime()
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
     );
   }
 
   function toggleSelectedDate(date: string) {
-    const index = selectedDates.value.indexOf(date);
+    const index = selectedDates.value.findIndex(
+      (selected) => selected.date === date
+    );
     if (index === -1) {
       addDate(date);
-    } else {
-      selectedDates.value.splice(index, 1);
+      return;
     }
+
+    // Prevent removing if it's locked
+    if (selectedDates.value[index].locked) {
+      toast.warning("You can't remove a locked class. Unlock it first.");
+      triggerShake(date);
+      return;
+    }
+
+    selectedDates.value.splice(index, 1);
   }
 
   function onCalendarDayClick(day: CalendarDay) {
@@ -103,13 +123,14 @@ export const useCalendarStore = defineStore("calendar", () => {
       selectedDates.value = Array.from({ length: 5 }, (_, i) => {
         const d = new Date(base);
         d.setDate(base.getDate() + i * 7);
-        return d.toLocaleDateString("en-CA");
+        const date = d.toLocaleDateString("en-CA");
+        return { date };
       });
       return;
     }
 
     if (
-      !selectedDates.value.includes(day.date) &&
+      !selectedDates.value.some((selected) => selected.date === day.date) &&
       selectedDates.value.length >= packageLimit.value
     ) {
       toast.warning(
@@ -126,6 +147,21 @@ export const useCalendarStore = defineStore("calendar", () => {
     selectedDates.value = [];
   }
 
+  function toggleLock(date: string) {
+    const item = selectedDates.value.find((d) => d.date === date);
+    if (item) item.locked = !item.locked;
+  }
+
+  function triggerShake(date: string) {
+    const item = selectedDates.value.find((d) => d.date === date);
+    if (!item) return;
+
+    item.isWiggling = true;
+    setTimeout(() => {
+      item.isWiggling = false;
+    }, 500); // match animation duration
+  }
+
   return {
     currentDate,
     selectedDates,
@@ -138,5 +174,7 @@ export const useCalendarStore = defineStore("calendar", () => {
     toggleSelectedDate,
     onCalendarDayClick,
     resetDates,
+    toggleLock,
+    triggerShake,
   };
 });
