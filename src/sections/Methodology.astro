@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import Card from "@/components/Card.astro";
+import MethodologyCard from "@/components/MethodologyCard.astro";
 import Calendar from "@/icons/Calendar.astro";
 import Certficate from "@/icons/Certificate.astro";
 import Notebook from "@/icons/Notebook.astro";
@@ -56,7 +56,7 @@ const cards = [
 
     <!-- Cards -->
     <div class="grid gap-6 sm:grid-cols-2 sm:gap-8 md:col-span-2 lg:col-span-1">
-      {cards.map((card) => <Card {...card} />)}
+      {cards.map((card) => <MethodologyCard {...card} />)}
     </div>
   </div>
 </section>
