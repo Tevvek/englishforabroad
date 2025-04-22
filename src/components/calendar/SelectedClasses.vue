@@ -30,6 +30,7 @@ watch(
                 const element = el as HTMLElement;
                 const top = element.offsetTop;
                 element.style.top = `${top}px`;
+                element.style.gridTemplateColumns = "auto 1fr auto"; // this is the same as the grid-cols-subgrid class
             });
         }
     },
@@ -41,23 +42,21 @@ watch(
     <!-- SELECTED CLASSES -->
     <div class="mt-6 space-y-2 lg:col-start-2">
         <h3 class="text-sm font-semibold text-gray-700">Your selected classes</h3>
-        <ul class="relative" ref="selectedDatesRef">
+        <ul class="relative grid grid-cols-[auto_1fr_auto]" ref="selectedDatesRef">
             <TransitionGroup name="fade-slide">
-                <li v-if="hasSelectedDates" class="w-full text-sm text-gray-600 flex items-center justify-between py-1 gap-2
-                    border-gray-300 border-b mb-1 pb-2
-                    ">
-                    <div class="flex items-center gap-2">
-                        <button @click="toggleLockAll" :class="cn(
-                            'text-gray-400 hover:text-gray-600 transition-transform duration-300',
-                        )">
+                <li v-if="hasSelectedDates"
+                    class="w-full text-sm text-gray-600 py-1 gap-2 border-gray-300 border-b mb-1 pb-2 grid grid-cols-subgrid col-span-3">
+                    <button @click="toggleLockAll" :class="cn(
+                        'text-gray-400 hover:text-gray-600 transition-transform duration-300',
+                    )">
 
-                            <component :is="allLocked ? LockClosedIcon : LockOpenIcon" class="size-4" />
-                        </button>
-                        <span>Dates</span>
-                    </div>
+                        <component :is="allLocked ? LockClosedIcon : LockOpenIcon" class="size-4" />
+                    </button>
+
+                    <span>Dates</span>
 
                     <button @click="resetDates" :class="cn(
-                        'text-xs text-red-500 hover:underline transition',
+                        'text-xs text-red-500 hover:underline transition justify-self-end',
                         { 'opacity-50 pointer-events-none hover:no-underline': hasLockedDates }
                     )">
                         Remove all
@@ -66,27 +65,30 @@ watch(
 
                 <!-- DATES -->
                 <li v-for="item in selectedDates" :key="item.date"
-                    class="w-full text-sm text-gray-600 flex items-center justify-between py-1 gap-2">
-                    <div class="flex items-center gap-2">
-                        <button @click="toggleLock(item.date)" :class="cn(
-                            'text-gray-400 hover:text-gray-600 transition-transform duration-300',
-                            { 'animate-shake': item.isWiggling }
-                        )">
+                    class="w-full text-sm text-gray-600 py-1 gap-2 grid col-span-3 grid-cols-subgrid ">
 
-                            <component :is="item.locked ? LockClosedIcon : LockOpenIcon" class="size-4" />
-                        </button>
-                        <span>{{ formatDate(item.date) }}</span>
-                    </div>
+                    <!-- LOCK -->
+                    <button @click="toggleLock(item.date)" :class="cn(
+                        'text-gray-400 hover:text-gray-600 transition-transform duration-300',
+                        { 'animate-shake': item.isWiggling }
+                    )">
 
+                        <component :is="item.locked ? LockClosedIcon : LockOpenIcon" class="size-4" />
+                    </button>
+
+                    <!-- DATE -->
+                    <span>{{ formatDate(item.date) }}</span>
+
+                    <!-- REMOVE -->
                     <button @click="toggleSelectedDate(item.date)" :class="cn(
-                        'text-xs text-red-500 hover:underline transition',
+                        'text-xs text-red-500 hover:underline transition justify-self-end',
                         { 'opacity-50 pointer-events-none hover:no-underline': item.locked }
                     )">
                         Remove
                     </button>
                 </li>
                 <!-- MESSAGE -->
-                <li v-if="!hasSelectedDates" class="text-sm text-gray-500 py-1">
+                <li v-if="!hasSelectedDates" class="text-sm text-gray-500 py-1 grid col-span-3">
                     No classes selected
                 </li>
             </TransitionGroup>
