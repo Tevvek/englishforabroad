@@ -33,6 +33,10 @@ export const useCalendarStore = defineStore("calendar", () => {
       year: "numeric",
     })
   );
+  const hasLockedDates = computed(() =>
+    selectedDates.value.some((date) => date.locked)
+  );
+  const hasSelectedDates = computed(() => selectedDates.value.length !== 0);
 
   const daysInCalendar = computed(() => {
     const days: CalendarDay[] = [];
@@ -126,6 +130,10 @@ export const useCalendarStore = defineStore("calendar", () => {
         const date = d.toLocaleDateString("en-CA");
         return { date };
       });
+
+      // ✅ Automatically turn off groupWeekly after selecting
+      groupWeekly.value = false;
+
       return;
     }
 
@@ -176,5 +184,7 @@ export const useCalendarStore = defineStore("calendar", () => {
     resetDates,
     toggleLock,
     triggerShake,
+    hasLockedDates,
+    hasSelectedDates,
   };
 });

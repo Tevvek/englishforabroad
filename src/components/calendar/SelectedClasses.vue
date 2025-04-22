@@ -16,7 +16,7 @@ function formatDate(date: string): string {
 const selectedDatesRef = useTemplateRef("selectedDatesRef");
 
 const store = useCalendarStore();
-const { selectedDates, groupWeekly } = storeToRefs(store);
+const { hasSelectedDates, selectedDates, groupWeekly } = storeToRefs(store);
 const { toggleSelectedDate, toggleLock } = store;
 
 watch(
@@ -65,7 +65,7 @@ watch(
                     </button>
                 </li>
                 <!-- MESSAGE -->
-                <li v-if="selectedDates.length === 0" class="text-sm text-gray-500 py-1">
+                <li v-if="!hasSelectedDates" class="text-sm text-gray-500 py-1">
                     No classes selected
                 </li>
             </TransitionGroup>
