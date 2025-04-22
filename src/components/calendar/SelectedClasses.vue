@@ -16,8 +16,8 @@ function formatDate(date: string): string {
 const selectedDatesRef = useTemplateRef("selectedDatesRef");
 
 const store = useCalendarStore();
-const { hasSelectedDates, selectedDates, groupWeekly } = storeToRefs(store);
-const { toggleSelectedDate, toggleLock } = store;
+const { hasLockedDates, hasSelectedDates, selectedDates, groupWeekly, allLocked } = storeToRefs(store);
+const { toggleSelectedDate, toggleLock, toggleLockAll, resetDates } = store;
 
 watch(
     selectedDates,
@@ -43,6 +43,27 @@ watch(
         <h3 class="text-sm font-semibold text-gray-700">Your selected classes</h3>
         <ul class="relative" ref="selectedDatesRef">
             <TransitionGroup name="fade-slide">
+                <li v-if="hasSelectedDates" class="w-full text-sm text-gray-600 flex items-center justify-between py-1 gap-2
+                    border-gray-300 border-b mb-1 pb-2
+                    ">
+                    <div class="flex items-center gap-2">
+                        <button @click="toggleLockAll" :class="cn(
+                            'text-gray-400 hover:text-gray-600 transition-transform duration-300',
+                        )">
+
+                            <component :is="allLocked ? LockClosedIcon : LockOpenIcon" class="size-4" />
+                        </button>
+                        <span>Dates</span>
+                    </div>
+
+                    <button @click="resetDates" :class="cn(
+                        'text-xs text-red-500 hover:underline transition',
+                        { 'opacity-50 pointer-events-none hover:no-underline': hasLockedDates }
+                    )">
+                        Remove all
+                    </button>
+                </li>
+
                 <!-- DATES -->
                 <li v-for="item in selectedDates" :key="item.date"
                     class="w-full text-sm text-gray-600 flex items-center justify-between py-1 gap-2">

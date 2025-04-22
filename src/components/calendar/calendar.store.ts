@@ -37,6 +37,11 @@ export const useCalendarStore = defineStore("calendar", () => {
     selectedDates.value.some((date) => date.locked)
   );
   const hasSelectedDates = computed(() => selectedDates.value.length !== 0);
+  const allLocked = computed(
+    () =>
+      selectedDates.value.length > 0 &&
+      selectedDates.value.every((date) => date.locked)
+  );
 
   const daysInCalendar = computed(() => {
     const days: CalendarDay[] = [];
@@ -152,12 +157,29 @@ export const useCalendarStore = defineStore("calendar", () => {
 
   // 🔁 Reset
   function resetDates() {
+    if (!hasSelectedDates.value) {
+      toast.warning("No dates to reset.");
+      return;
+    }
+
+    if (hasLockedDates.value) {
+      toast.warning("You can't reset dates with locked classes.");
+      return;
+    }
+
     selectedDates.value = [];
   }
 
   function toggleLock(date: string) {
     const item = selectedDates.value.find((d) => d.date === date);
     if (item) item.locked = !item.locked;
+  }
+
+  function toggleLockAll() {
+    const shouldLock = !allLocked.value;
+    selectedDates.value.forEach((item) => {
+      item.locked = shouldLock;
+    });
   }
 
   function triggerShake(date: string) {
@@ -186,5 +208,7 @@ export const useCalendarStore = defineStore("calendar", () => {
     triggerShake,
     hasLockedDates,
     hasSelectedDates,
+    allLocked,
+    toggleLockAll,
   };
 });
