@@ -6,15 +6,15 @@ import PurchaseClasses from "@/components/dashboard/cards/PurchaseClasses.astro"
 import DashboardLayout from "@/layouts/DashboardLayout.astro";
 
 const classes = [
-  { name: "Class #1" },
-  { name: "Class #2", missed: true },
-  { name: "Class #3", completed: true },
+  { name: "Class #1", completed: true },
+  { name: "Class #2" },
+  { name: "Class #3" },
   { name: "Class #4" },
 ];
 ---
 
 <DashboardLayout title="English for Abroad - Dashboard">
-  <div class="grid grid-rows-2 gap-6">
+  <div class="grid gap-6">
     <!-- #1 No classes purchased -->
     <ProgressTracker items={classes} />
 
