@@ -31,12 +31,6 @@ export default defineConfig({
         context: "server",
         access: "secret",
       }),
-      STRAPI_URL: envField.string({ context: "server", access: "secret" }),
-      STRAPI_API_TOKEN: envField.string({
-        context: "server",
-        access: "secret",
-      }),
-
       MODE: envField.enum({
         context: "client",
         access: "public",
