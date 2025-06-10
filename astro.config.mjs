@@ -14,10 +14,6 @@ export default defineConfig({
     plugins: [tailwindcss(), svgLoader()],
   },
 
-  experimental: {
-    svg: true,
-  },
-
   adapter: vercel(),
 
   env: {
