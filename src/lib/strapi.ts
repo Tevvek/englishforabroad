@@ -1,4 +1,6 @@
-import { STRAPI_URL, STRAPI_API_TOKEN } from "astro:env/server";
+// TODO this file does not work!! needs fixing
+// TODO comment out when deploying to Vercel
+// import { STRAPI_URL, STRAPI_API_TOKEN } from "astro:env/server";
 
 export default async function fetchApi<T>({
   endpoint,
@@ -13,7 +15,8 @@ export default async function fetchApi<T>({
     endpoint = endpoint.slice(1);
   }
 
-  const url = new URL(`${STRAPI_URL}/api/${endpoint}`);
+  //   const url = new URL(`${STRAPI_URL}/api/${endpoint}`);
+  const url = new URL("http://thisisnottobeused.com");
 
   if (query) {
     Object.entries(query).forEach(([key, value]) => {
@@ -25,9 +28,9 @@ export default async function fetchApi<T>({
     "Content-Type": "application/json",
   };
 
-  if (authToken || STRAPI_API_TOKEN) {
-    headers.Authorization = `Bearer ${authToken || STRAPI_API_TOKEN}`;
-  }
+  //   if (authToken || STRAPI_API_TOKEN) {
+  //     headers.Authorization = `Bearer ${authToken || STRAPI_API_TOKEN}`;
+  //   }
 
   const res = await fetch(url.toString(), {
     method,

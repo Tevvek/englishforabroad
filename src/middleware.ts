@@ -8,7 +8,7 @@ const guestOnlyRoutes = ["/login", "/register"];
 const protectedApiRoutes = ["/api/settings/change-password"];
 
 export const onRequest = defineMiddleware(
-  async ({ locals, cookies, url, redirect }, next) => {
+  async ({ locals, cookies, url, redirect, isPrerendered }, next) => {
     const pathname = url.pathname;
 
     const isProtected = protectedRoutes.some((route) =>
@@ -20,9 +20,7 @@ export const onRequest = defineMiddleware(
     );
 
     // 🚀 Early return if public route
-    if (!isProtected && !isGuestOnly && !isProtectedApi) {
-      return next(); // skip token logic entirely
-    }
+    if (isPrerendered) return next();
 
     const token = cookies.get("english-for-abroad-token")?.value;
     let user: User | null = null;
