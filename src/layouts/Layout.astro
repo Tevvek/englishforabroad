@@ -1,6 +1,5 @@
 ---
 import "@/styles/global.css";
-import "@fontsource-variable/nunito";
 import { ClientRouter } from "astro:transitions";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -67,7 +66,8 @@ const { title } = Astro.props;
       defer></script>
   </head>
   <body>
-    <Toaster position="top-center" client:load />
+    <Toaster position="top-center" client:only="vue" />
+
     <slot name="navbar" />
 
     <slot name="fixed-cta" />

@@ -1,0 +1,48 @@
+---
+import "@/styles/global.css";
+import { ClientRouter } from "astro:transitions";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "English for Abroad - Freebie",
+  description = "English for Abroad - Freebie",
+} = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <!-- BASE -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <ClientRouter />
+
+    <!-- SEO: title, description, keywords, viewport -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta
+      name="keywords"
+      content="ESL Classes, Online Lessons, Business English, English Tutoring, Conversation Course"
+    />
+
+    <!-- OPEN GRAPH -->
+    <meta property="og:title" content={title} />
+    <meta
+      property="og:description"
+      content="Private, personalized English lessons for kids and adults. From conversation and business to writing and test prep—tailored to your goals, all levels welcome. Start your learning journey today!"
+    />
+    <meta
+      property="og:image"
+      content="https://www.englishforabroad.com/logo.png"
+    />
+    <meta property="og:url" content="https://www.englishforabroad.com/" />
+    <meta property="og:type" content="website" />
+  </head>
+  <body class="bg-surface h-full">
+    <slot />
+  </body>
+</html>
