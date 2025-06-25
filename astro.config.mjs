@@ -6,9 +6,11 @@ import svgLoader from "vite-svg-loader";
 
 import vercel from "@astrojs/vercel";
 
+import react from "@astrojs/react";
+
 // https://astro.build/config
 export default defineConfig({
-  integrations: [vue()],
+  integrations: [vue(), react()],
 
   vite: {
     plugins: [tailwindcss(), svgLoader()],
@@ -18,6 +20,7 @@ export default defineConfig({
 
   env: {
     schema: {
+      // Recaptcha
       PUBLIC_RECAPTCHA_SITE_KEY: envField.string({
         context: "client",
         access: "public",
@@ -26,10 +29,28 @@ export default defineConfig({
         context: "server",
         access: "secret",
       }),
+
+      // Email setup
       GMAIL_APP_EMAIL: envField.string({ context: "server", access: "secret" }),
       GMAIL_APP_PASSWORD: envField.string({
         context: "server",
         access: "secret",
+      }),
+
+      // Strapi CMS
+
+      // Stripe payments
+
+      // Brevo email marketing
+      BREVO_API_KEY: envField.string({
+        context: "server",
+        access: "secret",
+      }),
+
+      // Other
+      SITE: envField.string({
+        context: "server",
+        access: "public",
       }),
       MODE: envField.enum({
         context: "client",
