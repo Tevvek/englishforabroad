@@ -1,0 +1,33 @@
+---
+/**
+ * We use this component so we have a consistent way to wrap sections.
+ * We separate the "Tag" which by default is a section with its inner div so that if needed, we can pass a background color
+ * which would take the entire width but only contain the content of the section.
+ */
+import { cn } from "@/lib/utils";
+
+type Props = {
+  tag?: keyof HTMLElementTagNameMap;
+  id?: string;
+  class?: string;
+};
+const { tag: Tag = "section", id, class: className } = Astro.props;
+---
+
+<Tag
+  id={id}
+  class={cn(
+    // vertical spacing
+    "py-16 md:py-24",
+
+    // horizontal spacing
+    "px-4 md:px-8 lg:px-12 xl:px-16",
+
+    // rest
+    className
+  )}
+>
+  <div class="max-w-3xl mx-auto">
+    <slot />
+  </div>
+</Tag>

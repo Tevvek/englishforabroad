@@ -55,12 +55,11 @@ export default function FreebieForm() {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>First name</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="First name"
+                  placeholder="Your name"
                   {...field}
-                  className="bg-white"
+                  className="bg-white h-12 text-center"
                 />
               </FormControl>
               <FormMessage />
@@ -72,12 +71,11 @@ export default function FreebieForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
               <FormControl>
                 <Input
                   placeholder="your@email.com"
                   {...field}
-                  className="bg-white"
+                  className="bg-white h-12 text-center"
                 />
               </FormControl>
               <FormMessage />
@@ -85,7 +83,10 @@ export default function FreebieForm() {
           )}
         />
 
-        <Button type="submit" className="bg-peach w-full">
+        <Button
+          type="submit"
+          className="w-full bg-orange-500 hover:bg-orange-600 text-white h-12 font-semibold uppercase"
+        >
           Download now
         </Button>
       </form>

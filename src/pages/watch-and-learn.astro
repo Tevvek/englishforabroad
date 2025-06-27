@@ -1,7 +1,7 @@
 ---
 import FreebieLayout from "@/layouts/FreebieLayout.astro";
 import FreebieForm from "./_freebie-form";
-import { Check } from "lucide-react";
+import { CheckCircle } from "lucide-react";
 import { Image } from "astro:assets";
 
 import resourcesImage from "@/assets/freebie/01-resources.webp";
@@ -9,123 +9,167 @@ import watchAndLearnImage from "@/assets/freebie/02-watch-and-learn.webp";
 import stepsImage from "@/assets/freebie/03-steps.webp";
 
 import aliImage from "@/images/ali.webp";
+import Section from "@/components/Section.astro";
+import { cn } from "@/lib/utils";
 ---
 
 <FreebieLayout>
-  <main class="py-8 bg-surface overflow-x-hidden">
-    <section class="px-8 max-w-2xl mx-auto">
-      <p class="uppercase text-center text-sm mb-2 text-balance">
+  <main class="bg-surface overflow-x-hidden">
+    <!-- Hero section -->
+    <Section id="hero" class="text-balance text-center">
+      <p class="text-sm font-medium text-gray-600 mb-4 tracking-wide uppercase">
         Stuck in that "I understand, but I can't speak" feeling?
       </p>
-      <h1 class="uppercase text-4xl text-center mb-4 text-balance">
+      <h1 class="text-4xl md:text-6xl text-gray-900 mb-6 leading-tight">
         Learn to speak English Confidently using TV SHOWS!
       </h1>
-      <p class="text-lg text-center mb-8 text-balance">
+      <p class="text-lg text-gray-700 mb-8 leading-relaxed">
         Subscribe to get your free guide, plus language tips and early access to
         new offers and resources to help you speak English with confidence.
       </p>
       <FreebieForm client:visible />
-    </section>
+    </Section>
 
-    <section
-      class="bg-gradient-to-b from-surface from-50% to-accent-custom to-50% py-16"
+    <Section
+      class="bg-gradient-to-b from-surface from-50% to-50% to-white pt-0 md:pt-0"
     >
-      <div class="relative h-64">
-        <!-- 01 most left -->
+      <div
+        class="flex relative aspect-[210/297] w-[clamp(12rem,_50vw,_28rem)] mx-auto"
+      >
         <div
-          class="absolute mx-auto inset-0 h-64 w-52 bg-slate-300 -translate-x-20 -rotate-12 shadow-2xl"
+          class={cn(
+            // width
+            "aspect-[210/297] w-[clamp(12rem,_50vw,_28rem)]",
+
+            // transformations
+            "absolute inset-0 -translate-x-[clamp(3rem,_10vw,_20rem)] translate-y-16 -rotate-6"
+          )}
         >
           <Image
             src={resourcesImage}
-            alt="Freebie resources image"
-            class="object-cover h-full object-top-left"
+            alt="Resources"
+            class="object-cover size-full object-top-left shadow-lg"
           />
         </div>
-
-        <!-- 02 centered on top of everything-->
         <div
-          class="absolute mx-auto inset-0 h-64 w-52 bg-slate-300 z-10 shadow-2xl"
+          class={cn(
+            // width
+            "aspect-[210/297] w-[clamp(12rem,_50vw,_28rem)]",
+
+            // transformations
+            "absolute inset-0 z-10"
+          )}
         >
           <Image
             src={watchAndLearnImage}
-            alt="Freebie watch and learn image"
-            class="object-cover h-full"
+            alt="Watch and Learn"
+            class="object-cover size-full object-top-left shadow-lg"
           />
         </div>
-        <!-- 03 most right -->
         <div
-          class="absolute mx-auto inset-0 h-64 w-52 bg-slate-300 translate-x-20 rotate-12 shadow-2xl"
+          class={cn(
+            // width
+            "aspect-[210/297] w-[clamp(12rem,_50vw,_28rem)]",
+
+            // transformations
+            "absolute inset-0 translate-x-[clamp(3rem,_10vw,_20rem)] translate-y-8 rotate-6"
+          )}
         >
           <Image
             src={stepsImage}
-            alt="Freebie steps image"
-            class="object-cover h-full object-top-right"
+            alt="Steps"
+            class="object-cover size-full object-top-left shadow-lg"
           />
         </div>
       </div>
-    </section>
+    </Section>
 
-    <section class="bg-accent-custom px-8 pb-8">
-      <div class="2xl:container mx-auto">
-        <h2 class="text-3xl mb-4 uppercase text-center">What you'll get</h2>
-        <ul class="grid gap-y-2 md:grid-cols-2">
-          <li class="flex gap-x-2 items-center">
-            <Check className="size-4" />
-            <span>
-              Easy, low-pressure ways to turn your TV time into real speaking
-              practice
-            </span>
-          </li>
-          <li class="flex gap-x-2 items-center">
-            <Check className="size-4" />
-            <span>
-              Tricks to build English into your routine in a way that feels fun
-              & flexible
-            </span>
-          </li>
-          <li class="flex gap-x-2 items-center">
-            <Check className="size-4" />
-            <span>
-              Tools to gain the confidence to talk about shows in English
-            </span>
-          </li>
-          <li class="flex gap-x-2 items-center">
-            <Check className="size-4" />
-            <span>
-              Access to dozens of show recommendations for practicing English
-            </span>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <section
-      class="bg-surface px-8 pt-8 grid md:grid-cols-2 md:grid-rows-[auto_1fr] 2xl:container mx-auto"
-    >
-      <div class="md:col-start-1 md:row-start-1 text-center md:text-left">
-        <p class="text-sm mb-2 uppercase">Behind the guide</p>
-        <h2 class="text-3xl mb-4 uppercase">Hi! I'm Ali</h2>
-      </div>
-
-      <div
-        class="md:col-start-2 md:row-start-1 md:row-span-2 max-w-xs mb-4 mx-auto"
+    <!-- What'll you get section -->
+    <Section id="what-you-get" class="bg-white text-center">
+      <h2
+        class="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight uppercase"
       >
-        <Image src={aliImage} alt="My face" />
-      </div>
+        What's included?
+      </h2>
 
-      <div class="md:col-start-1 md:row-start-2">
-        <p class="mb-2">
-          I help English learners who understand a lot but still feel stuck when
-          it's time to speak. If you're tired of studying lots and still not
-          feeling confident in real conversations, you're not alone!
-        </p>
-        <p class="">
-          With two Master's degrees and over 1,000 students taught, I focus on
-          helping you sound natural, speak with confidence, and enjoy expressing
-          yourself in English, especially when you're abroad and want to connect
-          with others in real life.
-        </p>
+      <div class="text-left grid md:grid-cols-2 gap-4 md:gap-8 mb-12">
+        <div class="flex items-start space-x-3">
+          <CheckCircle className="h-5 w-5 text-orange-500 mt-1 flex-shrink-0" />
+          <span class="text-gray-700">
+            Easy, low-pressure ways to turn your TV time into real speaking
+            practice
+          </span>
+        </div>
+        <div class="flex items-start space-x-3">
+          <CheckCircle className="h-5 w-5 text-orange-500 mt-1 flex-shrink-0" />
+          <span class="text-gray-700">
+            Tricks to build English into your routine in a way that feels fun &
+            flexible
+          </span>
+        </div>
+        <div class="flex items-start space-x-3">
+          <CheckCircle className="h-5 w-5 text-orange-500 mt-1 flex-shrink-0" />
+          <span class="text-gray-700">
+            Tools to gain the confidence to talk about shows in English
+          </span>
+        </div>
+        <div class="flex items-start space-x-3">
+          <CheckCircle className="h-5 w-5 text-orange-500 mt-1 flex-shrink-0" />
+          <span class="text-gray-700">
+            Access to dozens of show recommendations for practicing English
+          </span>
+        </div>
       </div>
-    </section>
+    </Section>
+
+    <!-- About me section -->
+    <Section id="about-me" class="bg-surface text-center">
+      <p class="text-sm font-medium text-gray-600 mb-4 tracking-wide uppercase">
+        Behind the guide
+      </p>
+      <h2
+        class="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight uppercase"
+      >
+        Hi! I'm Ali
+      </h2>
+
+      <div class="grid md:grid-cols-2 place-items-center gap-8">
+        <Image
+          src={aliImage}
+          alt="Hi! I'm Ali! Your english teacher"
+          class="md:col-start-2 place-self-center max-w-sm w-full"
+        />
+
+        <div class="space-y-4 text-left md:col-start-1 md:row-start-1">
+          <p class="text-lg text-gray-700 leading-relaxed">
+            I help English learners who understand a lot but still feel stuck
+            when it's time to speak. If you're tired of studying lots and still
+            not feeling confident in real conversations, you're not alone!
+          </p>
+          <p class="text-lg text-gray-700 leading-relaxed">
+            With two Master's degrees and over 1,000 students taught, I focus on
+            helping you sound natural, speak with confidence, and enjoy
+            expressing yourself in English, especially when you're abroad and
+            want to connect with others in real life.
+          </p>
+        </div>
+      </div>
+    </Section>
+
+    <!-- Footer -->
+    <Section id="footer" class="bg-black text-center text-balance" tag="footer">
+      <p class="text-sm font-medium mb-4 tracking-wide uppercase text-white">
+        Stuck in that "I understand, but I can't speak" feeling?
+      </p>
+      <h2 class="text-3xl md:text-4xl mb-6 leading-tight text-white">
+        Learn to speak English Confidently using TV SHOWS!
+      </h2>
+      <p class="text-lg mb-8 leading-relaxed text-white">
+        Subscribe to get your free guide, plus language tips and early access to
+        new offers and resources to help you speak English with confidence.
+      </p>
+
+      <FreebieForm client:visible />
+    </Section>
   </main>
 </FreebieLayout>

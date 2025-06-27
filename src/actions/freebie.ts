@@ -35,7 +35,7 @@ export const freebie = defineAction({
 
     return {
       success: true,
-      message: "Subscribed to newsletter!",
+      message: "Check your email inbox for the guide!",
     };
   },
 });
