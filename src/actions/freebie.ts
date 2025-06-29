@@ -43,7 +43,11 @@ export const freebie = defineAction({
 
     return {
       success: true,
-      message: "Check your email inbox for the guide!",
+      message: `🎉 You're in!
+      Check your inbox— your free guide is on its way!
+      (It might land in Promotions or Spam, so be sure to check there too.)
+
+      Can't find it? Email me anytime at ali@englishforabroad.com`,
     };
   },
 });

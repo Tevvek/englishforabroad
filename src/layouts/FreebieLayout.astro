@@ -1,5 +1,6 @@
 ---
 import "@/styles/global.css";
+import { Toaster } from "@/components/ui/sonner";
 import { ClientRouter } from "astro:transitions";
 
 interface Props {
@@ -43,6 +44,7 @@ const {
     <meta property="og:type" content="website" />
   </head>
   <body class="bg-surface h-full">
+    <Toaster client:visible position="top-center" />
     <slot />
   </body>
 </html>

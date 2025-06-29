@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -12,7 +11,8 @@ import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { actions } from "astro:actions";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const formSchema = z.object({
@@ -33,7 +33,7 @@ export default function FreebieForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     if (!values.consent) {
-      alert("You must consent to receive emails.");
+      toast.error("You must consent to receive emails.");
       return;
     }
 
@@ -45,20 +45,24 @@ export default function FreebieForm() {
 
     if (error) {
       console.error(error.message);
-      alert(error.message);
+      toast.error(error.message);
       return;
     }
 
     const { message } = data;
 
-    alert(message);
+    form.reset();
+    toast.success(message);
   }
+
+  const consent = useWatch({ control: form.control, name: "consent" });
+  const isValid = form.formState.isValid;
 
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-4 max-w-md mx-auto"
+        className="space-y-4 max-w-md mx-auto relative"
       >
         <FormField
           control={form.control}
@@ -115,7 +119,7 @@ export default function FreebieForm() {
 
         <Button
           type="submit"
-          disabled={!form.watch("consent") || !form.formState.isValid}
+          disabled={!consent || !isValid}
           className="w-full bg-orange-500 hover:bg-orange-600 text-white h-12 font-semibold uppercase"
         >
           Get your guide
