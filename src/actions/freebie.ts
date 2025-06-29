@@ -1,4 +1,4 @@
-import { defineAction } from "astro:actions";
+import { ActionError, defineAction } from "astro:actions";
 import { BREVO_API_KEY } from "astro:env/server";
 import { z } from "astro:schema";
 
@@ -8,8 +8,16 @@ export const freebie = defineAction({
   input: z.object({
     name: z.string(),
     email: z.string().email(),
+    consent: z.boolean().default(false).optional(),
   }),
-  handler: async ({ name, email }) => {
+  handler: async ({ name, email, consent }) => {
+    if (!consent) {
+      throw new ActionError({
+        code: "BAD_REQUEST",
+        message: "You must consent to receive emails",
+      });
+    }
+
     const response = await fetch("https://api.brevo.com/v3/contacts", {
       method: "POST",
       headers: {

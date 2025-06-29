@@ -2,12 +2,14 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { actions } from "astro:actions";
 import { useForm } from "react-hook-form";
@@ -16,6 +18,7 @@ import { z } from "zod";
 const formSchema = z.object({
   name: z.string().min(1, { message: "Name is required" }),
   email: z.string().email({ message: "Invalid email address" }),
+  consent: z.boolean().default(false).optional(),
 });
 
 export default function FreebieForm() {
@@ -24,18 +27,25 @@ export default function FreebieForm() {
     defaultValues: {
       name: "",
       email: "",
+      consent: false,
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    if (!values.consent) {
+      alert("You must consent to receive emails.");
+      return;
+    }
+
     const { error, data } = await actions.freebie({
       name: values.name,
       email: values.email,
+      consent: values.consent,
     });
 
     if (error) {
-      console.error(error);
-      alert("Failed to subscribe to newsletter");
+      console.error(error.message);
+      alert(error.message);
       return;
     }
 
@@ -83,11 +93,32 @@ export default function FreebieForm() {
           )}
         />
 
+        <FormField
+          control={form.control}
+          name="consent"
+          render={({ field }) => (
+            <FormItem className="flex items-center text-start text-wrap ">
+              <FormControl>
+                <Switch
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                  aria-readonly
+                />
+              </FormControl>
+              <FormLabel className="text-muted-foreground text-sm">
+                I agree to receive emails from English for Abroad. I can
+                unsubscribe at any time.
+              </FormLabel>
+            </FormItem>
+          )}
+        />
+
         <Button
           type="submit"
+          disabled={!form.watch("consent") || !form.formState.isValid}
           className="w-full bg-orange-500 hover:bg-orange-600 text-white h-12 font-semibold uppercase"
         >
-          Download now
+          Get your guide
         </Button>
       </form>
     </Form>
