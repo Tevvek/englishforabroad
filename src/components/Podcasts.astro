@@ -1,7 +1,6 @@
 ---
+import PodcastsTags from "@/components/PodcastsTags";
 import PodcastsCarousel from "@/components/PodcastsCarousel.vue";
-import PodcastsTags from "@/components/PodcastsTags.vue";
-import { type Podcast } from "@/types/resources";
 import { getCollection } from "astro:content";
 
 const markdowns = await getCollection("podcasts");
@@ -36,7 +35,7 @@ const podcasts = markdowns.map<any>((markdown) => ({
     </li>
   </ul> -->
 
-  <PodcastsTags client:load />
+  <PodcastsTags client:visible />
 
   <PodcastsCarousel client:load podcasts={podcasts} />
 </section>
