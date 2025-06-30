@@ -1,0 +1,143 @@
+---
+import FreebieLayout from "@/layouts/FreebieLayout.astro";
+import WaitlistForm from "./_waitlist-form";
+import { CheckCircle } from "lucide-react";
+import { Image } from "astro:assets";
+
+import aliImage from "@/images/ali.webp";
+import Section from "@/components/Section.astro";
+
+const layout = {
+  title:
+    "Online Group English Course for Korean Women | 한국 여성을 위한 온라인 영어 그룹 수업",
+  description:
+    "Join the waitlist for an online English course designed for Korean women preparing for life abroad. 자연스럽고 자신 있게 영어로 말하세요. 해외 생활을 준비하는 한국 여성을 위한 안전하고 따뜻한 영어 연습 공간입니다.",
+};
+---
+
+<FreebieLayout {...layout}>
+  <main class="bg-surface overflow-x-hidden">
+    <!-- Hero section -->
+    <Section id="hero" class="text-balance text-center">
+      <p class="text-sm font-medium text-gray-600 mb-4 tracking-wide uppercase">
+        Ready to speak English with more confidence and connection?
+      </p>
+      <h1 class="text-4xl md:text-6xl text-gray-900 mb-6 leading-tight">
+        Join the Waitlist for My New Group English course!
+      </h1>
+      <p class="text-lg text-gray-700 mb-4 leading-relaxed">
+        This course is designed for Korean women who want to express themselves
+        naturally, feel more confident speaking, and connect with people from
+        around the world in English.
+      </p>
+      <p class="text-lg text-gray-700 mb-8 leading-relaxed">
+        Sign up to be the first to know when doors open. You'll also receive
+        language tips, helpful tools, and early access to exclusive offers!
+      </p>
+      <WaitlistForm client:visible />
+    </Section>
+
+    <!-- What'll you get section -->
+    <Section id="what-you-get" class="bg-white text-center">
+      <h2
+        class="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight uppercase"
+      >
+        This class is for you if...
+      </h2>
+
+      <div class="text-left grid md:grid-cols-2 gap-4 md:gap-8 mb-12">
+        <div class="flex items-start space-x-3">
+          <CheckCircle className="h-5 w-5 text-orange-500 mt-1 flex-shrink-0" />
+          <span class="text-gray-700">
+            You can understand English well, but conversation still feels
+            awkward or robotic.
+          </span>
+        </div>
+        <div class="flex items-start space-x-3">
+          <CheckCircle className="h-5 w-5 text-orange-500 mt-1 flex-shrink-0" />
+          <span class="text-gray-700">
+            You want to speak more naturally and stop translating everything
+            from Korean in your head.
+          </span>
+        </div>
+        <div class="flex items-start space-x-3">
+          <CheckCircle className="h-5 w-5 text-orange-500 mt-1 flex-shrink-0" />
+          <span class="text-gray-700">
+            You plan to travel or move abroad and feel unsure how to start
+            conversations or make friends in English.
+          </span>
+        </div>
+        <div class="flex items-start space-x-3">
+          <CheckCircle className="h-5 w-5 text-orange-500 mt-1 flex-shrink-0" />
+          <span class="text-gray-700">
+            You want a supportive space where making mistakes is okay and
+            progress feels fun, not stressful.
+          </span>
+        </div>
+      </div>
+    </Section>
+
+    <!-- About me section -->
+    <Section id="about-me" class="bg-surface text-center">
+      <p class="text-sm font-medium text-gray-600 mb-4 tracking-wide uppercase">
+        Who's your teacher?
+      </p>
+      <h2
+        class="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight uppercase"
+      >
+        Hi! I'm Ali
+      </h2>
+
+      <div class="grid md:grid-cols-2 place-items-center gap-8">
+        <Image
+          src={aliImage}
+          alt="Hi! I'm Ali! Your english teacher"
+          class="md:col-start-2 place-self-center max-w-sm w-full"
+        />
+
+        <div class="space-y-4 text-left md:col-start-1 md:row-start-1">
+          <p class="text-lg text-gray-700 leading-relaxed">Hi, I'm Ali.</p>
+          <p class="text-lg text-gray-700 leading-relaxed">
+            I've taught more than 1,000 Korean English learners and helped them
+            move from understanding English to actually speaking it with
+            confidence, clarity, and a sense of connection.
+          </p>
+          <p class="text-lg text-gray-700 leading-relaxed">
+            I help learners who've studied hard for years but still feel stuck
+            when it's time to talk. If that's you, you're not alone. Maybe
+            you've tried to memorize every grammar rule, or you keep
+            second-guessing yourself: “Is this English natural… or is it
+            Konglish?”
+          </p>
+          <p class="text-lg text-gray-700 leading-relaxed">
+            With two Master's degrees and a background from Georgetown
+            University, I bring academic experience, and more importantly, real
+            empathy. I understand the pressure to “get it right,” the leftover
+            hagwon habits, and the hesitation that comes from years of focusing
+            on tests instead of conversations.
+          </p>
+          <p class="text-lg text-gray-700 leading-relaxed">
+            That's why I created this course: to help you finally speak up, feel
+            heard, and enjoy using English in your real life.
+          </p>
+        </div>
+      </div>
+    </Section>
+
+    <!-- Footer -->
+    <Section id="footer" class="bg-black text-center text-balance" tag="footer">
+      <p class="text-sm font-medium mb-4 tracking-wide uppercase text-white">
+        Ready to speak English with more confidence and connection?
+      </p>
+      <h2 class="text-3xl md:text-4xl mb-6 leading-tight text-white">
+        Join the Waitlist for My New Group English course!
+      </h2>
+      <p class="text-lg mb-8 leading-relaxed text-white">
+        Sign up to be the first to know when doors open. You'll also receive
+        language tips, helpful tools, and early access to exclusive offers!
+      </p>
+
+      <WaitlistForm client:visible />
+    </Section>
+  </main>
+</FreebieLayout>
