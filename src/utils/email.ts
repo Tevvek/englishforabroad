@@ -18,7 +18,7 @@ export const MAIL_OPTIONS = {
 export const generateMailOptionsGroupClassesNotification = (email: string) => {
   return {
     ...MAIL_OPTIONS,
-    subject: "New client interested ind group classes",
+    subject: "New client interested in group classes",
     text: `
           A user has submitted their email through the contact form on the website.
 

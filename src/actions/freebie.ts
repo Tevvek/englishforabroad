@@ -1,6 +1,8 @@
+import { EMAIL_TRANSPORTER, MAIL_OPTIONS } from "@/utils/email";
 import { ActionError, defineAction } from "astro:actions";
 import { BREVO_API_KEY } from "astro:env/server";
 import { z } from "astro:schema";
+import nodemailer from "nodemailer";
 
 const NEW_SUBSCRIBERS_LIST_ID = 5;
 
@@ -18,7 +20,7 @@ export const freebie = defineAction({
       });
     }
 
-    const response = await fetch("https://api.brevo.com/v3/contacts", {
+    const brevoResult = await fetch("https://api.brevo.com/v3/contacts", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -35,10 +37,15 @@ export const freebie = defineAction({
       }),
     });
 
-    if (!response.ok) {
+    if (!brevoResult.ok) {
       return {
         error: "Failed to subscribe to newsletter",
       };
+    }
+
+    const emailResult = await sendEmailNotificationToMyself(email, name);
+    if (!emailResult.accepted || emailResult.accepted.length === 0) {
+      return { error: "Failed to send notification email" };
     }
 
     return {
@@ -51,3 +58,22 @@ export const freebie = defineAction({
     };
   },
 });
+
+function sendEmailNotificationToMyself(email: string, name: string) {
+  // TODO this should be part of the Brevo's flow but it is not working, so for now we are using nodemailer to send it ourselves
+  const transporter = nodemailer.createTransport(EMAIL_TRANSPORTER);
+  const mailOOptions = {
+    ...MAIL_OPTIONS,
+    subject: "New person subscribed to the watch-and-learn freebie",
+    text: `
+                  New person subscribed to the watch-and-learn freebie.
+        
+                  Email:
+                  ${email}
+
+                  Name:
+                  ${name}
+              `,
+  };
+  return transporter.sendMail(mailOOptions);
+}
