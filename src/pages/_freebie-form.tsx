@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { actions } from "astro:actions";
+import { Loader2 } from "lucide-react";
 import { useForm, useWatch } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -30,6 +31,8 @@ export default function FreebieForm() {
       consent: false,
     },
   });
+
+  const isSubmitting = form.formState.isSubmitting;
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     if (!values.consent) {
@@ -119,10 +122,17 @@ export default function FreebieForm() {
 
         <Button
           type="submit"
-          disabled={!consent || !isValid}
-          className="w-full bg-orange-500 hover:bg-orange-600 text-white h-12 font-semibold uppercase"
+          disabled={!consent || !isValid || isSubmitting}
+          className="w-full bg-orange-500 hover:bg-orange-600 text-white h-12 font-semibold uppercase flex items-center justify-center gap-2"
         >
-          Get your guide
+          {isSubmitting ? (
+            <>
+              <Loader2 className="animate-spin" />
+              Submitting...
+            </>
+          ) : (
+            "Get your guide"
+          )}
         </Button>
       </form>
     </Form>
