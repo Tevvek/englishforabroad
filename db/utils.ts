@@ -9,13 +9,12 @@ import { produce } from "immer";
 export function defineTableWithTimestamps(
   config: Parameters<typeof defineTable>[0]
 ) {
-  return defineTable(
-    produce(config, (draft) => {
-      draft.columns = {
-        ...draft.columns,
-        createdAt: column.date({ default: new Date() }),
-        updatedAt: column.date({ default: new Date() }),
-      };
-    })
-  );
+  return defineTable({
+    ...config,
+    columns: {
+      ...config.columns,
+      createdAt: column.date({ default: new Date() }),
+      updatedAt: column.date({ default: new Date() }),
+    },
+  });
 }
