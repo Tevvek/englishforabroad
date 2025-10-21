@@ -1,5 +1,4 @@
-import { defineTable, column } from "astro:db";
-import { produce } from "immer";
+import { column, defineTable } from "astro:db";
 
 /**
  * Extended defineTable that automatically adds createdAt and updatedAt fields
