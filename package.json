@@ -33,6 +33,7 @@
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "astro": "5.10.1",
+    "bcryptjs": "^3.0.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "immer": "^10.1.3",
@@ -54,6 +55,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.51.1",
+    "@types/bcryptjs": "^3.0.0",
     "dotenv": "^16.5.0",
     "sharp": "^0.34.2",
     "tw-animate-css": "^1.3.4"

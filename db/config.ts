@@ -14,9 +14,21 @@ export const User = defineTableWithTimestamps({
   },
 });
 
+export const Session = defineTableWithTimestamps({
+  columns: {
+    id: column.number({ primaryKey: true }),
+    userId: column.number({ references: () => User.columns.id }),
+    token: column.text({ unique: true }),
+    expiresAt: column.date(),
+    ipAddress: column.text(),
+    userAgent: column.text(),
+  },
+});
+
 // https://astro.build/db/config
 export default defineDb({
   tables: {
     User,
+    Session,
   },
 });

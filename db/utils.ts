@@ -1,4 +1,4 @@
-import { column, defineTable } from "astro:db";
+import { column, defineTable, type RuntimeConfig } from "astro:db";
 
 // Warning: Do not use immer or other immutable data libraries with defineTable
 // as the returned table object needs to be mutable. Using immutable data will
@@ -9,9 +9,9 @@ import { column, defineTable } from "astro:db";
  * @param config - Table configuration object
  * @returns Table definition with timestamp fields
  */
-export function defineTableWithTimestamps(
-  config: Parameters<typeof defineTable>[0]
-) {
+export const defineTableWithTimestamps: RuntimeConfig["defineTable"] = (
+  config
+) => {
   return defineTable({
     ...config,
     columns: {
@@ -20,4 +20,4 @@ export function defineTableWithTimestamps(
       updatedAt: column.date({ default: new Date() }),
     },
   });
-}
+};
