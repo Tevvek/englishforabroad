@@ -49,6 +49,13 @@ export default defineConfig({
         access: "secret",
       }),
 
+      // Session
+      SESSION_COOKIE_NAME: envField.string({
+        context: "server",
+        access: "public",
+        default: "english-for-abroad-session",
+      }),
+
       // Other
       SITE: envField.string({
         context: "server",

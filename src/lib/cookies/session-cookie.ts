@@ -1,11 +1,13 @@
 import type { AstroCookies } from "astro";
+import { SESSION_COOKIE_NAME } from "astro:env/server";
 
-const SESSION_COOKIE_NAME = "session_token";
+const THIRTY_DAYS_IN_SECONDS = 60 * 60 * 24 * 30;
+
 const SESSION_COOKIE_OPTIONS = {
   httpOnly: true,
-  secure: true,
+  secure: import.meta.env.MODE === "production",
   sameSite: "lax" as const,
-  maxAge: 60 * 60 * 24 * 30, // 30 days in seconds
+  maxAge: THIRTY_DAYS_IN_SECONDS,
   path: "/",
 };
 
