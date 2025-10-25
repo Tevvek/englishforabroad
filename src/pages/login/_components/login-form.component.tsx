@@ -19,6 +19,10 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, type LoginFormData } from "../_schemas/login.schema";
+import { actions, isActionError, isInputError } from "astro:actions";
+import { toast } from "sonner";
+import { navigate } from "astro:transitions/client";
+import { isRedirect } from "@/utils/actions.utils";
 
 export function LoginForm({
   className,
@@ -28,9 +32,31 @@ export function LoginForm({
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit = async (data: LoginFormData) => {
-    console.log("Login data:", data);
-    // TODO: Implement login logic
+  const onSubmit = async (formData: LoginFormData) => {
+    const { error, data } = await actions.login(formData);
+
+    if (error && isInputError(error)) {
+      // Handle input validation errors
+      Object.entries(error.fields).forEach(([field, fieldErrors]) => {
+        form.setError(field as keyof LoginFormData, {
+          message: fieldErrors[0],
+        });
+      });
+      return;
+    }
+
+    if (error && isActionError(error)) {
+      toast.error(error.message);
+      return;
+    }
+
+    if (data && isRedirect(data)) {
+      navigate(data.to);
+      return;
+    }
+
+    toast.error("An unknown error occurred");
+    return;
   };
 
   return (

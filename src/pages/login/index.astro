@@ -1,12 +1,12 @@
 ---
-import Layout from "@/layouts/Layout.astro";
+import ReactLayout from "@/layouts/ReactLayout.astro";
 import { LoginForm } from "./_components/login-form.component";
 ---
 
-<Layout title="Login - English for Abroad">
+<ReactLayout title="Login - English for Abroad">
   <div class="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
     <div class="w-full max-w-sm">
       <LoginForm client:load />
     </div>
   </div>
-</Layout>
+</ReactLayout>

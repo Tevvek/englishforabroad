@@ -11,7 +11,7 @@ export const User = defineTableWithTimestamps({
     role: column.text({ default: "user", enum: ["user", "admin"] }),
     confirmed: column.boolean({ default: false }),
     blocked: column.boolean({ default: false }),
-    lastLoginAt: column.date(),
+    lastLoginAt: column.date({ optional: true }),
   },
 });
 

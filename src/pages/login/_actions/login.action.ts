@@ -1,6 +1,6 @@
 import { defineAction } from "astro:actions";
 import { loginSchema } from "../_schemas/login.schema";
-import { redirect, fail } from "@/utils/responses";
+import { redirect, fail } from "@/utils/actions.utils";
 import { findUserByEmail } from "../_queries/find-user-by-email.query";
 import { verifyPassword } from "../_validations/verify-password.validation";
 import { isUserActive } from "../_validations/is-user-active.validation";

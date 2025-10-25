@@ -1,4 +1,4 @@
-import { login } from "@/pages/login/_actions/login-action";
+import { login } from "@/pages/login/_actions/login.action";
 import { freebie } from "./freebie";
 import { waitlist } from "./waitlist";
 
