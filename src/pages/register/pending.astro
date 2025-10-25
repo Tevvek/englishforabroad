@@ -1,0 +1,60 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+---
+
+<Layout title="Confirm Your Email - English for Abroad">
+  <div class="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
+    <div class="w-full max-w-md">
+      <Card>
+        <CardHeader className="text-center">
+          <CardTitle>Check Your Email</CardTitle>
+          <CardDescription>
+            We've sent a confirmation link to your email address
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div class="text-center space-y-2">
+            <div class="w-16 h-16 mx-auto bg-blue-100 rounded-full flex items-center justify-center">
+              <svg
+                class="w-8 h-8 text-blue-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                ></path>
+              </svg>
+            </div>
+            <p class="text-sm text-muted-foreground">
+              Please check your email and click the confirmation link to activate your account.
+            </p>
+            <p class="text-xs text-muted-foreground">
+              The confirmation link will expire in 24 hours.
+            </p>
+          </div>
+          
+          <div class="border-t pt-4">
+            <p class="text-center text-sm text-muted-foreground">
+              Didn't receive the email? Check your spam folder or{" "}
+              <a href="/register" class="underline text-primary">
+                try again
+              </a>
+            </p>
+          </div>
+
+          <div class="text-center">
+            <a href="/login" class="text-sm underline text-primary">
+              Back to Sign In
+            </a>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  </div>
+</Layout>

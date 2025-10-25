@@ -26,10 +26,21 @@ export const Session = defineTableWithTimestamps({
   },
 });
 
+export const EmailConfirmation = defineTableWithTimestamps({
+  columns: {
+    id: column.number({ primaryKey: true }),
+    userId: column.number({ references: () => User.columns.id }),
+    token: column.text({ unique: true }),
+    expiresAt: column.date(),
+    confirmed: column.boolean({ default: false }),
+  },
+});
+
 // https://astro.build/db/config
 export default defineDb({
   tables: {
     User,
     Session,
+    EmailConfirmation,
   },
 });

@@ -49,6 +49,12 @@ export default defineConfig({
         access: "secret",
       }),
 
+      // Resend email service
+      RESEND_API_KEY: envField.string({
+        context: "server",
+        access: "secret",
+      }),
+
       // Session
       SESSION_COOKIE_NAME: envField.string({
         context: "server",

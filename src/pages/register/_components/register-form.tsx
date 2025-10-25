@@ -16,22 +16,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-const registerSchema = z
-  .object({
-    email: z.string().email("Please enter a valid email address"),
-    password: z.string().min(6, "Password must be at least 6 characters"),
-    confirmPassword: z.string().min(6, "Please confirm your password"),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ["confirmPassword"],
-  });
-
-type RegisterFormData = z.infer<typeof registerSchema>;
+import { registerSchema, type RegisterFormData } from "../_schemas/register.schema";
+import { actions, isActionError, isInputError } from "astro:actions";
+import { toast } from "sonner";
+import { navigate } from "astro:transitions/client";
+import { isRedirect } from "@/utils/actions.utils";
 
 export function RegisterForm({
   className,
@@ -41,9 +32,32 @@ export function RegisterForm({
     resolver: zodResolver(registerSchema),
   });
 
-  const onSubmit = async (data: RegisterFormData) => {
-    console.log("Register data:", data);
-    // TODO: Implement register logic
+  const onSubmit = async (formData: RegisterFormData) => {
+    const { error, data } = await actions.register(formData);
+
+    if (error && isInputError(error)) {
+      // Handle input validation errors
+      Object.entries(error.fields).forEach(([field, fieldErrors]) => {
+        form.setError(field as keyof RegisterFormData, {
+          message: fieldErrors[0],
+        });
+      });
+      return;
+    }
+
+    if (error && isActionError(error)) {
+      toast.error(error.message);
+      return;
+    }
+
+    if (data && isRedirect(data)) {
+      toast.success(data.message);
+      navigate(data.to);
+      return;
+    }
+
+    toast.error("An unknown error occurred");
+    return;
   };
 
   return (
@@ -107,9 +121,7 @@ export function RegisterForm({
                   className="w-full"
                   disabled={form.formState.isSubmitting}
                 >
-                  {form.formState.isSubmitting
-                    ? "Creating account..."
-                    : "Create account"}
+{form.formState.isSubmitting ? "Creating account..." : "Create account"}
                 </Button>
                 <p className="text-center text-sm text-muted-foreground">
                   Already have an account?{" "}
