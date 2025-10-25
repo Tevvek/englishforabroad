@@ -21,7 +21,7 @@ export async function createSession({
   expiresAt.setDate(expiresAt.getDate() + expiresInDays);
 
   // Create session in database
-  const [session] = await db
+  const session = await db
     .insert(Session)
     .values({
       userId,
@@ -30,7 +30,8 @@ export async function createSession({
       ipAddress,
       userAgent,
     })
-    .returning();
+    .returning()
+    .get();
 
   return session;
 }

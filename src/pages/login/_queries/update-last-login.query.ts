@@ -5,7 +5,7 @@ export async function updateLastLogin(userId: number): Promise<void> {
   await db
     .update(User)
     .set({
-      updatedAt: new Date(),
+      lastLoginAt: new Date(),
     })
     .where(eq(User.id, userId));
 }

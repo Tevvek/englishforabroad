@@ -16,3 +16,7 @@ export function getClientIp(req: Request): string {
 
   return "unknown";
 }
+
+export function getUserAgent(req: Request): string {
+  return req.headers.get("user-agent") || "unknown";
+}

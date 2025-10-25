@@ -7,7 +7,7 @@ import { isUserActive } from "../_validations/is-user-active.validation";
 import { createSession } from "@/lib/session/create-session.query";
 import { setSessionCookie } from "@/lib/cookies/session-cookie";
 import { updateLastLogin } from "../_queries/update-last-login.query";
-import { getClientIp } from "@/utils/get-client-ip";
+import { getClientIp, getUserAgent } from "@/utils/client-utils";
 
 export const login = defineAction({
   input: loginSchema,
@@ -44,7 +44,7 @@ export const login = defineAction({
     const session = await createSession({
       userId: user.id,
       ipAddress: getClientIp(request),
-      userAgent: request.headers.get("user-agent") || "",
+      userAgent: getUserAgent(request),
     });
 
     // Set authentication cookie
