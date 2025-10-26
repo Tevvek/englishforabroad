@@ -5,6 +5,7 @@ import { verifyResetToken } from "../_queries/verify-reset-token.query";
 import { resetUserPassword } from "../_queries/reset-user-password.query";
 import { hashPassword } from "../../register/_utils/hash-password.util";
 import { isPasswordDifferent } from "../_validations/is-password-different.validation";
+import { sendPasswordChangedNotification } from "../_utils/send-password-changed-notification.util";
 import { tryCatch } from "@/utils/tryCatch";
 
 export const resetPassword = defineAction({
@@ -70,6 +71,19 @@ export const resetPassword = defineAction({
         message: "Failed to reset password. Please try again.",
         code: "BAD_REQUEST",
       });
+    }
+
+    // Send password change notification email
+    const [, notificationError] = await tryCatch(
+      sendPasswordChangedNotification({
+        email: tokenResult.data.email,
+        username: tokenResult.data.username,
+      })
+    );
+
+    // Note: We don't fail the request if notification fails, as the password was successfully changed
+    if (notificationError) {
+      console.error("Failed to send password change notification:", notificationError);
     }
 
     // Redirect with success message

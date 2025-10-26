@@ -30,6 +30,9 @@ export function ForgotPasswordForm({
 }: React.ComponentProps<"div">) {
   const form = useForm<ForgotPasswordFormData>({
     resolver: zodResolver(forgotPasswordSchema),
+    defaultValues: {
+      email: "",
+    },
   });
 
   const onSubmit = async (formData: ForgotPasswordFormData) => {

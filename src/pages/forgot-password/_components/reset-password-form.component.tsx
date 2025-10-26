@@ -38,6 +38,10 @@ export function ResetPasswordForm({
 }: ResetPasswordFormProps) {
   const form = useForm<ResetPasswordFormData>({
     resolver: zodResolver(resetPasswordFormSchema),
+    defaultValues: {
+      password: "",
+      confirmPassword: "",
+    },
   });
 
   const onSubmit = async (formData: ResetPasswordFormData) => {

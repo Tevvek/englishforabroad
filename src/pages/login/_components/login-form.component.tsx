@@ -30,6 +30,10 @@ export function LoginForm({
 }: React.ComponentProps<"div">) {
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
 
   const onSubmit = async (formData: LoginFormData) => {
