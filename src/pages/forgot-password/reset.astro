@@ -1,0 +1,18 @@
+---
+import ReactLayout from "@/layouts/ReactLayout.astro";
+import { ResetPasswordForm } from "./_components/reset-password-form.component";
+
+const token = Astro.url.searchParams.get("token");
+
+if (!token) {
+  return Astro.redirect("/forgot-password?message=Invalid%20reset%20link&type=error");
+}
+---
+
+<ReactLayout title="Reset Password - English for Abroad">
+  <div class="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
+    <div class="w-full max-w-md">
+      <ResetPasswordForm token={token} client:load />
+    </div>
+  </div>
+</ReactLayout>
