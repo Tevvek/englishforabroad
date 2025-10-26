@@ -1,23 +1,17 @@
 import * as React from "react"
 import {
-  IconCamera,
-  IconChartBar,
+  IconBook,
+  IconCalendar,
   IconDashboard,
-  IconDatabase,
-  IconFileAi,
-  IconFileDescription,
-  IconFileWord,
-  IconFolder,
-  IconHelp,
   IconInnerShadowTop,
-  IconListDetails,
-  IconReport,
-  IconSearch,
+  IconLibrary,
+  IconNotebook,
   IconSettings,
-  IconUsers,
+  IconTarget,
+  IconTrendingUp,
+  IconVideo,
 } from "@tabler/icons-react"
 
-import { NavDocuments } from "@/components/nav-documents"
 import { NavMain } from "@/components/nav-main"
 import { NavSecondary } from "@/components/nav-secondary"
 import { NavUser } from "@/components/nav-user"
@@ -33,117 +27,57 @@ import {
 
 const data = {
   user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
+    name: "Student",
+    email: "student@example.com",
+    avatar: "/avatars/student.jpg",
   },
   navMain: [
     {
-      title: "Dashboard",
+      title: "(TODO) Dashboard",
       url: "#",
       icon: IconDashboard,
     },
     {
-      title: "Lifecycle",
+      title: "(TODO) My Classes",
       url: "#",
-      icon: IconListDetails,
+      icon: IconVideo,
     },
     {
-      title: "Analytics",
+      title: "(TODO) Lessons",
       url: "#",
-      icon: IconChartBar,
+      icon: IconBook,
     },
     {
-      title: "Projects",
+      title: "(TODO) Homework",
       url: "#",
-      icon: IconFolder,
+      icon: IconNotebook,
     },
     {
-      title: "Team",
+      title: "(TODO) Progress",
       url: "#",
-      icon: IconUsers,
-    },
-  ],
-  navClouds: [
-    {
-      title: "Capture",
-      icon: IconCamera,
-      isActive: true,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
+      icon: IconTrendingUp,
     },
     {
-      title: "Proposal",
-      icon: IconFileDescription,
+      title: "(TODO) Practice",
       url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
+      icon: IconTarget,
     },
     {
-      title: "Prompts",
-      icon: IconFileAi,
+      title: "(TODO) Resources",
       url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
+      icon: IconLibrary,
+    },
+    {
+      title: "(TODO) Calendar",
+      url: "#",
+      icon: IconCalendar,
     },
   ],
   navSecondary: [
     {
-      title: "Settings",
+      title: "(TODO) Settings",
       url: "#",
       icon: IconSettings,
-    },
-    {
-      title: "Get Help",
-      url: "#",
-      icon: IconHelp,
-    },
-    {
-      title: "Search",
-      url: "#",
-      icon: IconSearch,
-    },
-  ],
-  documents: [
-    {
-      name: "Data Library",
-      url: "#",
-      icon: IconDatabase,
-    },
-    {
-      name: "Reports",
-      url: "#",
-      icon: IconReport,
-    },
-    {
-      name: "Word Assistant",
-      url: "#",
-      icon: IconFileWord,
     },
   ],
 }
@@ -160,7 +94,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             >
               <a href="#">
                 <IconInnerShadowTop className="!size-5" />
-                <span className="text-base font-semibold">Acme Inc.</span>
+                <span className="text-base font-semibold">English for Abroad</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -168,7 +102,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavDocuments items={data.documents} />
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>

@@ -1,7 +1,6 @@
 ---
 import ReactLayout from "@/layouts/ReactLayout.astro";
 import DashboardWrapper from "./_components/dashboard-wrapper.component";
-import { SectionCards } from "@/components/section-cards";
 ---
 
 <ReactLayout title="Dashboard - English for Abroad">
@@ -9,7 +8,7 @@ import { SectionCards } from "@/components/section-cards";
     <div class="flex flex-1 flex-col">
       <div class="@container/main flex flex-1 flex-col gap-2">
         <div class="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-          <SectionCards client:load />
+          <h1 class="text-2xl font-bold">Dashboard</h1>
         </div>
       </div>
     </div>
