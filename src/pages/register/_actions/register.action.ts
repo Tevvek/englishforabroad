@@ -11,16 +11,7 @@ export const register = defineAction({
   input: registerSchema,
   handler: async ({ email, password }) => {
     // Check if email is already registered
-    const [emailAvailable, emailCheckError] = await tryCatch(
-      isEmailAvailable(email)
-    );
-
-    if (emailCheckError) {
-      return fail({
-        message: "Unable to verify email availability. Please try again.",
-        code: "BAD_REQUEST",
-      });
-    }
+    const emailAvailable = await isEmailAvailable(email);
 
     if (!emailAvailable) {
       return fail({
@@ -34,7 +25,7 @@ export const register = defineAction({
       createUser({ email, password })
     );
 
-    if (createUserError || !newUser) {
+    if (createUserError) {
       return fail({
         message: "Failed to create user account. Please try again.",
         code: "BAD_REQUEST",
@@ -69,10 +60,11 @@ export const register = defineAction({
       });
     }
 
-    // Redirect to confirmation pending page
+    // Redirect to login page with success message
     return redirect({
-      message: "Registration successful! Please check your email to confirm your account.",
-      to: "/register/pending",
+      message:
+        "Registration successful! Please check your email to confirm your account.",
+      to: "/login",
     });
   },
 });

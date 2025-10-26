@@ -1,12 +1,12 @@
 ---
-import Layout from "@/layouts/Layout.astro";
+import ReactLayout from "@/layouts/ReactLayout.astro";
 import { RegisterForm } from "./_components/register-form";
 ---
 
-<Layout title="Register - English for Abroad">
+<ReactLayout title="Register - English for Abroad">
   <div class="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
     <div class="w-full max-w-sm">
       <RegisterForm client:load />
     </div>
   </div>
-</Layout>
+</ReactLayout>

@@ -1,10 +1,12 @@
 ---
 import "@/styles/global.css";
+import "sonner/dist/styles.css";
 import { ClientRouter } from "astro:transitions";
 import "swiper/css";
 import "swiper/css/pagination";
 import { PUBLIC_RECAPTCHA_SITE_KEY } from "astro:env/client";
 import { Toaster } from "sonner";
+import { GlobalMessageHandler } from "@/components/ui/global-message-handler";
 
 interface Props {
   title: string;
@@ -67,6 +69,7 @@ const { title } = Astro.props;
   </head>
   <body>
     <Toaster position="top-center" client:only="react" />
+    <GlobalMessageHandler client:only="react" />
 
     <slot name="navbar" />
 

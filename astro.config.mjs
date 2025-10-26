@@ -12,6 +12,8 @@ import db from "@astrojs/db";
 
 // https://astro.build/config
 export default defineConfig({
+  output: "server",
+
   integrations: [vue(), react(), db()],
 
   vite: {
@@ -60,6 +62,13 @@ export default defineConfig({
         context: "server",
         access: "public",
         default: "english-for-abroad-session",
+      }),
+
+      // Bcrypt
+      BCRYPT_SALT_ROUNDS: envField.number({
+        context: "server",
+        access: "public",
+        default: 12,
       }),
 
       // Other

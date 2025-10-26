@@ -2,7 +2,7 @@ import { db, EmailConfirmation, User, eq, and } from "astro:db";
 
 export async function confirmEmail(token: string) {
   // Find the confirmation record
-  const [confirmation] = await db
+  const confirmation = await db
     .select()
     .from(EmailConfirmation)
     .where(
@@ -10,7 +10,8 @@ export async function confirmEmail(token: string) {
         eq(EmailConfirmation.token, token),
         eq(EmailConfirmation.confirmed, false)
       )
-    );
+    )
+    .get();
 
   if (!confirmation) {
     return { success: false, error: "Invalid or expired confirmation token" };

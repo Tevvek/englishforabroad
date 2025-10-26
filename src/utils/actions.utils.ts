@@ -4,11 +4,28 @@
 
 import { ActionError } from "astro:actions";
 
-export function redirect({ message, to }: { message: string; to?: string }) {
+export function redirect({ 
+  message, 
+  to, 
+  type = "success" 
+}: { 
+  message?: string; 
+  to: string; 
+  type?: "success" | "error" | "info"; 
+}) {
+  let redirectUrl = to;
+  
+  if (message) {
+    const params = new URLSearchParams();
+    params.set("message", message);
+    params.set("type", type);
+    redirectUrl = `${to}?${params.toString()}`;
+  }
+  
   return {
     success: true,
-    message,
-    to,
+    message: message || "",
+    to: redirectUrl,
   };
 }
 

@@ -18,7 +18,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { registerSchema, type RegisterFormData } from "../_schemas/register.schema";
+import {
+  registerSchema,
+  type RegisterFormData,
+} from "../_schemas/register.schema";
 import { actions, isActionError, isInputError } from "astro:actions";
 import { toast } from "sonner";
 import { navigate } from "astro:transitions/client";
@@ -51,7 +54,6 @@ export function RegisterForm({
     }
 
     if (data && isRedirect(data)) {
-      toast.success(data.message);
       navigate(data.to);
       return;
     }
@@ -121,7 +123,9 @@ export function RegisterForm({
                   className="w-full"
                   disabled={form.formState.isSubmitting}
                 >
-{form.formState.isSubmitting ? "Creating account..." : "Create account"}
+                  {form.formState.isSubmitting
+                    ? "Creating account..."
+                    : "Create account"}
                 </Button>
                 <p className="text-center text-sm text-muted-foreground">
                   Already have an account?{" "}

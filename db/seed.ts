@@ -1,15 +1,16 @@
 import { db, User } from "astro:db";
+import { generatePublicId } from "@/utils/public-id";
+import { hashPassword } from "@/pages/register/_utils/hash-password.util";
 
-// https://astro.build/db/seed
 export default async function seed() {
   // Insert sample users
   await db.insert(User).values([
     {
       id: 1,
-      publicId: "admin-001",
-      username: "admin@englishforabroad.com",
+      publicId: generatePublicId(),
+      username: "admin",
       email: "admin@englishforabroad.com",
-      password: "$2a$10$example.hash.for.admin.password", // This would be a real bcrypt hash in production
+      password: await hashPassword("admin123"),
       role: "admin",
       confirmed: true,
       blocked: false,
@@ -19,10 +20,10 @@ export default async function seed() {
     },
     {
       id: 2,
-      publicId: "user-001",
-      username: "student@example.com",
-      email: "user@example.com",
-      password: "$2a$12$28RnteoDyf2ZDfliKvVHBe9B5Ho6JthkmEqxvYJugiHaZYGdBVwQ.", // This would be a real bcrypt hash in production
+      publicId: generatePublicId(),
+      username: "student",
+      email: "student@example.com",
+      password: await hashPassword("student123"),
       role: "user",
       confirmed: true,
       blocked: false,
