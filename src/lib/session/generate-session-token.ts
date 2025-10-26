@@ -1,6 +1,9 @@
-import { randomBytes } from "crypto";
+import { nanoid } from "nanoid";
 
+/**
+ * Generate a secure session token using NanoID
+ * @returns string - A cryptographically secure token for user sessions
+ */
 export function generateSessionToken(): string {
-  // 32 bytes = 256 bits of entropy
-  return randomBytes(32).toString("base64url");
+  return nanoid();
 }

@@ -1,5 +1,9 @@
-import { randomBytes } from "crypto";
+import { nanoid } from "nanoid";
 
+/**
+ * Generate a secure reset token using NanoID
+ * @returns string - A cryptographically secure token for password reset
+ */
 export function generateResetToken(): string {
-  return randomBytes(32).toString("hex");
+  return nanoid();
 }
