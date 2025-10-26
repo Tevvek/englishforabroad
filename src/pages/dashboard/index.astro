@@ -1,16 +1,11 @@
 ---
-
+import ReactLayout from "@/layouts/ReactLayout.astro";
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Dashboard</title>
-  </head>
-  <body>
-    <h1>Dashboard</h1>
-  </body>
-</html>
+<ReactLayout title="Dashboard - English for Abroad">
+  <div class="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
+    <div class="w-full max-w-4xl">
+      <h1>Dashboard</h1>
+    </div>
+  </div>
+</ReactLayout>
