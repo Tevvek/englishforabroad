@@ -1,11 +1,17 @@
 ---
 import ReactLayout from "@/layouts/ReactLayout.astro";
+import DashboardWrapper from "./_components/dashboard-wrapper.component";
+import { SectionCards } from "@/components/section-cards";
 ---
 
 <ReactLayout title="Dashboard - English for Abroad">
-  <div class="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
-    <div class="w-full max-w-4xl">
-      <h1>Dashboard</h1>
+  <DashboardWrapper client:load>
+    <div class="flex flex-1 flex-col">
+      <div class="@container/main flex flex-1 flex-col gap-2">
+        <div class="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+          <SectionCards client:load />
+        </div>
+      </div>
     </div>
-  </div>
+  </DashboardWrapper>
 </ReactLayout>
