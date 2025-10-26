@@ -18,7 +18,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { forgotPasswordSchema, type ForgotPasswordFormData } from "../_schemas/forgot-password.schema";
+import {
+  forgotPasswordSchema,
+  type ForgotPasswordFormData,
+} from "../_schemas/forgot-password.schema";
 import { actions, isActionError, isInputError } from "astro:actions";
 import { toast } from "sonner";
 import { navigate } from "astro:transitions/client";
@@ -54,7 +57,9 @@ export function ForgotPasswordForm({
     }
 
     if (data && isRedirect(data)) {
-      navigate(data.to);
+      // Using window.location.href instead of Astro's navigate() because password managers
+      // (specifically Bitwarden) can interfere with view transitions and prevent redirects
+      window.location.href = data.to;
       return;
     }
 
@@ -68,7 +73,8 @@ export function ForgotPasswordForm({
         <CardHeader>
           <CardTitle>Reset your password</CardTitle>
           <CardDescription>
-            Enter your email address and we'll send you a link to reset your password
+            Enter your email address and we'll send you a link to reset your
+            password
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -97,7 +103,9 @@ export function ForgotPasswordForm({
                   className="w-full"
                   disabled={form.formState.isSubmitting}
                 >
-                  {form.formState.isSubmitting ? "Sending..." : "Send Reset Link"}
+                  {form.formState.isSubmitting
+                    ? "Sending..."
+                    : "Send Reset Link"}
                 </Button>
                 <p className="text-center text-sm text-muted-foreground">
                   Remember your password?{" "}

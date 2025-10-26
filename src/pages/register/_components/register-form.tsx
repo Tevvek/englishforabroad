@@ -59,7 +59,9 @@ export function RegisterForm({
     }
 
     if (data && isRedirect(data)) {
-      navigate(data.to);
+      // Using window.location.href instead of Astro's navigate() because password managers
+      // (specifically Bitwarden) can interfere with view transitions and prevent redirects
+      window.location.href = data.to;
       return;
     }
 
