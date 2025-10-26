@@ -22,17 +22,19 @@ export async function confirmEmail(token: string) {
     return { success: false, error: "Confirmation token has expired" };
   }
 
-  // Mark confirmation as confirmed
-  await db
-    .update(EmailConfirmation)
-    .set({ confirmed: true })
-    .where(eq(EmailConfirmation.id, confirmation.id));
+  // Use transaction to ensure both operations succeed or fail together
+  await db.transaction(async (tx) => {
+    // Update user's confirmed status
+    await tx
+      .update(User)
+      .set({ confirmed: true })
+      .where(eq(User.id, confirmation.userId));
 
-  // Update user's confirmed status
-  await db
-    .update(User)
-    .set({ confirmed: true })
-    .where(eq(User.id, confirmation.userId));
+    // Delete the email confirmation record since it's no longer needed
+    await tx
+      .delete(EmailConfirmation)
+      .where(eq(EmailConfirmation.id, confirmation.id));
+  });
 
   return { success: true };
 }

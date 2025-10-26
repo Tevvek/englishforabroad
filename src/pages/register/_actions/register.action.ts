@@ -4,7 +4,7 @@ import { redirect, fail } from "@/utils/actions.utils";
 import { isEmailAvailable } from "../_validations/is-email-available.validation";
 import { createUser } from "../_queries/create-user.query";
 import { createEmailConfirmation } from "../_queries/create-email-confirmation.query";
-import { sendConfirmationEmail } from "@/utils/resend";
+import { sendConfirmationEmail } from "../_utils/send-confirmation-email.util";
 import { tryCatch } from "@/utils/tryCatch";
 
 export const register = defineAction({
