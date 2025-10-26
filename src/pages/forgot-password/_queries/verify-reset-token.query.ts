@@ -11,6 +11,7 @@ export async function verifyResetToken(token: string) {
       used: PasswordReset.used,
       userEmail: User.email,
       userUsername: User.username,
+      currentPasswordHash: User.password,
     })
     .from(PasswordReset)
     .innerJoin(User, eq(PasswordReset.userId, User.id))
@@ -38,6 +39,7 @@ export async function verifyResetToken(token: string) {
       userId: reset.userId,
       email: reset.userEmail,
       username: reset.userUsername,
+      currentPasswordHash: reset.currentPasswordHash,
     }
   };
 }

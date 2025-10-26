@@ -18,12 +18,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { resetPasswordSchema, type ResetPasswordFormData } from "../_schemas/reset-password.schema";
+import {
+  resetPasswordFormSchema,
+  type ResetPasswordFormData,
+} from "../_schemas/reset-password.schema";
 import { actions, isActionError, isInputError } from "astro:actions";
 import { toast } from "sonner";
 import { navigate } from "astro:transitions/client";
 import { isRedirect } from "@/utils/actions.utils";
-import { useEffect } from "react";
 
 interface ResetPasswordFormProps extends React.ComponentProps<"div"> {
   token: string;
@@ -35,26 +37,24 @@ export function ResetPasswordForm({
   ...props
 }: ResetPasswordFormProps) {
   const form = useForm<ResetPasswordFormData>({
-    resolver: zodResolver(resetPasswordSchema),
-    defaultValues: {
-      token,
-    },
+    resolver: zodResolver(resetPasswordFormSchema),
   });
 
-  // Set token when component mounts or token changes
-  useEffect(() => {
-    form.setValue("token", token);
-  }, [token, form]);
-
   const onSubmit = async (formData: ResetPasswordFormData) => {
-    const { error, data } = await actions.resetPassword(formData);
+    // Include the token in the form data
+    const { error, data } = await actions.resetPassword({
+      ...formData,
+      token,
+    });
 
     if (error && isInputError(error)) {
       // Handle input validation errors
       Object.entries(error.fields).forEach(([field, fieldErrors]) => {
-        form.setError(field as keyof ResetPasswordFormData, {
-          message: fieldErrors[0],
-        });
+        if (fieldErrors && fieldErrors.length > 0) {
+          form.setError(field as keyof ResetPasswordFormData, {
+            message: fieldErrors[0],
+          });
+        }
       });
       return;
     }
@@ -78,9 +78,7 @@ export function ResetPasswordForm({
       <Card>
         <CardHeader>
           <CardTitle>Create new password</CardTitle>
-          <CardDescription>
-            Enter your new password below
-          </CardDescription>
+          <CardDescription>Enter your new password below</CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -117,7 +115,9 @@ export function ResetPasswordForm({
                   className="w-full"
                   disabled={form.formState.isSubmitting}
                 >
-                  {form.formState.isSubmitting ? "Resetting..." : "Reset Password"}
+                  {form.formState.isSubmitting
+                    ? "Resetting..."
+                    : "Reset Password"}
                 </Button>
                 <p className="text-center text-sm text-muted-foreground">
                   Remember your password?{" "}

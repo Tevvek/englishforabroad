@@ -1,11 +1,17 @@
 ---
 import ReactLayout from "@/layouts/ReactLayout.astro";
 import { ResetPasswordForm } from "./_components/reset-password-form.component";
+import { redirect } from "@/utils/actions.utils";
 
 const token = Astro.url.searchParams.get("token");
 
 if (!token) {
-  return Astro.redirect("/forgot-password?message=Invalid%20reset%20link&type=error");
+  const redirectResponse = redirect({
+    message: "Invalid reset link",
+    to: "/forgot-password",
+    type: "error",
+  });
+  return Astro.redirect(redirectResponse.to);
 }
 ---
 

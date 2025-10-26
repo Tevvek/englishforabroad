@@ -7,7 +7,7 @@ export interface ResetUserPasswordData {
 }
 
 export async function resetUserPassword({ resetId, userId, hashedPassword }: ResetUserPasswordData) {
-  // Use transaction to update password and mark reset as used
+  // Use transaction to update password and delete reset token
   await db.transaction(async (tx) => {
     // Update user's password
     await tx
@@ -15,10 +15,9 @@ export async function resetUserPassword({ resetId, userId, hashedPassword }: Res
       .set({ password: hashedPassword })
       .where(eq(User.id, userId));
 
-    // Mark reset token as used
+    // Delete the password reset token since it's no longer needed
     await tx
-      .update(PasswordReset)
-      .set({ used: true })
+      .delete(PasswordReset)
       .where(eq(PasswordReset.id, resetId));
   });
 

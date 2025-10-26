@@ -31,5 +31,18 @@ export default async function seed() {
       updatedAt: new Date("2024-01-02"),
       lastLoginAt: new Date("2024-01-02"),
     },
+    {
+      id: 3,
+      publicId: generatePublicId(),
+      username: "ali",
+      email: "ali@englishforabroad.com",
+      password: await hashPassword("123123123aA"),
+      role: "user",
+      confirmed: true,
+      blocked: false,
+      createdAt: new Date("2024-01-03"),
+      updatedAt: new Date("2024-01-03"),
+      lastLoginAt: new Date("2024-01-03"),
+    },
   ]);
 }

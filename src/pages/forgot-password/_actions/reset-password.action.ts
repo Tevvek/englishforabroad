@@ -4,6 +4,7 @@ import { redirect, fail } from "@/utils/actions.utils";
 import { verifyResetToken } from "../_queries/verify-reset-token.query";
 import { resetUserPassword } from "../_queries/reset-user-password.query";
 import { hashPassword } from "../../register/_utils/hash-password.util";
+import { isPasswordDifferent } from "../_validations/is-password-different.validation";
 import { tryCatch } from "@/utils/tryCatch";
 
 export const resetPassword = defineAction({
@@ -19,9 +20,28 @@ export const resetPassword = defineAction({
       });
     }
 
-    if (!tokenResult.success) {
+    if (!tokenResult.success || !tokenResult.data) {
       return fail({
-        message: tokenResult.error,
+        message: tokenResult.error ?? "Invalid or expired reset token",
+        code: "BAD_REQUEST",
+      });
+    }
+
+    // Check if new password is different from current password
+    const [isDifferent, compareError] = await tryCatch(
+      isPasswordDifferent(password, tokenResult.data.currentPasswordHash)
+    );
+
+    if (compareError) {
+      return fail({
+        message: "Failed to validate password. Please try again.",
+        code: "BAD_REQUEST",
+      });
+    }
+
+    if (!isDifferent) {
+      return fail({
+        message: "New password must be different from your current password.",
         code: "BAD_REQUEST",
       });
     }
@@ -54,7 +74,8 @@ export const resetPassword = defineAction({
 
     // Redirect with success message
     return redirect({
-      message: "Password reset successfully! You can now sign in with your new password.",
+      message:
+        "Password reset successfully! You can now sign in with your new password.",
       to: "/login",
       type: "success",
     });
