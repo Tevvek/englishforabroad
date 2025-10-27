@@ -2,11 +2,11 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { SiteHeader } from "@/components/site-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
-interface DashboardWrapperProps {
+interface DashboardLayoutProps {
   children: React.ReactNode;
 }
 
-export default function DashboardWrapper({ children }: DashboardWrapperProps) {
+export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <SidebarProvider
       style={
