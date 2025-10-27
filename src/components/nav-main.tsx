@@ -23,11 +23,14 @@ export function NavMain({
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
-              tooltip="(TODO) Book class"
+              tooltip="(DOING) Book class"
               className="bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground min-w-8 duration-200 ease-linear"
+              asChild
             >
-              <IconCirclePlusFilled />
-              <span>(TODO) Book class</span>
+              <a href="/dashboard/book-class">
+                <IconCirclePlusFilled />
+                <span>(DOING) Book class</span>
+              </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
