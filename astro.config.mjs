@@ -10,11 +10,13 @@ import react from "@astrojs/react";
 
 import db from "@astrojs/db";
 
+import inoxToolsRequestNanostores from "@inox-tools/request-nanostores";
+
 // https://astro.build/config
 export default defineConfig({
   output: "server",
 
-  integrations: [vue(), react(), db()],
+  integrations: [vue(), react(), db(), inoxToolsRequestNanostores()],
 
   vite: {
     plugins: [tailwindcss(), svgLoader()],
