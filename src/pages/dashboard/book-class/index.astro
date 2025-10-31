@@ -1,6 +1,23 @@
 ---
 import DashboardPageLayout from "@/layouts/DashboardPageLayout.astro";
 import BookingCalendar from "@/components/booking-calendar.tsx";
+import { initializeWithServerData } from "@/stores/month-availability.store";
+import { getCurrentMonthAvailability } from "./_queries/current-month-availability.query";
+
+// Load current month data server-side for fast initial rendering
+const today = new Date();
+const { availability, monthData } = await getCurrentMonthAvailability(today);
+
+// Transform to match our nanostore interface
+const monthStoreData = {
+  availability,
+  unavailableDates: monthData.summary.unavailableDates,
+};
+
+console.log(monthStoreData);
+
+// Initialize the nanostore with server-side data
+initializeWithServerData(today, monthStoreData);
 ---
 
 <DashboardPageLayout title="Book Class - English for Abroad">

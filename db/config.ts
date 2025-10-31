@@ -50,9 +50,17 @@ export const ClassBooking = defineTableWithTimestamps({
   columns: {
     id: column.number({ primaryKey: true }),
     studentId: column.number({ references: () => User.columns.id }),
-    scheduledDate: column.date(),
-    scheduledTime: column.text(), // "HH:MM" format
-    duration: column.number({ default: 50 }), // minutes
+
+    // ✅ ISO UTC string ("2025-10-01T07:00:00Z")
+    startTimeUTC: column.text(),
+    endTimeUTC: column.text(),
+
+    duration: column.number({ default: 50 }),
+
+    // ✅ store actual timezone context for audit (optional but recommended)
+    teacherTimezone: column.text({ default: "Europe/Madrid" }),
+    studentTimezone: column.text({ optional: true }),
+
     notes: column.text({ optional: true }),
     status: column.text({
       default: "scheduled",
@@ -66,33 +74,29 @@ export const ClassBooking = defineTableWithTimestamps({
 export const TeacherAvailability = defineTableWithTimestamps({
   columns: {
     id: column.number({ primaryKey: true }),
-    dayOfWeek: column.number(), // 0-6 (Sunday to Saturday)
-    startTime: column.text(), // "HH:MM" format
-    endTime: column.text(), // "HH:MM" format
+    dayOfWeek: column.number(), // 0-6 instead of strings (easier math)
+    startTime: column.text(), // "11:00"
+    endTime: column.text(), // "16:00"
     isActive: column.boolean({ default: true }),
+
+    // ✅ so system knows how to interpret local hours
+    timeZone: column.text({ default: "Europe/Madrid" }),
   },
 });
 
-export const Holiday = defineTableWithTimestamps({
+export const TeacherAvailabilityOverride = defineTableWithTimestamps({
   columns: {
     id: column.number({ primaryKey: true }),
-    name: column.text(),
-    date: column.date(),
+    date: column.text(), // ✅ as "2025-03-04", not date type
+    startTime: column.text(), // "11:00"
+    endTime: column.text(), // "13:00"
+    type: column.text({
+      enum: ["override", "extra"],
+    }),
+    isActive: column.boolean({ default: true }),
+
+    timeZone: column.text({ default: "Europe/Madrid" }),
     description: column.text({ optional: true }),
-    isRecurring: column.boolean({ default: false }), // for annual holidays
-    createdBy: column.number({ references: () => User.columns.id }),
-  },
-});
-
-export const TeacherUnavailability = defineTableWithTimestamps({
-  columns: {
-    id: column.number({ primaryKey: true }),
-    startDate: column.date(),
-    endDate: column.date(),
-    reason: column.text({ optional: true }),
-    isAllDay: column.boolean({ default: true }),
-    startTime: column.text({ optional: true }), // for partial day unavailability
-    endTime: column.text({ optional: true }),
   },
 });
 
@@ -112,14 +116,18 @@ export const ClassSettings = defineTableWithTimestamps({
 // https://astro.build/db/config
 export default defineDb({
   tables: {
+    // auth
     User,
     Session,
     EmailConfirmation,
     PasswordReset,
+
+    // bookings
     ClassBooking,
+
+    // availabilities
     TeacherAvailability,
-    Holiday,
-    TeacherUnavailability,
+    TeacherAvailabilityOverride,
     ClassSettings,
   },
 });
