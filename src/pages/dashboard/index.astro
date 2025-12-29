@@ -1,33 +1,13 @@
 ---
-import Layout from "@/layouts/Layout.astro";
+export const prerender = false;
+
+import DashboardLayout from "@/layouts/dashboard.layout.astro";
 
 const { session } = Astro.locals;
 
 if (!session) {
   return Astro.redirect("/auth/login");
 }
-
-const user = Astro.locals.user;
 ---
 
-<Layout title="Dashboard">
-  <p>Dashboard</p>
-  <p>{user?.email}</p>
-
-  <button id="sign-out">Sign out</button>
-</Layout>
-
-<script>
-  import { signOut } from "@/lib/auth-client";
-  import { navigate } from "astro:transitions/client";
-
-  const signOutButton = document.getElementById("sign-out");
-
-  if (signOutButton) {
-    signOutButton.addEventListener("click", async () => {
-      await signOut();
-
-      return await navigate("/auth/login");
-    });
-  }
-</script>
+<DashboardLayout title="Dashboard"> hi </DashboardLayout>
