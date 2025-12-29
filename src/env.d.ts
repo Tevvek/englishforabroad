@@ -1,10 +1,9 @@
 /// <reference path="../.astro/types.d.ts" />
-/// <reference types="astro/client" />
 
-import { type Auth } from "./types/auth";
-
-declare global {
-  namespace App {
-    interface Locals extends Auth {}
+declare namespace App {
+  // Note: 'import {} from ""' syntax does not work in .d.ts files.
+  interface Locals {
+    user: import("better-auth").User | null;
+    session: import("better-auth").Session | null;
   }
 }
