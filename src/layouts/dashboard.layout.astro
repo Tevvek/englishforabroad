@@ -1,10 +1,17 @@
 ---
+import Logo from "@/components/Logo.astro";
 import DashboardShell from "./dashboard.shell";
 import Layout from "./Layout.astro";
+
+const pathname = Astro.url.pathname; // e.g. /dashboard/home
+const arr = pathname.split("/"); // e.g. ["", "dashboard", "home"]
+const selected = arr[arr.length - 1]; // e.g. "home"
 ---
 
 <Layout title="Dashboard">
-  <DashboardShell>
+  <DashboardShell client:visible selectedNavItem={selected}>
+    <Logo slot="logo" class="w-20" />
+
     <slot />
   </DashboardShell>
 </Layout>

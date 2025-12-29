@@ -4,8 +4,12 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
 export default function DashboardShell({
   children,
+  logo,
+  selectedNavItem,
 }: {
   children: React.ReactNode;
+  logo?: React.ReactNode;
+  selectedNavItem?: string;
 }) {
   return (
     <SidebarProvider
@@ -16,7 +20,9 @@ export default function DashboardShell({
         } as React.CSSProperties
       }
     >
-      <AppSidebar variant="inset" />
+      <AppSidebar variant="inset" selectedNavItem={selectedNavItem}>
+        {logo}
+      </AppSidebar>
       <SidebarInset>
         <SiteHeader />
         <div className="flex flex-1 flex-col">
