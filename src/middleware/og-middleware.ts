@@ -1,13 +1,13 @@
-import { defineMiddleware } from "astro:middleware";
-import fetchApi from "./lib/strapi";
+import fetchApi from "@/lib/strapi";
 import type { User } from "@/types/auth";
-import { to } from "./utils/to";
+import { to } from "@/utils/to";
+import { defineMiddleware } from "astro:middleware";
 
 const protectedRoutes = ["/dashboard", "/me", "/dashboard/settings"];
 const guestOnlyRoutes = ["/login", "/register"];
 const protectedApiRoutes = ["/api/settings/change-password"];
 
-export const onRequest = defineMiddleware(
+const ogMiddleware = defineMiddleware(
   async ({ locals, cookies, url, redirect, isPrerendered }, next) => {
     const pathname = url.pathname;
 
@@ -73,3 +73,5 @@ export const onRequest = defineMiddleware(
     return response;
   }
 );
+
+export default ogMiddleware;

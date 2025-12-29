@@ -1,0 +1,47 @@
+---
+export const prerender = false;
+
+import Logo from "@/components/Logo.astro";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import Layout from "@/layouts/Layout.astro";
+import { cn } from "@/lib/utils";
+import NaverButton from "./_naver-button";
+
+const { session } = Astro.locals;
+
+if (session) {
+  return Astro.redirect("/dashboard");
+}
+---
+
+<Layout title="Login">
+  <div
+    class="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10"
+  >
+    <div class="flex w-full max-w-sm flex-col gap-6">
+      <Logo class="self-center w-20" />
+      <div class={cn("flex flex-col gap-6")}>
+        <Card>
+          <CardHeader className="text-center">
+            <CardTitle className="text-xl">
+              Welcome to EnglishForAbroad!
+            </CardTitle>
+            <CardDescription>
+              Login into your EnglishForAbroad account with your Naver account
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="flex flex-col gap-2">
+            <NaverButton client:visible />
+            <!-- <KakaoTalkButton /> -->
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  </div>
+</Layout>

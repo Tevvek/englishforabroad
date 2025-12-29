@@ -8,9 +8,11 @@ import vercel from "@astrojs/vercel";
 
 import react from "@astrojs/react";
 
+import db from "@astrojs/db";
+
 // https://astro.build/config
 export default defineConfig({
-  integrations: [vue(), react()],
+  integrations: [vue(), react(), db()],
 
   vite: {
     plugins: [tailwindcss(), svgLoader()],
@@ -43,6 +45,16 @@ export default defineConfig({
 
       // Brevo email marketing
       BREVO_API_KEY: envField.string({
+        context: "server",
+        access: "secret",
+      }),
+
+      // Naver
+      NAVER_CLIENT_ID: envField.string({
+        context: "server",
+        access: "secret",
+      }),
+      NAVER_CLIENT_SECRET: envField.string({
         context: "server",
         access: "secret",
       }),
