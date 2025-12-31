@@ -39,9 +39,23 @@ export default defineConfig({
         access: "secret",
       }),
 
-      // Strapi CMS
-
       // Stripe payments
+      STRIPE_SECRET_KEY: envField.string({
+        context: "server",
+        access: "secret",
+      }),
+      STRIPE_WEBHOOK_SECRET: envField.string({
+        context: "server",
+        access: "secret",
+      }),
+      STRIPE_FULL_PAYMENT_PRICE_ID: envField.string({
+        context: "server",
+        access: "secret",
+      }),
+      STRIPE_INSTALLMENTS_PRICE_ID: envField.string({
+        context: "server",
+        access: "secret",
+      }),
 
       // Brevo email marketing
       BREVO_API_KEY: envField.string({
