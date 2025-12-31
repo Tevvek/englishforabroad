@@ -1,7 +1,127 @@
 ---
 export const prerender = false;
 
+import { Badge } from "@/components/ui/badge";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import DashboardLayout from "@/layouts/dashboard.layout.astro";
+import { db, eq, UserCredits } from "astro:db";
+import { Package } from "lucide-react";
+import PurchasePackageButton from "./_purchase-package-button";
+
+const purchaseOptions = [
+  {
+    id: "full-payment",
+    name: "Full Payment",
+    price: 600,
+    description: "Pay once for all 12 classes",
+    paymentType: "One-time payment",
+    popular: true,
+  },
+  {
+    id: "installments",
+    name: "Installments",
+    price: 600,
+    description: "Split into monthly payments",
+    paymentType: "3 monthly payments of $200",
+    popular: false,
+  },
+] as const;
+
+const { user } = Astro.locals;
+
+const userCredits = await db
+  .select()
+  .from(UserCredits)
+  .where(eq(UserCredits.userId, user!.id))
+  .get();
+
+const credits = userCredits?.credits || 0;
 ---
 
-<DashboardLayout title="Dashboard"> Purchase </DashboardLayout>
+<DashboardLayout title="Dashboard">
+  <Card
+    className="mb-8 border-2 border-primary/20 bg-gradient-to-br from-card to-primary/5"
+  >
+    <CardContent className="py-6 text-center">
+      <CardTitle className="mb-3 text-xl font-title"
+        >Remaining Classes</CardTitle
+      >
+      <div class="flex items-end justify-center gap-2">
+        <span class="text-4xl font-bold text-primary">{credits}</span>
+        <span class="mb-1 text-lg text-muted-foreground">classes</span>
+      </div>
+    </CardContent>
+  </Card>
+
+  <div class="mb-4">
+    <h2 class="text-2xl font-semibold text-foreground">
+      Purchase More Credits
+    </h2>
+    <p class="mt-1 text-muted-foreground">
+      12 classes of 50 minutes each - Choose your payment method
+    </p>
+  </div>
+
+  <div class="grid gap-6 md:grid-cols-2">
+    {
+      purchaseOptions.map((option) => (
+        <Card
+          className={`relative ${option.popular ? "border-2 border-primary shadow-lg" : ""}`}
+        >
+          {option.popular && (
+            <div class="absolute -top-3 left-1/2 -translate-x-1/2">
+              <Badge className="bg-primary text-primary-foreground">
+                Most Popular
+              </Badge>
+            </div>
+          )}
+          <CardHeader>
+            <div class="mb-2 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+              <Package className="h-6 w-6 text-primary" />
+            </div>
+            <CardTitle>{option.name}</CardTitle>
+            <CardDescription>{option.description}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div class="mb-6">
+              <div class="flex items-end gap-1">
+                <span class="text-4xl font-bold text-foreground">
+                  ${option.price}
+                </span>
+              </div>
+              <p class="mt-2 text-sm text-muted-foreground">
+                {option.paymentType}
+              </p>
+              <p class="mt-1 text-sm font-medium text-foreground">
+                12 classes x 50 minutes
+              </p>
+            </div>
+
+            <PurchasePackageButton id={option.id} client:visible />
+
+            <div class="mt-4 space-y-2 border-t border-border pt-4">
+              <div class="flex items-center gap-2 text-sm text-muted-foreground">
+                <div class="h-1.5 w-1.5 rounded-full bg-primary" />
+                Instant credit activation
+              </div>
+              <div class="flex items-center gap-2 text-sm text-muted-foreground">
+                <div class="h-1.5 w-1.5 rounded-full bg-primary" />
+                Valid for 12 months
+              </div>
+              <div class="flex items-center gap-2 text-sm text-muted-foreground">
+                <div class="h-1.5 w-1.5 rounded-full bg-primary" />
+                Book anytime
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      ))
+    }
+  </div>
+</DashboardLayout>
