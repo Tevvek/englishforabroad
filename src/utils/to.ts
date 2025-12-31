@@ -8,3 +8,11 @@ export async function to<T>(
     return [err instanceof Error ? err : new Error(String(err)), null];
   }
 }
+
+export function toSync<T>(arg: T): [T, null] | [null, Error] {
+  try {
+    return [arg, null];
+  } catch (error) {
+    return [null, error instanceof Error ? error : new Error(String(error))];
+  }
+}
