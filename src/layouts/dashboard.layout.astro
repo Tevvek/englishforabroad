@@ -9,7 +9,7 @@ const selected = arr[arr.length - 1]; // e.g. "home"
 ---
 
 <Layout title="Dashboard">
-  <DashboardShell client:visible selectedNavItem={selected}>
+  <DashboardShell client:load selectedNavItem={selected}>
     <Logo slot="logo" class="w-20" />
 
     <slot />
