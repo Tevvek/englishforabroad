@@ -54,11 +54,22 @@ const Verification = defineTable({
   },
 });
 
+const UserCredits = defineTable({
+  columns: {
+    id: column.text({ primaryKey: true }),
+    userId: column.text({ references: () => User.columns.id, unique: true }),
+    credits: column.number({ default: 0 }),
+    createdAt: column.date({ default: NOW }),
+    updatedAt: column.date({ default: NOW }),
+  },
+});
+
 export default defineDb({
   tables: {
     User,
     Session,
     Account,
     Verification,
+    UserCredits,
   },
 });
