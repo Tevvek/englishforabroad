@@ -1,0 +1,23 @@
+---
+import DashboardPageLayout from "@/layouts/DashboardPageLayout.astro";
+import BookingCalendar from "@/components/booking-calendar.tsx";
+---
+
+<DashboardPageLayout title="Book Class - English for Abroad">
+  <div class="container mx-auto px-4 py-6 max-w-7xl">
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold mb-2">Book a Class</h1>
+      <p class="text-muted-foreground">
+        Schedule your English lesson with one of our experienced teachers
+      </p>
+    </div>
+    <div class="w-min">
+      <div>
+        <div class="text-lg font-semibold mb-4">
+          Select a Date and Time for Your Class
+        </div>
+        <BookingCalendar client:visible />
+      </div>
+    </div>
+  </div>
+</DashboardPageLayout>
