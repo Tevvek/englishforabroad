@@ -9,7 +9,6 @@ export default async function fetchApi<T>({
   body,
   wrappedByKey,
   wrappedByList,
-  authToken,
 }: FetchAPIProps): Promise<T> {
   if (endpoint.startsWith("/")) {
     endpoint = endpoint.slice(1);

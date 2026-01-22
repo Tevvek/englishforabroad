@@ -1,7 +1,5 @@
 ---
 import RestLayout from "./RestLayout.astro";
-import Navbar from "@/components/Navbar.astro";
-import type { Podcast } from "@/types/resources";
 import Footer from "@/sections/Footer.astro";
 import Volume from "@/components/Volume.astro";
 import { Image } from "astro:assets";
@@ -36,7 +34,7 @@ const similarPodcasts = podcasts
   anchor?.addEventListener("click", () => {
     const themeText = anchor.textContent;
     const theme = Object.values(PodcastsThemes).find(
-      (value) => value === themeText
+      (value) => value === themeText,
     )!;
     selectedPodcast.set(theme);
   });
@@ -55,7 +53,7 @@ const similarPodcasts = podcasts
       <div
         class={cn(
           "bg-white text-primary rounded-xl p-4 gap-x-4 shadow-lg grid grid-rows-[auto_auto_auto_1fr_auto]",
-          "md:col-span-3 md:grid-cols-[auto_1fr] md:grid-rows-[auto_auto_1fr_auto]"
+          "md:col-span-3 md:grid-cols-[auto_1fr] md:grid-rows-[auto_auto_1fr_auto]",
         )}
       >
         <ImageSkeleton
@@ -76,7 +74,7 @@ const similarPodcasts = podcasts
           href="/resources"
           class={cn(
             "border border-primary py-0.5 font-semibold text-primary px-4 rounded-full text-xs transition duration-300 hover:scale-105 shadow w-fit place-self-end mb-4 row-start-1",
-            "md:col-start-2 md:row-start-1 md:mb-0"
+            "md:col-start-2 md:row-start-1 md:mb-0",
           )}
         >
           {theme}
@@ -91,7 +89,7 @@ const similarPodcasts = podcasts
           rel="noopener noreferrer"
           class={cn(
             "bg-primary text-white font-bold rounded-full px-12 py-2 transition duration-300 hover:scale-105 shadow flex justify-center items-center gap-x-2",
-            "md:w-fit md:col-start-2 md:row-start-4"
+            "md:w-fit md:col-start-2 md:row-start-4",
           )}
           >Listen here <Volume />
         </a>
@@ -111,7 +109,7 @@ const similarPodcasts = podcasts
               "bg-white text-primary rounded-xl p-4 h-80 grid-rows-[min-content_min-content_auto] grid gap-x-4 transition duration-300 hover:scale-105 shadow-lg",
               "xs:h-44 xs:grid-rows-[auto_1fr] xs:grid-cols-[auto_1fr]",
               "md:h-80 md:grid-rows-[min-content_min-content_auto] md:grid-cols-1",
-              "lg:h-44 lg:grid-rows-[auto_1fr] lg:grid-cols-[auto_1fr]"
+              "lg:h-44 lg:grid-rows-[auto_1fr] lg:grid-cols-[auto_1fr]",
             )}
           >
             <h3
@@ -119,7 +117,7 @@ const similarPodcasts = podcasts
                 "font-bold line-clamp-2",
                 "xs:col-start-2 xs:row-start-1",
                 "md:col-start-1 md:row-start-1 ",
-                "lg:col-start-2 lg:row-start-1"
+                "lg:col-start-2 lg:row-start-1",
               )}
             >
               {tpd.title}
@@ -129,7 +127,7 @@ const similarPodcasts = podcasts
                 "text-sm line-clamp-2 mb-2",
                 "xs:mb-0 xs:line-clamp-6 xs:col-start-2 xs:row-start-2",
                 "md:line-clamp-2 md:mb-2 md:col-start-1 md:row-start-2",
-                "lg:mb-0 lg:line-clamp-6 lg:col-start-2 lg:row-start-2 lg:h-fit"
+                "lg:mb-0 lg:line-clamp-6 lg:col-start-2 lg:row-start-2 lg:h-fit",
               )}
             >
               {tpd.shortDescription}
@@ -140,7 +138,7 @@ const similarPodcasts = podcasts
                 "self-end max-w-48 w-full aspect-square place-self-center",
                 "xs:max-w-36 xs:col-start-1 xs:row-start-1 xs:row-span-2",
                 "md:max-w-48 md:col-start-1 md:row-start-3 md:row-span-1",
-                "lg:max-w-36 lg:col-start-1 lg:row-start-1 lg:row-span-2"
+                "lg:max-w-36 lg:col-start-1 lg:row-start-1 lg:row-span-2",
               )}
             >
               <Image

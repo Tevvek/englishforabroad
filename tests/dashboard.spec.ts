@@ -1,6 +1,3 @@
-import { test, expect } from "@playwright/test";
-import { login } from "@tests/utils/auth";
-
 // test("Dashboard renders user email from Astro.locals.user", async ({
 //   page,
 // }) => {
