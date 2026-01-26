@@ -40,8 +40,24 @@ const movies = defineCollection({
     }),
 });
 
+const freebies = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/data/freebies" }),
+  schema: z.object({
+    title: z.string(),
+    subtitle: z.string().optional(),
+    description: z.string(),
+    brevoListId: z.number(),
+    slug: z.string(),
+    buttonText: z.string().default("Download"),
+    // SEO
+    metaTitle: z.string().optional(),
+    metaDescription: z.string().optional(),
+  }),
+});
+
 export const collections = {
   podcasts,
   tvShows,
   movies,
+  freebies,
 };

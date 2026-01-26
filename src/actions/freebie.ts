@@ -3,21 +3,42 @@ import { ActionError, defineAction } from "astro:actions";
 import { BREVO_API_KEY } from "astro:env/server";
 import { z } from "astro:schema";
 import nodemailer from "nodemailer";
-
-const NEW_SUBSCRIBERS_LIST_ID = 5;
+import { getEntry } from "astro:content";
 
 export const freebie = defineAction({
   input: z.object({
     name: z.string(),
     email: z.string().email(),
     consent: z.boolean().default(false).optional(),
+    freebieSlug: z.string().optional(),
   }),
-  handler: async ({ name, email, consent }) => {
+  handler: async ({ name, email, consent, freebieSlug }) => {
     if (!consent) {
       throw new ActionError({
         code: "BAD_REQUEST",
         message: "You must consent to receive emails",
       });
+    }
+
+    // Determine brevoListId and title based on whether slug is provided
+    let brevoListId: number;
+    let title: string;
+    
+    if (freebieSlug) {
+      // Load freebie config from content collection
+      const freebieData = await getEntry("freebies", freebieSlug);
+      if (!freebieData) {
+        throw new ActionError({
+          code: "NOT_FOUND",
+          message: "Freebie not found",
+        });
+      }
+      brevoListId = freebieData.data.brevoListId;
+      title = freebieData.data.title;
+    } else {
+      // Fallback for watch-and-learn (hardcoded values)
+      brevoListId = 5;
+      title = "Watch and Learn";
     }
 
     const brevoResult = await fetch("https://api.brevo.com/v3/contacts", {
@@ -32,7 +53,7 @@ export const freebie = defineAction({
         attributes: {
           FIRSTNAME: name,
         },
-        listIds: [NEW_SUBSCRIBERS_LIST_ID],
+        listIds: [brevoListId],
         updateEnabled: true,
       }),
     });
@@ -43,7 +64,12 @@ export const freebie = defineAction({
       };
     }
 
-    const emailResult = await sendEmailNotificationToMyself(email, name);
+    const emailResult = await sendEmailNotificationToMyself(
+      email,
+      name,
+      title,
+      freebieSlug || "watch-and-learn"
+    );
     if (!emailResult.accepted || emailResult.accepted.length === 0) {
       return { error: "Failed to send notification email" };
     }
@@ -59,14 +85,20 @@ export const freebie = defineAction({
   },
 });
 
-function sendEmailNotificationToMyself(email: string, name: string) {
+function sendEmailNotificationToMyself(
+  email: string,
+  name: string,
+  freebieTitle: string,
+  freebieSlug: string
+) {
   // TODO this should be part of the Brevo's flow but it is not working, so for now we are using nodemailer to send it ourselves
   const transporter = nodemailer.createTransport(EMAIL_TRANSPORTER);
   const mailOOptions = {
     ...MAIL_OPTIONS,
-    subject: "New person subscribed to the watch-and-learn freebie",
+    subject: `New person subscribed to the ${freebieSlug} freebie`,
     text: `
-                  New person subscribed to the watch-and-learn freebie.
+                  New person subscribed to the freebie: ${freebieTitle}
+                  Freebie slug: ${freebieSlug}
         
                   Email:
                   ${email}

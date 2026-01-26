@@ -22,7 +22,15 @@ const formSchema = z.object({
   consent: z.boolean().default(false).optional(),
 });
 
-export default function FreebieForm() {
+interface FreebieFormProps {
+  freebieSlug?: string;
+  buttonText?: string;
+}
+
+export default function FreebieForm({ 
+  freebieSlug, 
+  buttonText = "Get your guide" 
+}: FreebieFormProps = {}) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -44,6 +52,7 @@ export default function FreebieForm() {
       name: values.name,
       email: values.email,
       consent: values.consent,
+      ...(freebieSlug && { freebieSlug }),
     });
 
     if (error) {
@@ -131,7 +140,7 @@ export default function FreebieForm() {
               Submitting...
             </>
           ) : (
-            "Get your guide"
+            buttonText
           )}
         </Button>
       </form>

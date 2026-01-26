@@ -1,0 +1,43 @@
+---
+import FreebieLayout from "@/layouts/FreebieLayout.astro";
+import FreebieForm from "../_freebie-form";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const freebies = await getCollection("freebies");
+  return freebies.map((freebie) => ({
+    params: { slug: freebie.data.slug },
+    props: { freebie },
+  }));
+}
+
+const { freebie } = Astro.props;
+const {
+  title,
+  subtitle,
+  description,
+  slug,
+  buttonText,
+  metaTitle,
+  metaDescription,
+} = freebie.data;
+---
+
+<FreebieLayout title={metaTitle || title} description={metaDescription || description}>
+  <main class="bg-surface min-h-screen flex items-center justify-center py-16 md:py-24 px-4 md:px-8 lg:px-12 xl:px-16">
+    <div class="text-balance text-center max-w-3xl w-full">
+      {subtitle && (
+        <p class="text-sm font-medium text-gray-600 mb-4 tracking-wide uppercase">
+          {subtitle}
+        </p>
+      )}
+      <h1 class="text-4xl md:text-6xl text-gray-900 mb-6 leading-tight">
+        {title}
+      </h1>
+      <p class="text-lg text-gray-700 mb-8 leading-relaxed">
+        {description}
+      </p>
+      <FreebieForm client:visible freebieSlug={slug} buttonText={buttonText} />
+    </div>
+  </main>
+</FreebieLayout>
