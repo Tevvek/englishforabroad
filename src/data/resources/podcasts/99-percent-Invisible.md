@@ -1,5 +1,5 @@
 ---
-title: 99% Invisibles
+title: 99% Invisible
 slug: NinetyNinePercentInvisible
 shortDescription: Reveals the hidden elements of design in everyday life.
 longDescription: 99% Invisible explores the hidden elements of design and
