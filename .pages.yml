@@ -1,0 +1,66 @@
+content:
+  - name: podcasts
+    label: Podcasts
+    type: collection
+    path: src/data/resources/podcasts
+    format: yaml-frontmatter
+    subfolders: false
+    view:
+      fields: [ title, theme, link ]
+      primary: title
+      sort: [ title ]
+      default:
+        search: ''
+        sort: title
+        order: asc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: shortDescription
+        label: Short Description
+        type: text
+      - name: longDescription
+        label: Long Description
+        type: text
+      - name: theme
+        label: Theme
+        type: string
+      - name: image
+        label: Image
+        type: string
+      - name: link
+        label: Link
+        type: string
+  - name: tvshows
+    label: TV Shows
+    type: collection
+    path: src/data/resources/tvshows
+    format: yaml-frontmatter
+    subfolders: false
+    view:
+      fields: [ title, theme, link ]
+      primary: title
+      sort: [ title ]
+      default:
+        search: ''
+        sort: title
+        order: asc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: longDescription
+        label: Long Description
+        type: text
+      - name: theme
+        label: Theme
+        type: string
+      - name: image
+        label: Image
+        type: string
+      - name: link
+        label: Link
+        type: string
