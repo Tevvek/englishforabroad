@@ -9,6 +9,11 @@ media:
     input: src/images/resources/tvshows
     output: /tvshows
     extensions: [ webp ]
+  - name: freebies
+    label: Freebie Images
+    input: src/assets/freebies
+    output: /freebies
+    extensions: [ webp, png, jpg, jpeg ]
 
 content:
   - name: podcasts
@@ -82,3 +87,52 @@ content:
       - name: link
         label: Link
         type: string
+  - name: freebies
+    label: Freebies
+    type: collection
+    path: src/data/freebies
+    format: yaml-frontmatter
+    subfolders: false
+    view:
+      fields: [ title, slug ]
+      primary: title
+      sort: [ title ]
+      default:
+        search: ''
+        sort: title
+        order: asc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: subtitle
+        label: Subtitle
+        type: text
+      - name: description
+        label: Description
+        type: text
+        required: true
+      - name: slug
+        label: Slug
+        type: string
+        required: true
+      - name: buttonText
+        label: Button Text
+        type: string
+      - name: resourceURL
+        label: Resource URL
+        type: string
+        required: true
+      - name: image
+        label: Image
+        type: image
+        options:
+          media: freebies
+          extensions: [ webp, png, jpg, jpeg ]
+      - name: metaTitle
+        label: Meta Title
+        type: string
+      - name: metaDescription
+        label: Meta Description
+        type: text

@@ -46,9 +46,10 @@ const freebies = defineCollection({
     title: z.string(),
     subtitle: z.string().optional(),
     description: z.string(),
-    brevoListId: z.number(),
+    resourceURL: z.string(),
     slug: z.string(),
     buttonText: z.string().default("Download"),
+    image: z.string().optional(),
     // SEO
     metaTitle: z.string().optional(),
     metaDescription: z.string().optional(),

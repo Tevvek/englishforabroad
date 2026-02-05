@@ -22,15 +22,13 @@ const formSchema = z.object({
   consent: z.boolean().default(false).optional(),
 });
 
-interface FreebieFormProps {
-  freebieSlug: string;
+interface WatchAndLearnFormProps {
   buttonText?: string;
 }
 
-export default function FreebieForm({
-  freebieSlug,
+export default function WatchAndLearnForm({
   buttonText = "Get your guide",
-}: FreebieFormProps) {
+}: WatchAndLearnFormProps = {}) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -48,11 +46,10 @@ export default function FreebieForm({
       return;
     }
 
-    const { error, data } = await actions.freebie({
+    const { error, data } = await actions.freebieWatchAndLearn({
       name: values.name,
       email: values.email,
       consent: values.consent,
-      freebieSlug,
     });
 
     if (error) {

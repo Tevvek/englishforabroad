@@ -2,6 +2,8 @@
 import FreebieLayout from "@/layouts/FreebieLayout.astro";
 import FreebieForm from "../_freebie-form";
 import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+import resolveFreebieImage from "@/utils/resolveFreebieImage";
 
 export async function getStaticPaths() {
   const freebies = await getCollection("freebies");
@@ -20,7 +22,10 @@ const {
   buttonText,
   metaTitle,
   metaDescription,
+  image,
 } = freebie.data;
+
+const resolvedImage = resolveFreebieImage(image);
 ---
 
 <FreebieLayout title={metaTitle || title} description={metaDescription || description}>
@@ -38,6 +43,15 @@ const {
         {description}
       </p>
       <FreebieForm client:visible freebieSlug={slug} buttonText={buttonText} />
+      {resolvedImage && (
+        <div class="mt-10 md:mt-12">
+          <Image
+            src={resolvedImage}
+            alt={title}
+            class="mx-auto w-full max-w-xl rounded-2xl shadow-lg"
+          />
+        </div>
+      )}
     </div>
   </main>
 </FreebieLayout>

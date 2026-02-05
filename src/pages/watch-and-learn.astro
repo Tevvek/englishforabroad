@@ -1,6 +1,6 @@
 ---
 import FreebieLayout from "@/layouts/FreebieLayout.astro";
-import FreebieForm from "./_freebie-form";
+import WatchAndLearnForm from "./_freebie-watch-and-learn-form";
 import { CheckCircle } from "lucide-react";
 import { Image } from "astro:assets";
 
@@ -27,7 +27,7 @@ import { cn } from "@/lib/utils";
         Subscribe to get your free guide, plus language tips and early access to
         new offers and resources to help you speak English with confidence.
       </p>
-      <FreebieForm client:visible />
+      <WatchAndLearnForm client:visible />
     </Section>
 
     <Section
@@ -169,7 +169,7 @@ import { cn } from "@/lib/utils";
         new offers and resources to help you speak English with confidence.
       </p>
 
-      <FreebieForm client:visible />
+      <WatchAndLearnForm client:visible />
     </Section>
   </main>
 </FreebieLayout>
