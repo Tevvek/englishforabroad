@@ -5,6 +5,7 @@ import Volume from "@/components/Volume.astro";
 import { Image } from "astro:assets";
 import ImageSkeleton from "@/components/ImageSkeleton.astro";
 import cn from "@/utils/cn";
+import resolveResourceImage from "@/utils/resolveResourceImage";
 import { getCollection } from "astro:content";
 
 const { frontmatter } = Astro.props;
@@ -24,6 +25,8 @@ const similarPodcasts = podcasts
   .concat(podcasts.slice(0, currentIndex))
   .filter((pd) => pd.theme === theme && pd.title !== title)
   .slice(0, 3);
+
+const resolvedImage = resolveResourceImage(image) ?? image;
 ---
 
 <script>
@@ -60,7 +63,7 @@ const similarPodcasts = podcasts
           class="max-h-64 md:col-start-1 md:row-start-1 md:row-span-4 place-self-center mb-4 md:mb-0"
         >
           <Image
-            src={image}
+            src={resolvedImage}
             alt={title}
             transition:name={slug ? slug : title.replaceAll(" ", "")}
             loading="eager"
@@ -142,7 +145,7 @@ const similarPodcasts = podcasts
               )}
             >
               <Image
-                src={tpd.image}
+                src={resolveResourceImage(tpd.image) ?? tpd.image}
                 alt={title}
                 transition:name={tpd.title.replaceAll(" ", "")}
                 loading="eager"

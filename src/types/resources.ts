@@ -1,3 +1,7 @@
+import type { ImageMetadata } from "astro";
+
+export type ResourceImage = string | ImageMetadata;
+
 export enum PodcastsThemes {
   Art = "Art & Design",
   Culture = "Culture & Society",
@@ -22,7 +26,7 @@ export interface Podcast {
   title: string;
   shortDescription: string;
   longDescription: string;
-  image: string;
+  image: ResourceImage;
   theme: PodcastsThemes;
   link: string;
   url: string;
@@ -32,7 +36,7 @@ export interface Podcast {
 export interface TvShow {
   title: string;
   longDescription: string;
-  image: string;
+  image: ResourceImage;
   theme: TvShowsThemes;
   link: string;
   url: string;

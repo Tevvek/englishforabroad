@@ -59,7 +59,7 @@
           class="self-end place-self-center xs:self-center aspect-[2/3] w-48 xs:w-36 xs:col-start-1 xs:row-start-1 xs:row-span-2 bg-gray-300"
         >
           <img
-            :src="tvShow.image.src"
+            :src="getImageSrc(tvShow.image)"
             alt="tvShow"
             :style="{
               '--view-transition-name': getViewTransitionName(tvShow),
@@ -128,6 +128,9 @@ const onSwiperInitialized = (swiper: SwiperType) => {
   isSwiperReady.value = true;
   swiperInstance.value = swiper;
 };
+
+const getImageSrc = (image: TvShow["image"]) =>
+  typeof image === "string" ? image : image.src;
 
 watch(
   () => $selectedTvShow.value,

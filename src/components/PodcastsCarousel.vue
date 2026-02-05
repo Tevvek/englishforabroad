@@ -51,7 +51,7 @@
           class="self-end place-self-center aspect-square w-48 xs:w-36 xs:col-start-1 xs:row-start-1 xs:row-span-2 bg-gray-300"
         >
           <img
-            :src="podcast.image.src"
+            :src="getImageSrc(podcast.image)"
             alt="podcast"
             :style="{
               '--view-transition-name': podcast.slug
@@ -120,6 +120,9 @@ const onSwiperInitialized = (swiper: SwiperType) => {
   isSwiperReady.value = true;
   swiperInstance.value = swiper;
 };
+
+const getImageSrc = (image: Podcast["image"]) =>
+  typeof image === "string" ? image : image.src;
 
 watch(
   () => $selectedPodcast.value,

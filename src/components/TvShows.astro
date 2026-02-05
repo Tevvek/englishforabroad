@@ -2,10 +2,12 @@
 import TvShowsCarousel from "@/components/TvShowsCarousel.vue";
 import TvShowsTags from "@/components/TvShowsTags.vue";
 import { getCollection } from "astro:content";
+import resolveResourceImage from "@/utils/resolveResourceImage";
 
 const markdowns = await getCollection("tvShows");
 const tvShows = markdowns.map<any>((markdown) => ({
   ...markdown.data,
+  image: resolveResourceImage(markdown.data.image) ?? markdown.data.image,
   slug: markdown.id,
   url: `/resources/tvshows/${markdown.id}`,
 }));

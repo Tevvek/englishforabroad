@@ -10,6 +10,6 @@ longDescription: 99% Invisible explores the hidden elements of design and
   Mail, The Ice King, and The Secret Lives of Color reveal how design impacts
   our daily lives in surprising ways.
 theme: Art & Design
-image: ../../../images/resources/podcasts/99_percent_invisible.webp
+image: /podcasts/99_percent_invisible.webp
 link: https://99percentinvisible.org/
 ---

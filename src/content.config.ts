@@ -3,26 +3,26 @@ import { glob } from "astro/loaders";
 
 const podcasts = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/data/resources/podcasts" }),
-  schema: ({ image }) =>
+  schema: () =>
     z.object({
       title: z.string(),
       shortDescription: z.string(),
       longDescription: z.string(),
       theme: z.string(),
-      image: image(),
+      image: z.string(),
       link: z.string().url(),
     }),
 });
 
 const tvShows = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/data/resources/tvshows" }),
-  schema: ({ image }) =>
+  schema: () =>
     z.object({
       title: z.string(),
       shortDescription: z.string().optional(),
       longDescription: z.string(),
       theme: z.string(),
-      image: image(),
+      image: z.string(),
       link: z.string().url(),
     }),
 });

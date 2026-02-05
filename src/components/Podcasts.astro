@@ -2,10 +2,12 @@
 import PodcastsTags from "@/components/PodcastsTags";
 import PodcastsCarousel from "@/components/PodcastsCarousel.vue";
 import { getCollection } from "astro:content";
+import resolveResourceImage from "@/utils/resolveResourceImage";
 
 const markdowns = await getCollection("podcasts");
 const podcasts = markdowns.map<any>((markdown) => ({
   ...markdown.data,
+  image: resolveResourceImage(markdown.data.image) ?? markdown.data.image,
   slug: markdown.id,
   url: `/resources/podcasts/${markdown.id}`,
 }));

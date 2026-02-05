@@ -1,3 +1,15 @@
+media:
+  - name: podcasts
+    label: Podcast Images
+    input: src/images/resources/podcasts
+    output: /podcasts
+    extensions: [ webp ]
+  - name: tvshows
+    label: TV Show Images
+    input: src/images/resources/tvshows
+    output: /tvshows
+    extensions: [ webp ]
+
 content:
   - name: podcasts
     label: Podcasts
@@ -29,7 +41,10 @@ content:
         type: string
       - name: image
         label: Image
-        type: string
+        type: image
+        options:
+          media: podcasts
+          extensions: [ webp ]
       - name: link
         label: Link
         type: string
@@ -60,7 +75,10 @@ content:
         type: string
       - name: image
         label: Image
-        type: string
+        type: image
+        options:
+          media: tvshows
+          extensions: [ webp ]
       - name: link
         label: Link
         type: string
