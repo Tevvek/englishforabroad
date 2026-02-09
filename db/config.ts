@@ -7,6 +7,47 @@ const User = defineTable({
     email: column.text(),
     emailVerified: column.boolean({ default: false }),
     image: column.text({ optional: true }),
+    // Links an app user to their Stripe customer record.
+    stripeCustomerId: column.text({ optional: true }),
+    createdAt: column.date({ default: NOW }),
+    updatedAt: column.date({ default: NOW }),
+  },
+});
+
+const enumValues = <T extends [string, ...string[]]>(...values: T) => values;
+
+const STRIPE_EVENT_STATUSES = enumValues("received", "processed", "failed");
+
+const CREDIT_LEDGER_ENTRY_TYPES = enumValues(
+  "purchase_grant",
+  "booking_deduct",
+  "booking_refund",
+  "manual_adjustment",
+);
+
+// Stores processed Stripe webhook events for idempotency and debugging.
+const StripeEvent = defineTable({
+  columns: {
+    id: column.text({ primaryKey: true }),
+    stripeEventId: column.text(),
+    eventType: column.text(),
+    status: column.text({ enum: STRIPE_EVENT_STATUSES }),
+    errorMessage: column.text({ optional: true }),
+    processedAt: column.date({ optional: true }),
+    createdAt: column.date({ default: NOW }),
+    updatedAt: column.date({ default: NOW }),
+  },
+});
+
+// Source of truth for student credit balance changes (+12, -1, refunds, etc.).
+const CreditLedger = defineTable({
+  columns: {
+    id: column.text({ primaryKey: true }),
+    userId: column.text({ references: () => User.columns.id }),
+    stripeEventId: column.text({ optional: true }),
+    entryType: column.text({ enum: CREDIT_LEDGER_ENTRY_TYPES }),
+    creditsDelta: column.number(),
+    description: column.text({ optional: true }),
     createdAt: column.date({ default: NOW }),
     updatedAt: column.date({ default: NOW }),
   },
@@ -60,5 +101,7 @@ export default defineDb({
     Session,
     Account,
     Verification,
+    StripeEvent,
+    CreditLedger,
   },
 });
