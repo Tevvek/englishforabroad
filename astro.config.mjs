@@ -39,8 +39,6 @@ export default defineConfig({
         access: "secret",
       }),
 
-      // Strapi CMS
-
       // Stripe payments
 
       // Brevo email marketing

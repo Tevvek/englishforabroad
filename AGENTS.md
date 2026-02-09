@@ -8,7 +8,6 @@ This project is an Astro + TypeScript app managed with pnpm.
 - Framework: Astro 5
 - Languages: TypeScript, Astro, React, Vue
 - Package manager: pnpm
-- Test framework: Playwright (E2E)
 - Type checking: `astro check`
 - CI currently validates freebies metadata and runs Astro checks
 
@@ -30,7 +29,7 @@ cp .env.example .env
 
 5. Do not commit `.env` or secrets.
 
-## Build, Check, and Test Commands
+## Build and Check Commands
 
 ### Core commands
 
@@ -71,46 +70,9 @@ pnpm validate:freebies
 - Treat `pnpm astro check` as the main static-quality gate.
 - If asked to add linting, do so in a separate, explicit change.
 
-### Test commands (Playwright E2E)
-
-- Run all E2E tests:
-
-```bash
-pnpm test:e2e
-```
-
-- Run a single spec file:
-
-```bash
-pnpm test:e2e -- tests/login.spec.ts
-```
-
-- Run a single test by title grep:
-
-```bash
-pnpm test:e2e -- -g "JWT token cookie is set after login"
-```
-
-- Run a single file in a specific Playwright project:
-
-```bash
-pnpm test:e2e -- --project="Desktop Chromium" tests/login.spec.ts
-```
-
-- Show Playwright UI/debug mode (ad hoc):
-
-```bash
-pnpm test:e2e -- --ui
-```
-
-Notes:
-- Tests default to `http://localhost:4321` in `playwright.config.ts`.
-- Global teardown exists and cleans test users when registered by tests.
-
 ## Repo Structure (High-level)
 
 - `src/`: app code (pages, components, actions, utils, middleware)
-- `tests/`: Playwright E2E tests and helpers
 - `db/`: Astro DB schema and seed
 - `scripts/`: maintenance/validation scripts
 - `.github/workflows/`: CI automation
@@ -120,7 +82,6 @@ Notes:
 - TS config extends `astro/tsconfigs/strict`; keep code strict-safe.
 - Use configured path aliases when appropriate:
   - `@/*` -> `src/*`
-  - `@tests/*` -> `tests/*`
   - `@db/*` -> `db/*`
 - Prefer `import type` for type-only imports.
 - Keep imports grouped in this order:
@@ -162,18 +123,10 @@ Notes:
 - Include contextual logs for server-side failures, but do not leak secrets.
 - Reuse helper patterns like `to()` when they improve readability.
 
-## Testing Conventions
-
-- Keep test descriptions explicit and behavior-focused.
-- Reuse helpers in `tests/utils` for auth and navigation flows.
-- Ensure tests are isolated and cleanup is preserved.
-- Do not leave `test.only` or `describe.only` in committed code.
-
 ## Agent Execution Rules for This Repo
 
 - Before finalizing changes, run the narrowest relevant checks first.
-  - Example: changed login flow -> run `tests/login.spec.ts` first.
-- For broader risk areas, run `pnpm astro check` and then relevant E2E specs.
+- For broader risk areas, run `pnpm astro check`.
 - Do not edit generated/build output directories (`dist/`, `.vercel/`, `.astro/`).
 - Do not commit secrets, API keys, or local env files.
 
