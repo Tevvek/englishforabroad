@@ -4,13 +4,14 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import type { ReactNode } from "react"
 
 interface DashboardShellProps {
+  brand?: ReactNode
   children: ReactNode
 }
 
-export default function DashboardShell({ children }: DashboardShellProps) {
+export default function DashboardShell({ brand, children }: DashboardShellProps) {
   return (
     <SidebarProvider>
-      <AppSidebar variant="inset" />
+      <AppSidebar variant="inset" brand={brand} />
       <SidebarInset>
         <SiteHeader />
         <main className="p-4 lg:p-6">{children}</main>

@@ -19,7 +19,11 @@ const data = {
   ],
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
+  brand?: React.ReactNode
+}
+
+export function AppSidebar({ brand, ...props }: AppSidebarProps) {
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -30,7 +34,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
               <a href="/dashboard">
-                <span className="text-base font-semibold">Dashboard</span>
+                {brand ?? <span className="text-base font-semibold">Dashboard</span>}
+                {brand && <span className="sr-only">Dashboard home</span>}
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
