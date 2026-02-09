@@ -3,7 +3,7 @@ import {
   CalendarCheck2,
   CalendarPlus,
   CreditCard,
-  LayoutDashboard,
+  House,
   WalletCards,
 } from "lucide-react"
 
@@ -22,9 +22,9 @@ import {
 const data = {
   navMain: [
     {
-      title: "Dashboard",
-      url: "/dashboard",
-      icon: LayoutDashboard,
+      title: "Home",
+      url: "/dashboard/home",
+      icon: House,
     },
     {
       title: "Book a Class",
@@ -63,7 +63,7 @@ export function AppSidebar({ brand, ...props }: AppSidebarProps) {
               asChild
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
-              <a href="/dashboard">
+              <a href="/dashboard/home">
                 {brand ?? <span className="text-base font-semibold">Dashboard</span>}
                 {brand && <span className="sr-only">Dashboard home</span>}
               </a>
