@@ -1,9 +1,11 @@
 import * as React from "react"
 
+import { DashboardLogoutButton } from "@/components/dashboard-logout-button"
 import { NavMain } from "@/components/nav-main"
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -44,6 +46,9 @@ export function AppSidebar({ brand, ...props }: AppSidebarProps) {
       <SidebarContent>
         <NavMain items={data.navMain} />
       </SidebarContent>
+      <SidebarFooter>
+        <DashboardLogoutButton />
+      </SidebarFooter>
     </Sidebar>
   )
 }
