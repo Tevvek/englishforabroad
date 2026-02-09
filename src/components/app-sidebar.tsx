@@ -1,4 +1,11 @@
 import * as React from "react"
+import {
+  CalendarCheck2,
+  CalendarPlus,
+  CreditCard,
+  LayoutDashboard,
+  WalletCards,
+} from "lucide-react"
 
 import { DashboardLogoutButton } from "@/components/dashboard-logout-button"
 import { NavMain } from "@/components/nav-main"
@@ -17,6 +24,27 @@ const data = {
     {
       title: "Dashboard",
       url: "/dashboard",
+      icon: LayoutDashboard,
+    },
+    {
+      title: "Book a Class",
+      url: "/dashboard/book",
+      icon: CalendarPlus,
+    },
+    {
+      title: "My Classes",
+      url: "/dashboard/classes",
+      icon: CalendarCheck2,
+    },
+    {
+      title: "Payments & Plans",
+      url: "/dashboard/payments",
+      icon: CreditCard,
+    },
+    {
+      title: "Credits & Usage",
+      url: "/dashboard/credits",
+      icon: WalletCards,
     },
   ],
 }
