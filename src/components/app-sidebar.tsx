@@ -51,9 +51,10 @@ const data = {
 
 interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   brand?: React.ReactNode
+  currentPath: string
 }
 
-export function AppSidebar({ brand, ...props }: AppSidebarProps) {
+export function AppSidebar({ brand, currentPath, ...props }: AppSidebarProps) {
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -72,7 +73,7 @@ export function AppSidebar({ brand, ...props }: AppSidebarProps) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        <NavMain items={data.navMain} currentPath={currentPath} />
       </SidebarContent>
       <SidebarFooter>
         <DashboardLogoutButton />
