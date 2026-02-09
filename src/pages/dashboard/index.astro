@@ -1,8 +1,7 @@
 ---
-import Layout from "@/layouts/Layout.astro";
-import Dashboard from "./_dashboard.tsx";
+import DashboardLayout from "@/layouts/DashboardLayout.astro";
 ---
 
-<Layout title="Dashboard">
-  <Dashboard client:idle />
-</Layout>
+<DashboardLayout title="Dashboard">
+  <h1 class="text-2xl font-semibold">Hello world</h1>
+</DashboardLayout>

@@ -1,0 +1,16 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import DashboardShell from "@/pages/dashboard/_dashboard";
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<Layout title={title}>
+  <DashboardShell client:idle>
+    <slot />
+  </DashboardShell>
+</Layout>
