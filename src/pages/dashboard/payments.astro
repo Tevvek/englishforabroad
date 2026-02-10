@@ -1,16 +1,19 @@
 ---
+export const prerender = false;
+
+import { db, eq, sum, CreditLedger, User } from "astro:db";
+import { DashboardStripeCheckoutButton } from "@/components/dashboard-stripe-checkout-button";
 import DashboardLayout from "@/layouts/DashboardLayout.astro";
 import { setFlashToast } from "@/lib/flash-toast";
+import { stripe } from "@/lib/stripe";
+
+const PACKAGE_PRICE = 600;
+const PACKAGE_CREDITS = 12;
+const CLASS_DURATION_MINUTES = 50;
 
 const checkoutStatus = Astro.url.searchParams.get("checkout");
-const sessionId = Astro.url.searchParams.get("session_id");
-
 if (checkoutStatus === "success" || checkoutStatus === "cancel") {
   const isSuccess = checkoutStatus === "success";
-
-  const toastId = sessionId
-    ? `stripe:${checkoutStatus}:${sessionId}`
-    : `stripe:${checkoutStatus}`;
 
   const toastType = isSuccess ? "success" : "info";
   const toastTitle = isSuccess ? "Payment successful" : "Checkout canceled";
@@ -19,7 +22,6 @@ if (checkoutStatus === "success" || checkoutStatus === "cancel") {
     : "No charge was made.";
 
   setFlashToast(Astro.cookies, {
-    id: toastId,
     type: toastType,
     title: toastTitle,
     description: toastDescription,
@@ -27,11 +29,204 @@ if (checkoutStatus === "success" || checkoutStatus === "cancel") {
 
   return Astro.redirect("/dashboard/payments");
 }
+
+const userId = Astro.locals.user?.id;
+
+if (!userId) {
+  return Astro.redirect("/auth/login");
+}
+
+const users = await db.select().from(User).where(eq(User.id, userId));
+
+const user = users[0];
+
+if (!user) {
+  setFlashToast(Astro.cookies, {
+    type: "error",
+    title: "Unable to load billing data",
+    description: "Please sign in again.",
+  });
+  return Astro.redirect("/auth/login");
+}
+
+const creditBalanceRows = await db
+  .select({ credits: sum(CreditLedger.creditsDelta) })
+  .from(CreditLedger)
+  .where(eq(CreditLedger.userId, userId));
+
+const creditBalance = Number(creditBalanceRows[0]?.credits ?? 0);
+
+const checkoutSessions = user.stripeCustomerId
+  ? await stripe.checkout.sessions.list({
+      customer: user.stripeCustomerId,
+      limit: 10,
+    })
+  : { data: [] };
+
+const paymentIntentIds = checkoutSessions.data
+  .map((session) => session.payment_intent)
+  .filter(
+    (paymentIntent): paymentIntent is string =>
+      typeof paymentIntent === "string",
+  );
+
+const paymentIntentsById = new Map(
+  await Promise.all(
+    paymentIntentIds.map(async (paymentIntentId) => {
+      const paymentIntent = await stripe.paymentIntents.retrieve(
+        paymentIntentId,
+        {
+          expand: ["latest_charge"],
+        },
+      );
+
+      return [paymentIntentId, paymentIntent] as const;
+    }),
+  ),
+);
+
+const purchases = checkoutSessions.data.map((session) => {
+  const paymentIntentId =
+    typeof session.payment_intent === "string" ? session.payment_intent : null;
+  const paymentIntent = paymentIntentId
+    ? paymentIntentsById.get(paymentIntentId)
+    : null;
+  const charge = paymentIntent?.latest_charge;
+  const receiptUrl =
+    charge && typeof charge !== "string" ? charge.receipt_url : null;
+
+  return {
+    id: session.id,
+    amountTotal: session.amount_total,
+    currency: session.currency,
+    status: session.status,
+    paymentStatus: session.payment_status,
+    created: session.created,
+    receiptUrl,
+  };
+});
+
+const moneyFormatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+});
+
+const dateFormatter = new Intl.DateTimeFormat("en-US", {
+  dateStyle: "medium",
+  timeStyle: "short",
+});
+
+function formatPurchaseAmount(amount: number | null, currency: string | null) {
+  if (amount == null || !currency) {
+    return "-";
+  }
+
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: currency.toUpperCase(),
+  }).format(amount / 100);
+}
+
+function formatPurchaseDate(unixTimestampSeconds: number) {
+  return dateFormatter.format(new Date(unixTimestampSeconds * 1000));
+}
 ---
 
 <DashboardLayout title="Payments & Plans">
-  <h1 class="text-2xl font-semibold">Payments & Plans</h1>
-  <p class="mt-2 text-sm text-muted-foreground">
-    Hello world. This is where students will manage payments and lesson plans.
-  </p>
+  <div class="space-y-8">
+    <section class="space-y-2">
+      <h1 class="text-2xl font-semibold">Billing & Purchases</h1>
+      <p class="text-sm text-muted-foreground">
+        Buy your class package and review your Stripe purchase history.
+      </p>
+    </section>
+
+    <section class="grid gap-4 md:grid-cols-2">
+      <article class="rounded-lg border bg-card p-5">
+        <h2 class="text-lg font-semibold">12-Class Package</h2>
+        <p class="mt-2 text-sm text-muted-foreground">
+          One-time payment. {PACKAGE_CREDITS} credits total, and each credit is one
+          {" "}
+          {CLASS_DURATION_MINUTES}-minute class.
+        </p>
+        <p class="mt-4 text-2xl font-bold">
+          {moneyFormatter.format(PACKAGE_PRICE)}
+        </p>
+
+        <DashboardStripeCheckoutButton
+          client:load
+          buttonText={`Pay ${moneyFormatter.format(PACKAGE_PRICE)}`}
+        />
+      </article>
+
+      <article class="rounded-lg border bg-card p-5">
+        <h2 class="text-lg font-semibold">Current Balance</h2>
+        <p class="mt-2 text-sm text-muted-foreground">
+          Credits update automatically after successful Stripe payments.
+        </p>
+        <p class="mt-4 text-2xl font-bold">{creditBalance} credits</p>
+      </article>
+    </section>
+
+    <section class="space-y-3">
+      <h2 class="text-lg font-semibold">Purchase History</h2>
+
+      {
+        purchases.length === 0 ? (
+          <p class="rounded-lg border bg-card p-4 text-sm text-muted-foreground">
+            No purchases yet.
+          </p>
+        ) : (
+          <div class="overflow-x-auto rounded-lg border bg-card">
+            <table class="w-full min-w-[680px] text-sm">
+              <thead>
+                <tr class="border-b text-left text-muted-foreground">
+                  <th class="px-4 py-3 font-medium">Date</th>
+                  <th class="px-4 py-3 font-medium">Amount</th>
+                  <th class="px-4 py-3 font-medium">Status</th>
+                  <th class="px-4 py-3 font-medium">Payment</th>
+                  <th class="px-4 py-3 font-medium">Receipt</th>
+                </tr>
+              </thead>
+              <tbody>
+                {purchases.map((purchase) => (
+                  <tr class="border-b last:border-b-0">
+                    <td class="px-4 py-3">
+                      {formatPurchaseDate(purchase.created)}
+                    </td>
+                    <td class="px-4 py-3">
+                      {formatPurchaseAmount(
+                        purchase.amountTotal,
+                        purchase.currency,
+                      )}
+                    </td>
+                    <td class="px-4 py-3 capitalize">
+                      {purchase.status ?? "-"}
+                    </td>
+                    <td class="px-4 py-3 capitalize">
+                      {purchase.paymentStatus ?? "-"}
+                    </td>
+                    <td class="px-4 py-3">
+                      {purchase.receiptUrl ? (
+                        <a
+                          href={purchase.receiptUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          class="text-primary underline-offset-4 hover:underline"
+                        >
+                          View receipt
+                        </a>
+                      ) : (
+                        <span class="text-muted-foreground">-</span>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )
+      }
+    </section>
+  </div>
 </DashboardLayout>

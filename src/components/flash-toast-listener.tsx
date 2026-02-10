@@ -9,33 +9,37 @@ interface FlashToastListenerProps {
 
 export function FlashToastListener({ flashToast }: FlashToastListenerProps) {
   useEffect(() => {
-    if (!flashToast) {
-      return
-    }
+    const timer = window.setTimeout(() => {
+      if (!flashToast) {
+        return
+      }
 
-    const storageKey = `flash-toast:${flashToast.id}`
+      const storageKey = `flash-toast:${flashToast.id}`
 
-    if (sessionStorage.getItem(storageKey)) {
-      return
-    }
+      if (sessionStorage.getItem(storageKey)) {
+        return
+      }
 
-    sessionStorage.setItem(storageKey, "1")
+      sessionStorage.setItem(storageKey, "1")
 
-    switch (flashToast.type) {
-      case "success":
-        toast.success(flashToast.title, { description: flashToast.description })
-        break
-      case "error":
-        toast.error(flashToast.title, { description: flashToast.description })
-        break
-      case "warning":
-        toast.warning(flashToast.title, { description: flashToast.description })
-        break
-      default:
-        toast.message(flashToast.title, { description: flashToast.description })
-        break
-    }
-  }, [flashToast])
+      switch (flashToast.type) {
+        case "success":
+          toast.success(flashToast.title, { description: flashToast.description })
+          break
+        case "error":
+          toast.error(flashToast.title, { description: flashToast.description })
+          break
+        case "warning":
+          toast.warning(flashToast.title, { description: flashToast.description })
+          break
+        default:
+          toast.message(flashToast.title, { description: flashToast.description })
+          break
+      }
+    }, 100)
 
-  return null
+    return () => window.clearTimeout(timer)
+  }, [])
+
+  return <span hidden data-flash-toast-listener />
 }

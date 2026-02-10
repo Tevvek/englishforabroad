@@ -16,8 +16,8 @@ const flashToast = consumeFlashToast(Astro.cookies);
 ---
 
 <Layout title={title}>
-  <Toaster client:visible position="top-center" />
-  <FlashToastListener client:load flashToast={flashToast} />
+  <Toaster client:load position="top-center" />
+  <FlashToastListener client:only="react" flashToast={flashToast} />
   <DashboardShell client:idle currentPath={currentPath}>
     <Logo slot="brand" class="size-10" />
     <slot />
