@@ -114,6 +114,8 @@ pnpm validate:freebies
 - Use `safeParse` for untrusted input paths and return actionable errors.
 - Infer types from schemas when possible (`z.infer<typeof Schema>`).
 - Avoid `any`; use unions, generics, and narrow unknown values.
+- For authenticated page/action logic, prefer `Astro.locals.user` from middleware instead of re-querying `User` for identity checks.
+- For `astro:db` queries that expect a single row, use `.get()` instead of reading the first element from an array result.
 
 ## Error Handling and Logging
 

@@ -1,7 +1,7 @@
 ---
 export const prerender = false;
 
-import { db, eq, sum, CreditLedger, User } from "astro:db";
+import { db, eq, sum, CreditLedger } from "astro:db";
 import { DashboardStripeCheckoutButton } from "@/components/dashboard-stripe-checkout-button";
 import DashboardLayout from "@/layouts/DashboardLayout.astro";
 import { setFlashToast } from "@/lib/flash-toast";
@@ -30,31 +30,19 @@ if (checkoutStatus === "success" || checkoutStatus === "cancel") {
   return Astro.redirect("/dashboard/payments");
 }
 
-const userId = Astro.locals.user?.id;
-
-if (!userId) {
-  return Astro.redirect("/auth/login");
-}
-
-const users = await db.select().from(User).where(eq(User.id, userId));
-
-const user = users[0];
+const user = Astro.locals.user;
 
 if (!user) {
-  setFlashToast(Astro.cookies, {
-    type: "error",
-    title: "Unable to load billing data",
-    description: "Please sign in again.",
-  });
   return Astro.redirect("/auth/login");
 }
 
-const creditBalanceRows = await db
+const creditBalanceRow = await db
   .select({ credits: sum(CreditLedger.creditsDelta) })
   .from(CreditLedger)
-  .where(eq(CreditLedger.userId, userId));
+  .where(eq(CreditLedger.userId, user.id))
+  .get();
 
-const creditBalance = Number(creditBalanceRows[0]?.credits ?? 0);
+const creditBalance = Number(creditBalanceRow?.credits ?? 0);
 
 const checkoutSessions = user.stripeCustomerId
   ? await stripe.checkout.sessions.list({
