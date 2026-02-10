@@ -10,22 +10,12 @@ function getSiteBaseUrl() {
 
 export const createStripeCheckout = defineAction({
   handler: async (_input, context) => {
-    const userId = context.locals.user?.id
-
-    if (!userId) {
-      throw new ActionError({
-        code: "UNAUTHORIZED",
-        message: "Please sign in to continue.",
-      })
-    }
-
-    const users = await db.select().from(User).where(eq(User.id, userId))
-    const user = users[0]
+    const user = context.locals.user
 
     if (!user) {
       throw new ActionError({
-        code: "NOT_FOUND",
-        message: "We could not find your account. Please sign in again.",
+        code: "UNAUTHORIZED",
+        message: "Please sign in to continue.",
       })
     }
 
@@ -34,10 +24,10 @@ export const createStripeCheckout = defineAction({
 
       if (!stripeCustomerId) {
         const customer = await stripe.customers.create({
-          email: user.email,
-          name: user.name,
+          email: user.email ?? undefined,
+          name: user.name ?? undefined,
           metadata: {
-            userId,
+            userId: user.id,
           },
         })
 
@@ -46,7 +36,7 @@ export const createStripeCheckout = defineAction({
         await db
           .update(User)
           .set({ stripeCustomerId, updatedAt: new Date() })
-          .where(eq(User.id, userId))
+          .where(eq(User.id, user.id))
       }
 
       const siteBaseUrl = getSiteBaseUrl()

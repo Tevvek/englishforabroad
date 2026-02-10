@@ -25,12 +25,11 @@ async function handleCheckoutSessionCompleted(event: Stripe.Event) {
     throw new Error("Checkout session does not include a Stripe customer ID");
   }
 
-  const users = await db
+  const user = await db
     .select()
     .from(User)
-    .where(eq(User.stripeCustomerId, stripeCustomerId));
-
-  const user = users[0];
+    .where(eq(User.stripeCustomerId, stripeCustomerId))
+    .get();
 
   if (!user) {
     throw new Error(`No user found for Stripe customer ${stripeCustomerId}`);
@@ -75,9 +74,10 @@ export const POST: APIRoute = async ({ request }) => {
   const existingEvent = await db
     .select()
     .from(StripeEvent)
-    .where(eq(StripeEvent.stripeEventId, event.id));
+    .where(eq(StripeEvent.stripeEventId, event.id))
+    .get();
 
-  if (existingEvent[0]) {
+  if (existingEvent) {
     return new Response(JSON.stringify({ received: true, duplicate: true }), {
       status: 200,
       headers: { "content-type": "application/json" },
