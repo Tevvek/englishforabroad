@@ -1,5 +1,32 @@
 ---
 import DashboardLayout from "@/layouts/DashboardLayout.astro";
+import { setFlashToast } from "@/lib/flash-toast";
+
+const checkoutStatus = Astro.url.searchParams.get("checkout");
+const sessionId = Astro.url.searchParams.get("session_id");
+
+if (checkoutStatus === "success" || checkoutStatus === "cancel") {
+  const isSuccess = checkoutStatus === "success";
+
+  const toastId = sessionId
+    ? `stripe:${checkoutStatus}:${sessionId}`
+    : `stripe:${checkoutStatus}`;
+
+  const toastType = isSuccess ? "success" : "info";
+  const toastTitle = isSuccess ? "Payment successful" : "Checkout canceled";
+  const toastDescription = isSuccess
+    ? "Your purchase was completed successfully."
+    : "No charge was made.";
+
+  setFlashToast(Astro.cookies, {
+    id: toastId,
+    type: toastType,
+    title: toastTitle,
+    description: toastDescription,
+  });
+
+  return Astro.redirect("/dashboard/payments");
+}
 ---
 
 <DashboardLayout title="Payments & Plans">
