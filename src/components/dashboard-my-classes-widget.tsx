@@ -104,9 +104,53 @@ export function DashboardMyClassesWidget({
   pastBookings,
   refundWindowHours,
 }: DashboardMyClassesWidgetProps) {
+  const [isDialogOpen, setIsDialogOpen] = React.useState(false)
   const [pendingCancellation, setPendingCancellation] =
     React.useState<MyClassesBookingItem | null>(null)
   const [isCancelling, setIsCancelling] = React.useState(false)
+  const [pendingRedirectPath, setPendingRedirectPath] = React.useState<string | null>(null)
+  const dialogCloseTimerRef = React.useRef<number | null>(null)
+
+  const handleStartCancellation = React.useCallback((booking: MyClassesBookingItem) => {
+    setPendingCancellation(booking)
+    setPendingRedirectPath(null)
+    setIsDialogOpen(true)
+  }, [])
+
+  React.useEffect(() => {
+    if (dialogCloseTimerRef.current) {
+      window.clearTimeout(dialogCloseTimerRef.current)
+      dialogCloseTimerRef.current = null
+    }
+
+    if (isDialogOpen) {
+      return
+    }
+
+    dialogCloseTimerRef.current = window.setTimeout(() => {
+      setPendingCancellation(null)
+
+      if (!pendingRedirectPath) {
+        return
+      }
+
+      const redirectPath = pendingRedirectPath
+      setPendingRedirectPath(null)
+
+      navigate(redirectPath).catch((error) => {
+        console.error(error)
+        toast.error("Unable to continue. Please try again.")
+        setIsCancelling(false)
+      })
+    }, 200)
+
+    return () => {
+      if (dialogCloseTimerRef.current) {
+        window.clearTimeout(dialogCloseTimerRef.current)
+        dialogCloseTimerRef.current = null
+      }
+    }
+  }, [isDialogOpen, pendingRedirectPath])
 
   const handleConfirmCancellation = React.useCallback(async () => {
     if (!pendingCancellation || isCancelling) {
@@ -132,8 +176,8 @@ export function DashboardMyClassesWidget({
           : "Class cancelled. No credit refund for this cancellation.",
       )
 
-      setPendingCancellation(null)
-      await navigate("/dashboard/classes")
+      setPendingRedirectPath("/dashboard/classes")
+      setIsDialogOpen(false)
     } catch (error) {
       console.error(error)
       toast.error("Unable to cancel class. Please try again.")
@@ -144,11 +188,13 @@ export function DashboardMyClassesWidget({
   return (
     <>
       <Dialog
-        open={Boolean(pendingCancellation)}
+        open={isDialogOpen}
         onOpenChange={(open) => {
-          if (!open && !isCancelling) {
-            setPendingCancellation(null)
+          if (!open && isCancelling) {
+            return
           }
+
+          setIsDialogOpen(open)
         }}
       >
         <DialogContent>
@@ -172,7 +218,7 @@ export function DashboardMyClassesWidget({
             <Button
               type="button"
               variant="outline"
-              onClick={() => setPendingCancellation(null)}
+              onClick={() => setIsDialogOpen(false)}
               disabled={isCancelling}
             >
               Keep class
@@ -202,7 +248,7 @@ export function DashboardMyClassesWidget({
             <BookingCard
               booking={nextClass}
               refundWindowHours={refundWindowHours}
-              onCancel={setPendingCancellation}
+              onCancel={handleStartCancellation}
               isCancelling={isCancelling}
             />
           )}
@@ -222,7 +268,7 @@ export function DashboardMyClassesWidget({
                   key={booking.id}
                   booking={booking}
                   refundWindowHours={refundWindowHours}
-                  onCancel={setPendingCancellation}
+                  onCancel={handleStartCancellation}
                   isCancelling={isCancelling}
                 />
               ))}
@@ -244,7 +290,7 @@ export function DashboardMyClassesWidget({
                   key={booking.id}
                   booking={booking}
                   refundWindowHours={refundWindowHours}
-                  onCancel={setPendingCancellation}
+                  onCancel={handleStartCancellation}
                   isCancelling={isCancelling}
                 />
               ))}
@@ -266,7 +312,7 @@ export function DashboardMyClassesWidget({
                   key={booking.id}
                   booking={booking}
                   refundWindowHours={refundWindowHours}
-                  onCancel={setPendingCancellation}
+                  onCancel={handleStartCancellation}
                   isCancelling={isCancelling}
                 />
               ))}
