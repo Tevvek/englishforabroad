@@ -4,7 +4,7 @@ import { ClientRouter } from "astro:transitions";
 import "swiper/css";
 import "swiper/css/pagination";
 import { PUBLIC_RECAPTCHA_SITE_KEY } from "astro:env/client";
-import { Toaster } from "vue-sonner";
+import { Toaster } from "@/components/ui/sonner";
 
 interface Props {
   title: string;
@@ -67,7 +67,7 @@ const { title } = Astro.props;
       defer></script>
   </head>
   <body>
-    <Toaster position="top-center" client:only="vue" />
+    <Toaster position="top-center" client:load />
 
     <slot name="navbar" />
 

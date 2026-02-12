@@ -19,13 +19,30 @@ export const createStripeCheckout = defineAction({
       })
     }
 
+    const userRecord = await db
+      .select({
+        stripeCustomerId: User.stripeCustomerId,
+        email: User.email,
+        name: User.name,
+      })
+      .from(User)
+      .where(eq(User.id, user.id))
+      .get()
+
+    if (!userRecord) {
+      throw new ActionError({
+        code: "NOT_FOUND",
+        message: "We could not find your account. Please sign in again.",
+      })
+    }
+
     try {
-      let stripeCustomerId = user.stripeCustomerId
+      let stripeCustomerId = userRecord.stripeCustomerId
 
       if (!stripeCustomerId) {
         const customer = await stripe.customers.create({
-          email: user.email ?? undefined,
-          name: user.name ?? undefined,
+          email: userRecord.email ?? undefined,
+          name: userRecord.name ?? undefined,
           metadata: {
             userId: user.id,
           },

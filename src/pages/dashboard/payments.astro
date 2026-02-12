@@ -1,7 +1,7 @@
 ---
 export const prerender = false;
 
-import { db, eq, sum, CreditLedger } from "astro:db";
+import { db, eq, sum, CreditLedger, User } from "astro:db";
 import { DashboardStripeCheckoutButton } from "@/components/dashboard-stripe-checkout-button";
 import DashboardLayout from "@/layouts/DashboardLayout.astro";
 import { setFlashToast } from "@/lib/flash-toast";
@@ -44,9 +44,15 @@ const creditBalanceRow = await db
 
 const creditBalance = Number(creditBalanceRow?.credits ?? 0);
 
-const checkoutSessions = user.stripeCustomerId
+const userRecord = await db
+  .select({ stripeCustomerId: User.stripeCustomerId })
+  .from(User)
+  .where(eq(User.id, user.id))
+  .get();
+
+const checkoutSessions = userRecord?.stripeCustomerId
   ? await stripe.checkout.sessions.list({
-      customer: user.stripeCustomerId,
+      customer: userRecord.stripeCustomerId,
       limit: 10,
     })
   : { data: [] };

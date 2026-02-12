@@ -25,6 +25,8 @@ const CREDIT_LEDGER_ENTRY_TYPES = enumValues(
   "manual_adjustment",
 );
 
+const CLASS_BOOKING_STATUSES = enumValues("booked", "cancelled");
+
 // Stores processed Stripe webhook events for idempotency and debugging.
 const StripeEvent = defineTable({
   columns: {
@@ -48,6 +50,33 @@ const CreditLedger = defineTable({
     entryType: column.text({ enum: CREDIT_LEDGER_ENTRY_TYPES }),
     creditsDelta: column.number(),
     description: column.text({ optional: true }),
+    createdAt: column.date({ default: NOW }),
+    updatedAt: column.date({ default: NOW }),
+  },
+});
+
+// Teacher weekly availability rules used to compute bookable slots dynamically.
+const TeacherScheduleRule = defineTable({
+  columns: {
+    id: column.text({ primaryKey: true }),
+    weekday: column.number(),
+    startMinute: column.number(),
+    endMinute: column.number(),
+    slotIntervalMinutes: column.number(),
+    isActive: column.boolean({ default: true }),
+    createdAt: column.date({ default: NOW }),
+    updatedAt: column.date({ default: NOW }),
+  },
+});
+
+// Actual booked classes stored as UTC start/end instants.
+const ClassBooking = defineTable({
+  columns: {
+    id: column.text({ primaryKey: true }),
+    userId: column.text({ references: () => User.columns.id }),
+    startsAt: column.date(),
+    endsAt: column.date(),
+    status: column.text({ enum: CLASS_BOOKING_STATUSES }),
     createdAt: column.date({ default: NOW }),
     updatedAt: column.date({ default: NOW }),
   },
@@ -103,5 +132,7 @@ export default defineDb({
     Verification,
     StripeEvent,
     CreditLedger,
+    TeacherScheduleRule,
+    ClassBooking,
   },
 });

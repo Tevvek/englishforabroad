@@ -1,7 +1,6 @@
 ---
 import { FlashToastListener } from "@/components/flash-toast-listener";
 import Logo from "@/components/Logo.astro";
-import { Toaster } from "@/components/ui/sonner";
 import { consumeFlashToast } from "@/lib/flash-toast";
 import Layout from "@/layouts/Layout.astro";
 import DashboardShell from "@/layouts/DashboardShell";
@@ -16,7 +15,6 @@ const flashToast = consumeFlashToast(Astro.cookies);
 ---
 
 <Layout title={title}>
-  <Toaster client:load position="top-center" />
   <FlashToastListener client:only="react" flashToast={flashToast} />
   <DashboardShell client:idle currentPath={currentPath}>
     <Logo slot="brand" class="size-10" />
