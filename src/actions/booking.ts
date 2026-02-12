@@ -206,3 +206,83 @@ export const bookClassSlot = defineAction({
     }
   },
 })
+
+const CANCELLATION_REFUND_WINDOW_HOURS = 24
+
+export const cancelClassBooking = defineAction({
+  input: z.object({
+    bookingId: z.string().min(1),
+  }),
+  handler: async ({ bookingId }, context) => {
+    const user = context.locals.user
+
+    if (!user) {
+      throw new ActionError({
+        code: "UNAUTHORIZED",
+        message: "Please sign in to continue.",
+      })
+    }
+
+    const booking = await db
+      .select({
+        id: ClassBooking.id,
+        startsAt: ClassBooking.startsAt,
+        status: ClassBooking.status,
+      })
+      .from(ClassBooking)
+      .where(and(eq(ClassBooking.id, bookingId), eq(ClassBooking.userId, user.id)))
+      .get()
+
+    if (!booking) {
+      throw new ActionError({
+        code: "NOT_FOUND",
+        message: "Booking not found.",
+      })
+    }
+
+    if (booking.status !== "booked") {
+      throw new ActionError({
+        code: "BAD_REQUEST",
+        message: "This class is already cancelled.",
+      })
+    }
+
+    const startsAtDate = new Date(booking.startsAt)
+
+    if (startsAtDate.getTime() <= Date.now()) {
+      throw new ActionError({
+        code: "BAD_REQUEST",
+        message: "You can only cancel classes that have not started yet.",
+      })
+    }
+
+    const refundWindowMs = CANCELLATION_REFUND_WINDOW_HOURS * 60 * 60 * 1000
+    const isRefundEligible = startsAtDate.getTime() - Date.now() >= refundWindowMs
+
+    await db
+      .update(ClassBooking)
+      .set({
+        status: "cancelled",
+        updatedAt: new Date(),
+      })
+      .where(and(eq(ClassBooking.id, booking.id), eq(ClassBooking.status, "booked")))
+
+    if (isRefundEligible) {
+      await db.insert(CreditLedger).values({
+        id: crypto.randomUUID(),
+        userId: user.id,
+        entryType: "booking_refund",
+        creditsDelta: 1,
+        description: `Class cancellation refund for ${startsAtDate.toISOString()}`,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      })
+    }
+
+    return {
+      success: true,
+      refunded: isRefundEligible,
+      refundWindowHours: CANCELLATION_REFUND_WINDOW_HOURS,
+    }
+  },
+})

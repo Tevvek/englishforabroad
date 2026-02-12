@@ -201,6 +201,7 @@ export function DashboardBookClassWidget({
   const [isDialogOpen, setIsDialogOpen] = React.useState(false)
   const [activeSlot, setActiveSlot] = React.useState<string | null>(null)
   const [pendingSlot, setPendingSlot] = React.useState<AvailableClassSlot | null>(null)
+  const [pendingRedirectPath, setPendingRedirectPath] = React.useState<string | null>(null)
   const monthAvailabilityCacheRef = React.useRef<
     Record<string, MonthClassAvailability>
   >(
@@ -451,12 +452,39 @@ export function DashboardBookClassWidget({
   }, [creditBalance, prefetchMonthBlock, visibleMonthKey])
 
   React.useEffect(() => {
+    if (dialogCloseTimerRef.current) {
+      window.clearTimeout(dialogCloseTimerRef.current)
+      dialogCloseTimerRef.current = null
+    }
+
+    if (isDialogOpen) {
+      return
+    }
+
+    dialogCloseTimerRef.current = window.setTimeout(() => {
+      setPendingSlot(null)
+
+      if (!pendingRedirectPath) {
+        return
+      }
+
+      const redirectPath = pendingRedirectPath
+      setPendingRedirectPath(null)
+
+      navigate(redirectPath).catch((error) => {
+        console.error(error)
+        toast.error("Unable to continue. Please try again.")
+        setActiveSlot(null)
+      })
+    }, 200)
+
     return () => {
       if (dialogCloseTimerRef.current) {
         window.clearTimeout(dialogCloseTimerRef.current)
+        dialogCloseTimerRef.current = null
       }
     }
-  }, [])
+  }, [isDialogOpen, pendingRedirectPath])
 
   const handleBookSlot = React.useCallback(async () => {
     if (!pendingSlot) {
@@ -483,9 +511,8 @@ export function DashboardBookClassWidget({
       }
 
       toast.success("Class booked successfully.")
+      setPendingRedirectPath("/dashboard/classes")
       setIsDialogOpen(false)
-      setPendingSlot(null)
-      await navigate("/dashboard/classes")
     } catch (error) {
       console.error(error)
       toast.error("Unable to book this class. Please try another slot.")
@@ -519,19 +546,11 @@ export function DashboardBookClassWidget({
       <Dialog
         open={isDialogOpen}
         onOpenChange={(open) => {
+          if (!open && activeSlot) {
+            return
+          }
+
           setIsDialogOpen(open)
-
-          if (dialogCloseTimerRef.current) {
-            window.clearTimeout(dialogCloseTimerRef.current)
-            dialogCloseTimerRef.current = null
-          }
-
-          if (!open && !activeSlot) {
-            dialogCloseTimerRef.current = window.setTimeout(() => {
-              setPendingSlot(null)
-              dialogCloseTimerRef.current = null
-            }, 200)
-          }
         }}
       >
         <DialogContent>
@@ -637,6 +656,7 @@ export function DashboardBookClassWidget({
                         className="w-full"
                         onClick={() => {
                           setPendingSlot(slot)
+                          setPendingRedirectPath(null)
                           setIsDialogOpen(true)
                         }}
                         disabled={Boolean(activeSlot)}
