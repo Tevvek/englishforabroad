@@ -1,0 +1,16 @@
+---
+import { getUpcomingBookingsCount } from "../queries/get-upcoming-bookings-count.query";
+
+interface Props {
+  userId: string;
+}
+
+const { userId } = Astro.props;
+const upcomingCount = await getUpcomingBookingsCount(userId, new Date());
+---
+
+<article class="rounded-lg border bg-card p-5">
+  <h2 class="text-lg font-semibold">Upcoming Classes</h2>
+  <p class="mt-2 text-sm text-muted-foreground">Booked classes in your schedule.</p>
+  <p class="mt-4 text-2xl font-bold">{upcomingCount}</p>
+</article>

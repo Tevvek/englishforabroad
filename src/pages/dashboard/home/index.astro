@@ -1,0 +1,29 @@
+---
+export const prerender = false;
+
+import DashboardLayout from "@/layouts/dashboard/layout.astro";
+import CreditBalanceCard from "./_/components/credit-balance-card.astro";
+import NextClassCard from "./_/components/next-class-card.astro";
+import UpcomingClassesCard from "./_/components/upcoming-classes-card.astro";
+
+const user = Astro.locals.user!;
+---
+
+<DashboardLayout title="Home">
+  <div class="space-y-8">
+    <section class="space-y-2">
+      <h1 class="text-2xl font-semibold">Dashboard Home</h1>
+      <p class="text-sm text-muted-foreground">
+        Quick overview of your classes and credit balance. All times are shown in
+        KST.
+      </p>
+    </section>
+
+    <section class="grid gap-4 md:grid-cols-2">
+      <CreditBalanceCard userId={user.id} />
+      <UpcomingClassesCard userId={user.id} />
+    </section>
+
+    <NextClassCard userId={user.id} />
+  </div>
+</DashboardLayout>
