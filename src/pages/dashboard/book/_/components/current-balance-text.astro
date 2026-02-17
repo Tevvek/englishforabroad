@@ -1,0 +1,12 @@
+---
+import { getCreditBalance } from "../queries/get-credit-balance.query";
+
+interface Props {
+  userId: string;
+}
+
+const { userId } = Astro.props;
+const creditBalance = await getCreditBalance(userId);
+---
+
+<p class="text-sm font-medium">Current balance: {creditBalance} credits</p>

@@ -1,0 +1,63 @@
+---
+import { DashboardBookClassWidget } from "@/components/dashboard-book-class-widget";
+import {
+  buildMonthClassAvailability,
+  getUtcRangeForKstMonth,
+  type MonthClassAvailability,
+} from "@/lib/booking-schedule";
+import { getCreditBalance } from "../queries/get-credit-balance.query";
+import { listActiveScheduleRules } from "../queries/list-active-schedule-rules.query";
+import { listBookedClassesInRange } from "../queries/list-booked-classes-in-range.query";
+import { addMonthsToMonthKey } from "../utils/add-months-to-month-key.utils";
+import { getCurrentKstMonthKey } from "../utils/get-current-kst-month-key.utils";
+
+interface Props {
+  userId: string;
+}
+
+const { userId } = Astro.props;
+
+const currentMonthKey = getCurrentKstMonthKey();
+const creditBalance = await getCreditBalance(userId);
+
+const PRELOADED_MONTHS_COUNT = 3;
+const preloadedMonthKeys = Array.from(
+  { length: PRELOADED_MONTHS_COUNT },
+  (_, index) => addMonthsToMonthKey(currentMonthKey, index),
+);
+
+const scheduleRules = await listActiveScheduleRules();
+
+const initialMonthAvailabilityMap: Record<string, MonthClassAvailability> = {};
+
+if (scheduleRules.length > 0) {
+  const firstMonthRange = getUtcRangeForKstMonth(preloadedMonthKeys[0]);
+  const lastMonthRange = getUtcRangeForKstMonth(
+    addMonthsToMonthKey(preloadedMonthKeys[preloadedMonthKeys.length - 1], 1),
+  );
+
+  const bookedClasses = await listBookedClassesInRange(
+    firstMonthRange.startAt,
+    lastMonthRange.startAt,
+  );
+
+  const bookedStartsAt = new Set(
+    bookedClasses.map((booking) => new Date(booking.startsAt).getTime()),
+  );
+
+  for (const monthKey of preloadedMonthKeys) {
+    initialMonthAvailabilityMap[monthKey] = buildMonthClassAvailability({
+      kstMonth: monthKey,
+      rules: scheduleRules,
+      bookedStartsAt,
+    });
+  }
+}
+---
+
+<DashboardBookClassWidget
+  client:load
+  creditBalance={creditBalance}
+  initialMonthKey={currentMonthKey}
+  initialMonthAvailabilityMap={initialMonthAvailabilityMap}
+/>
