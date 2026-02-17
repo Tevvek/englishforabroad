@@ -2,6 +2,10 @@ import { auth } from "@/lib/auth";
 import { defineMiddleware } from "astro:middleware";
 
 const betterAuthMiddleware = defineMiddleware(async (context, next) => {
+  if (context.isPrerendered) {
+    return next();
+  }
+
   const isAuthed = await auth.api.getSession({
     headers: context.request.headers,
   });
