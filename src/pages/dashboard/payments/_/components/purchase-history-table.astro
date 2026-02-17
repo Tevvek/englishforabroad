@@ -1,0 +1,66 @@
+---
+import { getUserStripeCustomerId } from "../queries/get-user-stripe-customer-id.query";
+import { listPaymentPurchases } from "../queries/list-payment-purchases.query";
+import { formatPurchaseAmount } from "../utils/format-purchase-amount.utils";
+import { formatPurchaseDate } from "../utils/format-purchase-date.utils";
+
+interface Props {
+  userId: string;
+}
+
+const { userId } = Astro.props;
+const stripeCustomerId = await getUserStripeCustomerId(userId);
+const purchases = await listPaymentPurchases(stripeCustomerId);
+---
+
+<section class="space-y-3">
+  <h2 class="text-lg font-semibold">Purchase History</h2>
+
+  {
+    purchases.length === 0 ? (
+      <p class="rounded-lg border bg-card p-4 text-sm text-muted-foreground">
+        No purchases yet.
+      </p>
+    ) : (
+      <div class="overflow-x-auto rounded-lg border bg-card">
+        <table class="w-full min-w-[680px] text-sm">
+          <thead>
+            <tr class="border-b text-left text-muted-foreground">
+              <th class="px-4 py-3 font-medium">Date</th>
+              <th class="px-4 py-3 font-medium">Amount</th>
+              <th class="px-4 py-3 font-medium">Status</th>
+              <th class="px-4 py-3 font-medium">Payment</th>
+              <th class="px-4 py-3 font-medium">Receipt</th>
+            </tr>
+          </thead>
+          <tbody>
+            {purchases.map((purchase) => (
+              <tr class="border-b last:border-b-0">
+                <td class="px-4 py-3">{formatPurchaseDate(purchase.created)}</td>
+                <td class="px-4 py-3">
+                  {formatPurchaseAmount(purchase.amountTotal, purchase.currency)}
+                </td>
+                <td class="px-4 py-3 capitalize">{purchase.status ?? "-"}</td>
+                <td class="px-4 py-3 capitalize">{purchase.paymentStatus ?? "-"}</td>
+                <td class="px-4 py-3">
+                  {purchase.receiptUrl ? (
+                    <a
+                      href={purchase.receiptUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      class="text-primary underline-offset-4 hover:underline"
+                    >
+                      View receipt
+                    </a>
+                  ) : (
+                    <span class="text-muted-foreground">-</span>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    )
+  }
+</section>

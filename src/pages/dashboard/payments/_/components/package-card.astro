@@ -1,0 +1,28 @@
+---
+import { DashboardStripeCheckoutButton } from "@/components/dashboard-stripe-checkout-button";
+import { moneyFormatter } from "../utils/money-formatter.utils";
+
+interface Props {
+  packagePrice: number;
+  packageCredits: number;
+  classDurationMinutes: number;
+}
+
+const { packagePrice, packageCredits, classDurationMinutes } = Astro.props;
+---
+
+<article class="rounded-lg border bg-card p-5">
+  <h2 class="text-lg font-semibold">12-Class Package</h2>
+  <p class="mt-2 text-sm text-muted-foreground">
+    One-time payment. {packageCredits} credits total, and each credit is one {" "}
+    {classDurationMinutes}-minute class.
+  </p>
+  <p class="mt-4 text-2xl font-bold">
+    {moneyFormatter.format(packagePrice)}
+  </p>
+
+  <DashboardStripeCheckoutButton
+    client:load
+    buttonText={`Pay ${moneyFormatter.format(packagePrice)}`}
+  />
+</article>

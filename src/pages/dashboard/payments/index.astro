@@ -1,14 +1,12 @@
 ---
 export const prerender = false;
 
-import { DashboardStripeCheckoutButton } from "@/components/dashboard-stripe-checkout-button";
 import DashboardLayout from "@/layouts/dashboard/layout.astro";
 import { setFlashToast } from "@/lib/flash-toast";
-import { getPaymentsPageData } from "./_/data";
-import { formatPurchaseAmount } from "./_/utils/format-purchase-amount.utils";
-import { formatPurchaseDate } from "./_/utils/format-purchase-date.utils";
+import CurrentBalanceCard from "./_/components/current-balance-card.astro";
+import PackageCard from "./_/components/package-card.astro";
+import PurchaseHistoryTable from "./_/components/purchase-history-table.astro";
 import { getCheckoutFlashToast } from "./_/utils/get-checkout-flash-toast.utils";
-import { moneyFormatter } from "./_/utils/money-formatter.utils";
 
 const PACKAGE_PRICE = 600;
 const PACKAGE_CREDITS = 12;
@@ -23,8 +21,6 @@ if (checkoutStatus === "success" || checkoutStatus === "cancel") {
 }
 
 const user = Astro.locals.user!;
-
-const { creditBalance, purchases } = await getPaymentsPageData(user.id);
 ---
 
 <DashboardLayout title="Payments & Plans">
@@ -37,91 +33,13 @@ const { creditBalance, purchases } = await getPaymentsPageData(user.id);
     </section>
 
     <section class="grid gap-4 md:grid-cols-2">
-      <article class="rounded-lg border bg-card p-5">
-        <h2 class="text-lg font-semibold">12-Class Package</h2>
-        <p class="mt-2 text-sm text-muted-foreground">
-          One-time payment. {PACKAGE_CREDITS} credits total, and each credit is one
-          {" "}
-          {CLASS_DURATION_MINUTES}-minute class.
-        </p>
-        <p class="mt-4 text-2xl font-bold">
-          {moneyFormatter.format(PACKAGE_PRICE)}
-        </p>
-
-        <DashboardStripeCheckoutButton
-          client:load
-          buttonText={`Pay ${moneyFormatter.format(PACKAGE_PRICE)}`}
-        />
-      </article>
-
-      <article class="rounded-lg border bg-card p-5">
-        <h2 class="text-lg font-semibold">Current Balance</h2>
-        <p class="mt-2 text-sm text-muted-foreground">
-          Credits update automatically after successful Stripe payments.
-        </p>
-        <p class="mt-4 text-2xl font-bold">{creditBalance} credits</p>
-      </article>
+      <PackageCard
+        packagePrice={PACKAGE_PRICE}
+        packageCredits={PACKAGE_CREDITS}
+        classDurationMinutes={CLASS_DURATION_MINUTES}
+      />
+      <CurrentBalanceCard userId={user.id} />
     </section>
-
-    <section class="space-y-3">
-      <h2 class="text-lg font-semibold">Purchase History</h2>
-
-      {
-        purchases.length === 0 ? (
-          <p class="rounded-lg border bg-card p-4 text-sm text-muted-foreground">
-            No purchases yet.
-          </p>
-        ) : (
-          <div class="overflow-x-auto rounded-lg border bg-card">
-            <table class="w-full min-w-[680px] text-sm">
-              <thead>
-                <tr class="border-b text-left text-muted-foreground">
-                  <th class="px-4 py-3 font-medium">Date</th>
-                  <th class="px-4 py-3 font-medium">Amount</th>
-                  <th class="px-4 py-3 font-medium">Status</th>
-                  <th class="px-4 py-3 font-medium">Payment</th>
-                  <th class="px-4 py-3 font-medium">Receipt</th>
-                </tr>
-              </thead>
-              <tbody>
-                {purchases.map((purchase) => (
-                  <tr class="border-b last:border-b-0">
-                    <td class="px-4 py-3">
-                      {formatPurchaseDate(purchase.created)}
-                    </td>
-                    <td class="px-4 py-3">
-                      {formatPurchaseAmount(
-                        purchase.amountTotal,
-                        purchase.currency,
-                      )}
-                    </td>
-                    <td class="px-4 py-3 capitalize">
-                      {purchase.status ?? "-"}
-                    </td>
-                    <td class="px-4 py-3 capitalize">
-                      {purchase.paymentStatus ?? "-"}
-                    </td>
-                    <td class="px-4 py-3">
-                      {purchase.receiptUrl ? (
-                        <a
-                          href={purchase.receiptUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          class="text-primary underline-offset-4 hover:underline"
-                        >
-                          View receipt
-                        </a>
-                      ) : (
-                        <span class="text-muted-foreground">-</span>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )
-      }
-    </section>
+    <PurchaseHistoryTable userId={user.id} />
   </div>
 </DashboardLayout>

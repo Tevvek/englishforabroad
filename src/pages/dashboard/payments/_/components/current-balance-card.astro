@@ -1,0 +1,18 @@
+---
+import { getCreditBalance } from "../queries/get-credit-balance.query";
+
+interface Props {
+  userId: string;
+}
+
+const { userId } = Astro.props;
+const creditBalance = await getCreditBalance(userId);
+---
+
+<article class="rounded-lg border bg-card p-5">
+  <h2 class="text-lg font-semibold">Current Balance</h2>
+  <p class="mt-2 text-sm text-muted-foreground">
+    Credits update automatically after successful Stripe payments.
+  </p>
+  <p class="mt-4 text-2xl font-bold">{creditBalance} credits</p>
+</article>
