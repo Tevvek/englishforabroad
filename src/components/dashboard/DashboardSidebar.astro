@@ -1,0 +1,69 @@
+---
+import Logo from "@/components/Logo.astro";
+import { DashboardLogoutButton } from "@/components/dashboard-logout-button";
+
+interface NavItem {
+  title: string;
+  url: string;
+}
+
+interface Props {
+  currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+
+const navItems: NavItem[] = [
+  { title: "Home", url: "/dashboard/home" },
+  { title: "Book a Class", url: "/dashboard/book" },
+  { title: "My Classes", url: "/dashboard/classes" },
+  { title: "Payments & Plans", url: "/dashboard/payments" },
+  { title: "Credits & Usage", url: "/dashboard/credits" },
+];
+
+function isItemActive(itemUrl: string) {
+  return currentPath === itemUrl || currentPath.startsWith(`${itemUrl}/`);
+}
+---
+
+<aside class="hidden md:block md:w-64 md:shrink-0 md:p-2">
+  <div class="flex h-[calc(100svh-1rem)] flex-col">
+    <header class="p-2">
+      <a href="/dashboard/home" class="inline-flex items-center gap-2 rounded-md p-1.5">
+        <Logo class="size-10" />
+        <span class="sr-only">Dashboard home</span>
+      </a>
+    </header>
+
+    <nav class="flex-1 overflow-auto p-2" aria-label="Dashboard navigation">
+      <ul class="space-y-1">
+        {
+          navItems.map((item) => {
+            const isActive = isItemActive(item.url);
+
+            return (
+              <li>
+                <a
+                  href={item.url}
+                  aria-current={isActive ? "page" : undefined}
+                  class:list={[
+                    "flex h-8 items-center rounded-md px-3 text-sm transition-colors",
+                    "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+                    isActive &&
+                      "bg-primary font-medium text-primary-foreground hover:bg-primary hover:text-primary-foreground",
+                  ]}
+                >
+                  {item.title}
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </nav>
+
+    <footer class="p-2">
+      <DashboardLogoutButton client:load />
+    </footer>
+  </div>
+</aside>
