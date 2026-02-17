@@ -28,8 +28,11 @@ function isItemActive(itemUrl: string) {
 
 <aside class="hidden md:block md:w-64 md:shrink-0 md:p-2">
   <div class="flex h-[calc(100svh-1rem)] flex-col">
-    <header class="p-2">
-      <a href="/dashboard/home" class="inline-flex items-center gap-2 rounded-md p-1.5">
+    <header class="p-2" transition:persist>
+      <a
+        href="/dashboard/home"
+        class="inline-flex items-center gap-2 rounded-md p-1.5"
+      >
         <Logo class="size-10" />
         <span class="sr-only">Dashboard home</span>
       </a>
