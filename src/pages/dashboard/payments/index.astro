@@ -1,125 +1,30 @@
 ---
 export const prerender = false;
 
-import { db, eq, sum, CreditLedger, User } from "astro:db";
 import { DashboardStripeCheckoutButton } from "@/components/dashboard-stripe-checkout-button";
 import DashboardLayout from "@/layouts/dashboard/layout.astro";
 import { setFlashToast } from "@/lib/flash-toast";
-import { stripe } from "@/lib/stripe";
+import { getPaymentsPageData } from "./_/data";
+import { formatPurchaseAmount } from "./_/utils/format-purchase-amount.utils";
+import { formatPurchaseDate } from "./_/utils/format-purchase-date.utils";
+import { getCheckoutFlashToast } from "./_/utils/get-checkout-flash-toast.utils";
+import { moneyFormatter } from "./_/utils/money-formatter.utils";
 
 const PACKAGE_PRICE = 600;
 const PACKAGE_CREDITS = 12;
 const CLASS_DURATION_MINUTES = 50;
 
+// Handle checkout success and cancel flash toast
 const checkoutStatus = Astro.url.searchParams.get("checkout");
 if (checkoutStatus === "success" || checkoutStatus === "cancel") {
-  const isSuccess = checkoutStatus === "success";
-
-  const toastType = isSuccess ? "success" : "info";
-  const toastTitle = isSuccess ? "Payment successful" : "Checkout canceled";
-  const toastDescription = isSuccess
-    ? "Your purchase was completed successfully."
-    : "No charge was made.";
-
-  setFlashToast(Astro.cookies, {
-    type: toastType,
-    title: toastTitle,
-    description: toastDescription,
-  });
+  setFlashToast(Astro.cookies, getCheckoutFlashToast(checkoutStatus));
 
   return Astro.redirect("/dashboard/payments");
 }
 
 const user = Astro.locals.user!;
 
-const creditBalanceRow = await db
-  .select({ credits: sum(CreditLedger.creditsDelta) })
-  .from(CreditLedger)
-  .where(eq(CreditLedger.userId, user.id))
-  .get();
-
-const creditBalance = Number(creditBalanceRow?.credits ?? 0);
-
-const userRecord = await db
-  .select({ stripeCustomerId: User.stripeCustomerId })
-  .from(User)
-  .where(eq(User.id, user.id))
-  .get();
-
-const checkoutSessions = userRecord?.stripeCustomerId
-  ? await stripe.checkout.sessions.list({
-      customer: userRecord.stripeCustomerId,
-      limit: 10,
-    })
-  : { data: [] };
-
-const paymentIntentIds = checkoutSessions.data
-  .map((session) => session.payment_intent)
-  .filter(
-    (paymentIntent): paymentIntent is string =>
-      typeof paymentIntent === "string",
-  );
-
-const paymentIntentsById = new Map(
-  await Promise.all(
-    paymentIntentIds.map(async (paymentIntentId) => {
-      const paymentIntent = await stripe.paymentIntents.retrieve(
-        paymentIntentId,
-        {
-          expand: ["latest_charge"],
-        },
-      );
-
-      return [paymentIntentId, paymentIntent] as const;
-    }),
-  ),
-);
-
-const purchases = checkoutSessions.data.map((session) => {
-  const paymentIntentId =
-    typeof session.payment_intent === "string" ? session.payment_intent : null;
-  const paymentIntent = paymentIntentId
-    ? paymentIntentsById.get(paymentIntentId)
-    : null;
-  const charge = paymentIntent?.latest_charge;
-  const receiptUrl =
-    charge && typeof charge !== "string" ? charge.receipt_url : null;
-
-  return {
-    id: session.id,
-    amountTotal: session.amount_total,
-    currency: session.currency,
-    status: session.status,
-    paymentStatus: session.payment_status,
-    created: session.created,
-    receiptUrl,
-  };
-});
-
-const moneyFormatter = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
-});
-
-const dateFormatter = new Intl.DateTimeFormat("en-US", {
-  dateStyle: "medium",
-  timeStyle: "short",
-});
-
-function formatPurchaseAmount(amount: number | null, currency: string | null) {
-  if (amount == null || !currency) {
-    return "-";
-  }
-
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: currency.toUpperCase(),
-  }).format(amount / 100);
-}
-
-function formatPurchaseDate(unixTimestampSeconds: number) {
-  return dateFormatter.format(new Date(unixTimestampSeconds * 1000));
-}
+const { creditBalance, purchases } = await getPaymentsPageData(user.id);
 ---
 
 <DashboardLayout title="Payments & Plans">
