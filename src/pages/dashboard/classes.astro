@@ -6,7 +6,7 @@ import {
   DashboardMyClassesWidget,
   type MyClassesBookingItem,
 } from "@/components/dashboard-my-classes-widget";
-import DashboardLayout from "@/layouts/DashboardLayout.astro";
+import DashboardLayout from "@/layouts/dashboard/layout.astro";
 
 const CANCELLATION_REFUND_WINDOW_HOURS = 24;
 
@@ -17,7 +17,8 @@ if (!user) {
 }
 
 const now = new Date();
-const cancellationRefundWindowMs = CANCELLATION_REFUND_WINDOW_HOURS * 60 * 60 * 1000;
+const cancellationRefundWindowMs =
+  CANCELLATION_REFUND_WINDOW_HOURS * 60 * 60 * 1000;
 
 const upcomingBookedBookingsRaw = await db
   .select({
@@ -61,7 +62,9 @@ const cancelledBookingsRaw = await db
     status: ClassBooking.status,
   })
   .from(ClassBooking)
-  .where(and(eq(ClassBooking.userId, user.id), eq(ClassBooking.status, "cancelled")))
+  .where(
+    and(eq(ClassBooking.userId, user.id), eq(ClassBooking.status, "cancelled")),
+  )
   .orderBy(desc(ClassBooking.startsAt));
 
 const dateFormatter = new Intl.DateTimeFormat("en-US", {
@@ -121,7 +124,8 @@ const pastBookings = pastBookedBookingsRaw.map(toBookingItem);
         View your upcoming and past classes. All times are shown in KST.
       </p>
       <p class="text-sm text-muted-foreground">
-        Full refund if canceled at least {CANCELLATION_REFUND_WINDOW_HOURS} hours before class start.
+        Full refund if canceled at least {CANCELLATION_REFUND_WINDOW_HOURS} hours
+        before class start.
       </p>
     </section>
 

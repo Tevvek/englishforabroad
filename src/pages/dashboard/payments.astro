@@ -3,7 +3,7 @@ export const prerender = false;
 
 import { db, eq, sum, CreditLedger, User } from "astro:db";
 import { DashboardStripeCheckoutButton } from "@/components/dashboard-stripe-checkout-button";
-import DashboardLayout from "@/layouts/DashboardLayout.astro";
+import DashboardLayout from "@/layouts/dashboard/layout.astro";
 import { setFlashToast } from "@/lib/flash-toast";
 import { stripe } from "@/lib/stripe";
 

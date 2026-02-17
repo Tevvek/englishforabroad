@@ -2,7 +2,7 @@
 export const prerender = false;
 
 import { and, ClassBooking, CreditLedger, db, eq, gte, sum } from "astro:db";
-import DashboardLayout from "@/layouts/DashboardLayout.astro";
+import DashboardLayout from "@/layouts/dashboard/layout.astro";
 
 const user = Astro.locals.user;
 
@@ -60,7 +60,6 @@ const nextClassDateLabel = nextClass
 const nextClassTimeRangeLabel = nextClass
   ? `${timeFormatter.format(new Date(nextClass.startsAt))} - ${timeFormatter.format(new Date(nextClass.endsAt))}`
   : null;
-
 ---
 
 <DashboardLayout title="Home">
@@ -68,7 +67,8 @@ const nextClassTimeRangeLabel = nextClass
     <section class="space-y-2">
       <h1 class="text-2xl font-semibold">Dashboard Home</h1>
       <p class="text-sm text-muted-foreground">
-        Quick overview of your classes and credit balance. All times are shown in KST.
+        Quick overview of your classes and credit balance. All times are shown
+        in KST.
       </p>
     </section>
 
@@ -81,7 +81,9 @@ const nextClassTimeRangeLabel = nextClass
 
       <article class="rounded-lg border bg-card p-5">
         <h2 class="text-lg font-semibold">Upcoming Classes</h2>
-        <p class="mt-2 text-sm text-muted-foreground">Booked classes in your schedule.</p>
+        <p class="mt-2 text-sm text-muted-foreground">
+          Booked classes in your schedule.
+        </p>
         <p class="mt-4 text-2xl font-bold">{upcomingCount}</p>
       </article>
     </section>
@@ -119,6 +121,5 @@ const nextClassTimeRangeLabel = nextClass
         )
       }
     </section>
-
   </div>
 </DashboardLayout>

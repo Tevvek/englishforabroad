@@ -18,7 +18,7 @@ import {
   getUtcRangeForKstMonth,
   type MonthClassAvailability,
 } from "@/lib/booking-schedule";
-import DashboardLayout from "@/layouts/DashboardLayout.astro";
+import DashboardLayout from "@/layouts/dashboard/layout.astro";
 
 const CLASS_DURATION_MINUTES = 50;
 
@@ -67,8 +67,9 @@ function addMonthsToMonthKey(monthKey: string, delta: number) {
 }
 
 const PRELOADED_MONTHS_COUNT = 3;
-const preloadedMonthKeys = Array.from({ length: PRELOADED_MONTHS_COUNT }, (_, index) =>
-  addMonthsToMonthKey(currentMonthKey, index),
+const preloadedMonthKeys = Array.from(
+  { length: PRELOADED_MONTHS_COUNT },
+  (_, index) => addMonthsToMonthKey(currentMonthKey, index),
 );
 
 const scheduleRules = await db
@@ -119,7 +120,9 @@ if (scheduleRules.length > 0) {
       <p class="text-sm text-muted-foreground">
         1 credit = 1 class ({CLASS_DURATION_MINUTES} minutes)
       </p>
-      <p class="text-sm font-medium">Current balance: {creditBalance} credits</p>
+      <p class="text-sm font-medium">
+        Current balance: {creditBalance} credits
+      </p>
     </section>
 
     <DashboardBookClassWidget

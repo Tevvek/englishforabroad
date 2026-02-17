@@ -2,7 +2,7 @@
 export const prerender = false;
 
 import { db, desc, eq, CreditLedger } from "astro:db";
-import DashboardLayout from "@/layouts/DashboardLayout.astro";
+import DashboardLayout from "@/layouts/dashboard/layout.astro";
 
 const CLASS_DURATION_MINUTES = 50;
 
@@ -73,19 +73,29 @@ function formatEntryDate(date: Date) {
       <article class="rounded-lg border bg-card p-5">
         <h2 class="text-lg font-semibold">Current Balance</h2>
         <p class="mt-2 text-sm text-muted-foreground">Available to book now.</p>
-        <p class="mt-4 text-2xl font-bold">{creditsSummary.currentBalance} credits</p>
+        <p class="mt-4 text-2xl font-bold">
+          {creditsSummary.currentBalance} credits
+        </p>
       </article>
 
       <article class="rounded-lg border bg-card p-5">
         <h2 class="text-lg font-semibold">Total Granted</h2>
-        <p class="mt-2 text-sm text-muted-foreground">Purchased or refunded credits.</p>
-        <p class="mt-4 text-2xl font-bold">{creditsSummary.totalGranted} credits</p>
+        <p class="mt-2 text-sm text-muted-foreground">
+          Purchased or refunded credits.
+        </p>
+        <p class="mt-4 text-2xl font-bold">
+          {creditsSummary.totalGranted} credits
+        </p>
       </article>
 
       <article class="rounded-lg border bg-card p-5">
         <h2 class="text-lg font-semibold">Total Used</h2>
-        <p class="mt-2 text-sm text-muted-foreground">Credits consumed by bookings.</p>
-        <p class="mt-4 text-2xl font-bold">{creditsSummary.totalUsed} credits</p>
+        <p class="mt-2 text-sm text-muted-foreground">
+          Credits consumed by bookings.
+        </p>
+        <p class="mt-4 text-2xl font-bold">
+          {creditsSummary.totalUsed} credits
+        </p>
       </article>
     </section>
 
@@ -115,8 +125,12 @@ function formatEntryDate(date: Date) {
               <tbody>
                 {ledgerEntries.map((entry) => (
                   <tr class="border-b last:border-b-0">
-                    <td class="px-4 py-3">{formatEntryDate(entry.createdAt)}</td>
-                    <td class="px-4 py-3">{formatEntryType(entry.entryType)}</td>
+                    <td class="px-4 py-3">
+                      {formatEntryDate(entry.createdAt)}
+                    </td>
+                    <td class="px-4 py-3">
+                      {formatEntryType(entry.entryType)}
+                    </td>
                     <td
                       class:list={[
                         "px-4 py-3 font-medium",

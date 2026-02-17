@@ -1,9 +1,9 @@
 ---
 import { FlashToastListener } from "@/components/flash-toast-listener";
-import DashboardContent from "@/components/dashboard/DashboardContent.astro";
-import DashboardSidebar from "@/components/dashboard/DashboardSidebar.astro";
+import Content from "./content.astro";
+import Sidebar from "./sidebar.astro";
 import { consumeFlashToast } from "@/lib/flash-toast";
-import Layout from "@/layouts/Layout.astro";
+import BaseLayout from "@/layouts/Layout.astro";
 
 interface Props {
   title: string;
@@ -14,12 +14,12 @@ const currentPath = Astro.url.pathname;
 const flashToast = consumeFlashToast(Astro.cookies);
 ---
 
-<Layout title={title}>
+<BaseLayout title={title}>
   <FlashToastListener client:only="react" flashToast={flashToast} />
   <div class="flex min-h-svh w-full bg-sidebar">
-    <DashboardSidebar currentPath={currentPath} />
-    <DashboardContent title={title}>
+    <Sidebar currentPath={currentPath} />
+    <Content title={title}>
       <slot />
-    </DashboardContent>
+    </Content>
   </div>
-</Layout>
+</BaseLayout>
