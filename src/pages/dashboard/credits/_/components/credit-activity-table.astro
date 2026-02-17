@@ -1,0 +1,61 @@
+---
+import { listCreditLedgerEntries } from "../queries/list-credit-ledger-entries.query";
+import { formatCreditsDelta } from "../utils/format-credits-delta.utils";
+import { formatEntryDate } from "../utils/format-entry-date.utils";
+import { formatEntryType } from "../utils/format-entry-type.utils";
+
+interface Props {
+  userId: string;
+}
+
+const { userId } = Astro.props;
+const ledgerEntries = await listCreditLedgerEntries(userId);
+---
+
+<section class="space-y-3">
+  <h2 class="text-lg font-semibold">Credit Activity</h2>
+
+  {
+    ledgerEntries.length === 0 ? (
+      <p class="rounded-lg border bg-card p-4 text-sm text-muted-foreground">
+        No credit activity yet.
+      </p>
+    ) : (
+      <div class="overflow-x-auto rounded-lg border bg-card">
+        <table class="w-full min-w-[680px] text-sm">
+          <thead>
+            <tr class="border-b text-left text-muted-foreground">
+              <th class="px-4 py-3 font-medium">Date</th>
+              <th class="px-4 py-3 font-medium">Type</th>
+              <th class="px-4 py-3 font-medium">Delta</th>
+              <th class="px-4 py-3 font-medium">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            {ledgerEntries.map((entry) => (
+              <tr class="border-b last:border-b-0">
+                <td class="px-4 py-3">{formatEntryDate(entry.createdAt)}</td>
+                <td class="px-4 py-3">{formatEntryType(entry.entryType)}</td>
+                <td
+                  class:list={[
+                    "px-4 py-3 font-medium",
+                    entry.creditsDelta > 0
+                      ? "text-emerald-600"
+                      : entry.creditsDelta < 0
+                        ? "text-rose-600"
+                        : "",
+                  ]}
+                >
+                  {formatCreditsDelta(entry.creditsDelta)}
+                </td>
+                <td class="px-4 py-3 text-muted-foreground">
+                  {entry.description ?? "-"}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    )
+  }
+</section>

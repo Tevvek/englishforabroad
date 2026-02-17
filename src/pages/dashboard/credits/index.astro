@@ -1,0 +1,30 @@
+---
+export const prerender = false;
+
+import DashboardLayout from "@/layouts/dashboard/layout.astro";
+import CreditActivityTable from "./_/components/credit-activity-table.astro";
+import CreditsSummaryCards from "./_/components/credits-summary-cards.astro";
+
+const CLASS_DURATION_MINUTES = 50;
+
+const user = Astro.locals.user!;
+---
+
+<DashboardLayout title="Credits & Usage">
+  <div class="space-y-8">
+    <section class="space-y-2">
+      <h1 class="text-2xl font-semibold">Credits & Usage</h1>
+      <p class="text-sm text-muted-foreground">
+        Track your available class credits and usage history.
+      </p>
+    </section>
+
+    <CreditsSummaryCards userId={user.id} />
+
+    <p class="text-sm text-muted-foreground">
+      1 credit = 1 class ({CLASS_DURATION_MINUTES} minutes)
+    </p>
+
+    <CreditActivityTable userId={user.id} />
+  </div>
+</DashboardLayout>

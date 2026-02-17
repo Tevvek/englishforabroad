@@ -1,0 +1,32 @@
+---
+import { listCreditLedgerEntries } from "../queries/list-credit-ledger-entries.query";
+import { buildCreditsSummary } from "../utils/build-credits-summary.utils";
+
+interface Props {
+  userId: string;
+}
+
+const { userId } = Astro.props;
+const ledgerEntries = await listCreditLedgerEntries(userId);
+const creditsSummary = buildCreditsSummary(ledgerEntries);
+---
+
+<section class="grid gap-4 md:grid-cols-3">
+  <article class="rounded-lg border bg-card p-5">
+    <h2 class="text-lg font-semibold">Current Balance</h2>
+    <p class="mt-2 text-sm text-muted-foreground">Available to book now.</p>
+    <p class="mt-4 text-2xl font-bold">{creditsSummary.currentBalance} credits</p>
+  </article>
+
+  <article class="rounded-lg border bg-card p-5">
+    <h2 class="text-lg font-semibold">Total Granted</h2>
+    <p class="mt-2 text-sm text-muted-foreground">Purchased or refunded credits.</p>
+    <p class="mt-4 text-2xl font-bold">{creditsSummary.totalGranted} credits</p>
+  </article>
+
+  <article class="rounded-lg border bg-card p-5">
+    <h2 class="text-lg font-semibold">Total Used</h2>
+    <p class="mt-2 text-sm text-muted-foreground">Credits consumed by bookings.</p>
+    <p class="mt-4 text-2xl font-bold">{creditsSummary.totalUsed} credits</p>
+  </article>
+</section>
