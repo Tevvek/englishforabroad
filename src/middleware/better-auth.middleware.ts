@@ -6,16 +6,28 @@ const betterAuthMiddleware = defineMiddleware(async (context, next) => {
     return next();
   }
 
-  const isAuthed = await auth.api.getSession({
+  context.locals.user = null;
+  context.locals.session = null;
+
+  const authSession = await auth.api.getSession({
     headers: context.request.headers,
   });
 
-  if (isAuthed) {
-    context.locals.user = isAuthed.user;
-    context.locals.session = isAuthed.session;
-  } else {
-    context.locals.user = null;
-    context.locals.session = null;
+  if (authSession) {
+    context.locals.user = authSession.user;
+    context.locals.session = authSession.session;
+  }
+
+  const pathname = context.url.pathname;
+  const isDashboardRoute = pathname.startsWith("/dashboard");
+  const isAuthRoute = pathname.startsWith("/auth");
+
+  if (!context.locals.session && isDashboardRoute) {
+    return context.redirect("/auth");
+  }
+
+  if (context.locals.session && isAuthRoute) {
+    return context.redirect("/dashboard");
   }
 
   return next();
