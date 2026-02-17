@@ -1,0 +1,42 @@
+---
+import { listUpcomingBookedClassesExcludingNext } from "../queries/list-upcoming-booked-classes-excluding-next.query";
+import {
+  createMyClassesBookingItemContext,
+  toMyClassesBookingItemsWithContext,
+} from "../utils/to-my-classes-booking-item.utils";
+import ClassBookingCard from "./class-booking-card.astro";
+
+interface Props {
+  userId: string;
+  refundWindowHours: number;
+}
+
+const { userId, refundWindowHours } = Astro.props;
+
+const context = createMyClassesBookingItemContext(refundWindowHours);
+
+const upcomingBookingsRaw = await listUpcomingBookedClassesExcludingNext(
+  userId,
+  context.now,
+);
+
+const bookings = toMyClassesBookingItemsWithContext(upcomingBookingsRaw, context);
+---
+
+<section class="space-y-3">
+  <h2 class="text-lg font-semibold">Upcoming Classes</h2>
+
+  {
+    bookings.length === 0 ? (
+      <p class="rounded-lg border bg-card p-4 text-sm text-muted-foreground">
+        You do not have any upcoming classes.
+      </p>
+    ) : (
+      <div class="space-y-3">
+        {bookings.map((booking) => (
+          <ClassBookingCard booking={booking} refundWindowHours={refundWindowHours} />
+        ))}
+      </div>
+    )
+  }
+</section>

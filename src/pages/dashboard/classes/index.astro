@@ -1,0 +1,50 @@
+---
+export const prerender = false;
+
+import DashboardLayout from "@/layouts/dashboard/layout.astro";
+import CancelledClassesSection from "./_/components/cancelled-classes-section.astro";
+import NextClassSection from "./_/components/next-class-section.astro";
+import PastClassesSection from "./_/components/past-classes-section.astro";
+import UpcomingClassesSection from "./_/components/upcoming-classes-section.astro";
+
+const CANCELLATION_REFUND_WINDOW_HOURS = 24;
+
+const user = Astro.locals.user!;
+---
+
+<DashboardLayout title="My Classes">
+  <div class="space-y-6">
+    <section class="space-y-2">
+      <h1 class="text-2xl font-semibold">My Classes</h1>
+      <p class="text-sm text-muted-foreground">
+        View your upcoming and past classes. All times are shown in KST.
+      </p>
+      <p class="text-sm text-muted-foreground">
+        Full refund if canceled at least {CANCELLATION_REFUND_WINDOW_HOURS} hours
+        before class start.
+      </p>
+    </section>
+
+    <div class="space-y-8">
+      <NextClassSection
+        userId={user.id}
+        refundWindowHours={CANCELLATION_REFUND_WINDOW_HOURS}
+      />
+
+      <UpcomingClassesSection
+        userId={user.id}
+        refundWindowHours={CANCELLATION_REFUND_WINDOW_HOURS}
+      />
+
+      <CancelledClassesSection
+        userId={user.id}
+        refundWindowHours={CANCELLATION_REFUND_WINDOW_HOURS}
+      />
+
+      <PastClassesSection
+        userId={user.id}
+        refundWindowHours={CANCELLATION_REFUND_WINDOW_HOURS}
+      />
+    </div>
+  </div>
+</DashboardLayout>

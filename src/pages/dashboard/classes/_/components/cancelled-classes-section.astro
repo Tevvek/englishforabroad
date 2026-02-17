@@ -1,0 +1,39 @@
+---
+import { listCancelledClasses } from "../queries/list-cancelled-classes.query";
+import {
+  createMyClassesBookingItemContext,
+  toMyClassesBookingItemsWithContext,
+} from "../utils/to-my-classes-booking-item.utils";
+import ClassBookingCard from "./class-booking-card.astro";
+
+interface Props {
+  userId: string;
+  refundWindowHours: number;
+}
+
+const { userId, refundWindowHours } = Astro.props;
+
+const context = createMyClassesBookingItemContext(refundWindowHours);
+
+const cancelledBookingsRaw = await listCancelledClasses(userId);
+
+const bookings = toMyClassesBookingItemsWithContext(cancelledBookingsRaw, context);
+---
+
+<section class="space-y-3">
+  <h2 class="text-lg font-semibold">Cancelled Classes</h2>
+
+  {
+    bookings.length === 0 ? (
+      <p class="rounded-lg border bg-card p-4 text-sm text-muted-foreground">
+        You do not have any cancelled classes.
+      </p>
+    ) : (
+      <div class="space-y-3">
+        {bookings.map((booking) => (
+          <ClassBookingCard booking={booking} refundWindowHours={refundWindowHours} />
+        ))}
+      </div>
+    )
+  }
+</section>

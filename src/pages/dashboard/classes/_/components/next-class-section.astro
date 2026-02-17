@@ -1,0 +1,40 @@
+---
+import { getNextBookedClass } from "../queries/get-next-booked-class.query";
+import {
+  createMyClassesBookingItemContext,
+  toMyClassesBookingItemWithContext,
+} from "../utils/to-my-classes-booking-item.utils";
+import ClassBookingCard from "./class-booking-card.astro";
+
+interface Props {
+  userId: string;
+  refundWindowHours: number;
+}
+
+const { userId, refundWindowHours } = Astro.props;
+
+const context = createMyClassesBookingItemContext(refundWindowHours);
+
+const nextBookingRaw = await getNextBookedClass(userId, context.now);
+
+const nextClass = nextBookingRaw
+  ? toMyClassesBookingItemWithContext(nextBookingRaw, context)
+  : null;
+---
+
+<section class="space-y-3">
+  <h2 class="text-lg font-semibold">Next Class</h2>
+
+  {
+    !nextClass ? (
+      <p class="rounded-lg border bg-card p-4 text-sm text-muted-foreground">
+        You do not have a next class yet.
+      </p>
+    ) : (
+      <ClassBookingCard
+        booking={nextClass}
+        refundWindowHours={refundWindowHours}
+      />
+    )
+  }
+</section>
