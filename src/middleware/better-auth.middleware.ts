@@ -23,7 +23,7 @@ const betterAuthMiddleware = defineMiddleware(async (context, next) => {
   const isAuthRoute = pathname.startsWith("/auth");
 
   if (!context.locals.session && isDashboardRoute) {
-    return context.redirect("/auth");
+    return context.redirect("/auth/login");
   }
 
   if (context.locals.session && isAuthRoute) {
