@@ -2,14 +2,16 @@
 export const prerender = false;
 
 import DashboardLayout from "@/layouts/dashboard/layout.astro";
+import { buildCreditsSummary } from "@/queries/credits/get-credits-summary.query";
+import { listCreditLedgerEntries } from "@/queries/credits/list-credit-ledger-entries.query";
 import CreditActivityTable from "./_/components/credit-activity-table.astro";
 import CreditsSummaryCards from "./_/components/credits-summary-cards.astro";
-import { getCreditsPageData } from "./_/queries/get-credits-page-data.query";
 
 const CLASS_DURATION_MINUTES = 50;
 
 const user = Astro.locals.user!;
-const { summary, ledgerEntries } = await getCreditsPageData(user.id);
+const ledgerEntries = await listCreditLedgerEntries(user.id);
+const summary = buildCreditsSummary(ledgerEntries);
 ---
 
 <DashboardLayout title="Credits & Usage">

@@ -1,21 +1,7 @@
-import { CreditLedger, db, eq, sum } from "astro:db";
-
-import { withCachedNumber } from "@/lib/cache/with-cache";
-
-const CREDIT_BALANCE_CACHE_TTL_SECONDS = 30;
+import { getCreditsSummary } from "@/queries/credits/get-credits-summary.query";
 
 export async function getCreditBalance(userId: string) {
-  return withCachedNumber({
-    key: `credits:balance:${userId}`,
-    ttlSeconds: CREDIT_BALANCE_CACHE_TTL_SECONDS,
-    load: async () => {
-      const creditBalanceRow = await db
-        .select({ credits: sum(CreditLedger.creditsDelta) })
-        .from(CreditLedger)
-        .where(eq(CreditLedger.userId, userId))
-        .get();
+  const creditsSummary = await getCreditsSummary(userId);
 
-      return Number(creditBalanceRow?.credits ?? 0);
-    },
-  });
+  return creditsSummary.currentBalance;
 }

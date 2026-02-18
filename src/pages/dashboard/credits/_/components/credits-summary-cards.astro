@@ -1,8 +1,8 @@
 ---
-import type { CreditsPageData } from "../queries/get-credits-page-data.query";
+import type { CreditsSummary } from "@/queries/credits/get-credits-summary.query";
 
 interface Props {
-  creditsSummary: CreditsPageData["summary"];
+  creditsSummary: CreditsSummary;
 }
 
 const { creditsSummary } = Astro.props;

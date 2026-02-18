@@ -203,8 +203,7 @@ export const bookClassSlot = defineAction({
       updatedAt: new Date(),
     });
 
-    await deleteCachedKey(`credits:balance:${user.id}`);
-    await deleteCachedKey(`credits:page:${user.id}`);
+    await deleteCachedKey(`credits:activity:${user.id}`);
 
     return {
       success: true,
@@ -288,8 +287,7 @@ export const cancelClassBooking = defineAction({
         updatedAt: new Date(),
       });
 
-      await deleteCachedKey(`credits:balance:${user.id}`);
-      await deleteCachedKey(`credits:page:${user.id}`);
+      await deleteCachedKey(`credits:activity:${user.id}`);
     }
 
     return {

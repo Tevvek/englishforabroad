@@ -49,8 +49,7 @@ async function handleCheckoutSessionCompleted(event: Stripe.Event) {
     updatedAt: new Date(),
   });
 
-  await deleteCachedKey(`credits:balance:${user.id}`);
-  await deleteCachedKey(`credits:page:${user.id}`);
+  await deleteCachedKey(`credits:activity:${user.id}`);
 }
 
 export const POST: APIRoute = async ({ request }) => {
