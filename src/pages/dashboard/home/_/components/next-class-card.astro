@@ -1,20 +1,17 @@
 ---
-import { getCreditBalance } from "@/queries/credits/get-credit-balance.query";
 import { getNextUpcomingBooking } from "../queries/get-next-upcoming-booking.query";
 import { formatKstDate } from "../utils/format-kst-date.utils";
 import { formatKstTime } from "../utils/format-kst-time.utils";
 
 interface Props {
   userId: string;
+  creditBalance: number;
 }
 
-const { userId } = Astro.props;
+const { userId, creditBalance } = Astro.props;
 
 const now = new Date();
-const [creditBalance, nextClass] = await Promise.all([
-  getCreditBalance(userId),
-  getNextUpcomingBooking(userId, now),
-]);
+const nextClass = await getNextUpcomingBooking(userId, now);
 
 const nextClassDateLabel = nextClass ? formatKstDate(nextClass.startsAt) : null;
 const nextClassTimeRangeLabel = nextClass

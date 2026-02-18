@@ -2,11 +2,13 @@
 export const prerender = false;
 
 import DashboardLayout from "@/layouts/dashboard/layout.astro";
+import { getCreditBalance } from "@/queries/credits/get-credit-balance.query";
 import CreditBalanceCard from "./_/components/credit-balance-card.astro";
 import NextClassCard from "./_/components/next-class-card.astro";
 import UpcomingClassesCard from "./_/components/upcoming-classes-card.astro";
 
 const user = Astro.locals.user!;
+const creditBalance = await getCreditBalance(user.id);
 ---
 
 <DashboardLayout title="Home">
@@ -20,10 +22,10 @@ const user = Astro.locals.user!;
     </section>
 
     <section class="grid gap-4 md:grid-cols-2">
-      <CreditBalanceCard userId={user.id} />
+      <CreditBalanceCard creditBalance={creditBalance} />
       <UpcomingClassesCard userId={user.id} />
     </section>
 
-    <NextClassCard userId={user.id} />
+    <NextClassCard userId={user.id} creditBalance={creditBalance} />
   </div>
 </DashboardLayout>

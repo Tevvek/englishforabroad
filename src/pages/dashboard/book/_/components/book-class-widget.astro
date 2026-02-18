@@ -5,20 +5,18 @@ import {
   getUtcRangeForKstMonth,
   type MonthClassAvailability,
 } from "@/lib/booking-schedule";
-import { getCreditBalance } from "@/queries/credits/get-credit-balance.query";
 import { listActiveScheduleRules } from "../queries/list-active-schedule-rules.query";
 import { listBookedClassesInRange } from "../queries/list-booked-classes-in-range.query";
 import { addMonthsToMonthKey } from "../utils/add-months-to-month-key.utils";
 import { getCurrentKstMonthKey } from "../utils/get-current-kst-month-key.utils";
 
 interface Props {
-  userId: string;
+  creditBalance: number;
 }
 
-const { userId } = Astro.props;
+const { creditBalance } = Astro.props;
 
 const currentMonthKey = getCurrentKstMonthKey();
-const creditBalance = await getCreditBalance(userId);
 
 const PRELOADED_MONTHS_COUNT = 3;
 const preloadedMonthKeys = Array.from(

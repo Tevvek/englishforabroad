@@ -1,12 +1,9 @@
 ---
-import { getCreditBalance } from "@/queries/credits/get-credit-balance.query";
-
 interface Props {
-  userId: string;
+  creditBalance: number;
 }
 
-const { userId } = Astro.props;
-const creditBalance = await getCreditBalance(userId);
+const { creditBalance } = Astro.props;
 ---
 
 <p class="text-sm font-medium">Current balance: {creditBalance} credits</p>
