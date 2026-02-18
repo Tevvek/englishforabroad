@@ -5,6 +5,11 @@ import { db, eq, CreditLedger, StripeEvent, User } from "astro:db";
 import type { APIRoute } from "astro";
 import type Stripe from "stripe";
 
+import {
+  getCreditBalanceCacheKey,
+  getCreditsPageCacheKey,
+} from "@/lib/cache/credits-cache-keys";
+import { deleteCachedItem } from "@/lib/cache/upstash-kv";
 import { stripe } from "@/lib/stripe";
 
 const CREDITS_PER_PURCHASE = 12;
@@ -47,6 +52,9 @@ async function handleCheckoutSessionCompleted(event: Stripe.Event) {
     createdAt: new Date(),
     updatedAt: new Date(),
   });
+
+  await deleteCachedItem(getCreditBalanceCacheKey(user.id));
+  await deleteCachedItem(getCreditsPageCacheKey(user.id));
 }
 
 export const POST: APIRoute = async ({ request }) => {
