@@ -1,14 +1,11 @@
 ---
-import { listCreditLedgerEntries } from "../queries/list-credit-ledger-entries.query";
-import { buildCreditsSummary } from "../utils/build-credits-summary.utils";
+import type { CreditsPageData } from "../queries/get-credits-page-data.query";
 
 interface Props {
-  userId: string;
+  creditsSummary: CreditsPageData["summary"];
 }
 
-const { userId } = Astro.props;
-const ledgerEntries = await listCreditLedgerEntries(userId);
-const creditsSummary = buildCreditsSummary(ledgerEntries);
+const { creditsSummary } = Astro.props;
 ---
 
 <section class="grid gap-4 md:grid-cols-3">

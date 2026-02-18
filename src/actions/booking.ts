@@ -204,6 +204,7 @@ export const bookClassSlot = defineAction({
     });
 
     await deleteCachedKey(`credits:balance:${user.id}`);
+    await deleteCachedKey(`credits:page:${user.id}`);
 
     return {
       success: true,
@@ -288,6 +289,7 @@ export const cancelClassBooking = defineAction({
       });
 
       await deleteCachedKey(`credits:balance:${user.id}`);
+      await deleteCachedKey(`credits:page:${user.id}`);
     }
 
     return {

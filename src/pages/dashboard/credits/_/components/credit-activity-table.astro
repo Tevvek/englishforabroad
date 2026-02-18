@@ -1,15 +1,14 @@
 ---
-import { listCreditLedgerEntries } from "../queries/list-credit-ledger-entries.query";
+import type { CreditsLedgerEntry } from "../queries/get-credits-page-data.query";
 import { formatCreditsDelta } from "../utils/format-credits-delta.utils";
 import { formatEntryDate } from "../utils/format-entry-date.utils";
 import { formatEntryType } from "../utils/format-entry-type.utils";
 
 interface Props {
-  userId: string;
+  ledgerEntries: CreditsLedgerEntry[];
 }
 
-const { userId } = Astro.props;
-const ledgerEntries = await listCreditLedgerEntries(userId);
+const { ledgerEntries } = Astro.props;
 ---
 
 <section class="space-y-3">

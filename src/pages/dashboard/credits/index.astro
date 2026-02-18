@@ -4,10 +4,12 @@ export const prerender = false;
 import DashboardLayout from "@/layouts/dashboard/layout.astro";
 import CreditActivityTable from "./_/components/credit-activity-table.astro";
 import CreditsSummaryCards from "./_/components/credits-summary-cards.astro";
+import { getCreditsPageData } from "./_/queries/get-credits-page-data.query";
 
 const CLASS_DURATION_MINUTES = 50;
 
 const user = Astro.locals.user!;
+const { summary, ledgerEntries } = await getCreditsPageData(user.id);
 ---
 
 <DashboardLayout title="Credits & Usage">
@@ -19,12 +21,12 @@ const user = Astro.locals.user!;
       </p>
     </section>
 
-    <CreditsSummaryCards userId={user.id} />
+    <CreditsSummaryCards creditsSummary={summary} />
 
     <p class="text-sm text-muted-foreground">
       1 credit = 1 class ({CLASS_DURATION_MINUTES} minutes)
     </p>
 
-    <CreditActivityTable userId={user.id} />
+    <CreditActivityTable ledgerEntries={ledgerEntries} />
   </div>
 </DashboardLayout>
