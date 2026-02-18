@@ -1,8 +1,5 @@
-import { db, eq, TeacherScheduleRule } from "astro:db";
+import { listActiveScheduleRules as listCachedActiveScheduleRules } from "@/queries/schedule/list-active-schedule-rules.query";
 
 export async function listActiveScheduleRules() {
-  return db
-    .select()
-    .from(TeacherScheduleRule)
-    .where(eq(TeacherScheduleRule.isActive, true));
+  return listCachedActiveScheduleRules();
 }

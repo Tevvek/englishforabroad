@@ -8,7 +8,6 @@ import {
   gte,
   lt,
   sum,
-  TeacherScheduleRule,
 } from "astro:db";
 import { z } from "astro:schema";
 
@@ -19,6 +18,7 @@ import {
   isUtcSlotWithinSchedule,
 } from "@/lib/booking-schedule";
 import { deleteCachedKey } from "@/lib/cache/with-cache";
+import { listActiveScheduleRules } from "@/queries/schedule/list-active-schedule-rules.query";
 
 export const getClassAvailabilityForMonth = defineAction({
   input: z.object({
@@ -32,10 +32,7 @@ export const getClassAvailabilityForMonth = defineAction({
       });
     }
 
-    const scheduleRules = await db
-      .select()
-      .from(TeacherScheduleRule)
-      .where(eq(TeacherScheduleRule.isActive, true));
+    const scheduleRules = await listActiveScheduleRules();
 
     if (scheduleRules.length === 0) {
       return { availableDates: [], slotsByDate: {} };
@@ -96,10 +93,7 @@ export const bookClassSlot = defineAction({
       });
     }
 
-    const scheduleRules = await db
-      .select()
-      .from(TeacherScheduleRule)
-      .where(eq(TeacherScheduleRule.isActive, true));
+    const scheduleRules = await listActiveScheduleRules();
 
     if (scheduleRules.length === 0) {
       throw new ActionError({
@@ -204,6 +198,7 @@ export const bookClassSlot = defineAction({
     });
 
     await deleteCachedKey(`credits:activity:${user.id}`);
+    await deleteCachedKey(`classes:all:${user.id}`);
 
     return {
       success: true,
@@ -275,6 +270,8 @@ export const cancelClassBooking = defineAction({
       .where(
         and(eq(ClassBooking.id, booking.id), eq(ClassBooking.status, "booked")),
       );
+
+    await deleteCachedKey(`classes:all:${user.id}`);
 
     if (isRefundEligible) {
       await db.insert(CreditLedger).values({

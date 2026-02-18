@@ -1,25 +1,13 @@
-import { and, asc, ClassBooking, db, eq, gte } from "astro:db";
+import { listAllUserClasses } from "@/queries/classes/list-all-user-classes.query";
 
 export async function listUpcomingBookedClassesExcludingNext(
   userId: string,
   now: Date,
 ) {
-  return db
-    .select({
-      id: ClassBooking.id,
-      startsAt: ClassBooking.startsAt,
-      endsAt: ClassBooking.endsAt,
-      status: ClassBooking.status,
-    })
-    .from(ClassBooking)
-    .where(
-      and(
-        eq(ClassBooking.userId, userId),
-        eq(ClassBooking.status, "booked"),
-        gte(ClassBooking.startsAt, now),
-      ),
-    )
-    .orderBy(asc(ClassBooking.startsAt))
-    .offset(1)
-    .limit(10);
+  const allClasses = await listAllUserClasses(userId);
+
+  return allClasses
+    .filter((booking) => booking.status === "booked" && booking.startsAt >= now)
+    .sort((a, b) => a.startsAt.getTime() - b.startsAt.getTime())
+    .slice(1, 11);
 }
