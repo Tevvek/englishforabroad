@@ -2,15 +2,16 @@ import { ActionError, defineAction } from "astro:actions";
 import { BREVO_API_KEY } from "astro:env/server";
 import { z } from "astro:schema";
 
-const WAITLIST_LIST_ID = 7;
+const WAITLIST_LIST_ID = 11;
 
 export const waitlist = defineAction({
   input: z.object({
     name: z.string(),
     email: z.string().email(),
+    location: z.string(),
     consent: z.boolean().default(false).optional(),
   }),
-  handler: async ({ name, email, consent }) => {
+  handler: async ({ name, email, location, consent }) => {
     if (!consent) {
       throw new ActionError({
         code: "BAD_REQUEST",
@@ -29,6 +30,7 @@ export const waitlist = defineAction({
         email: email,
         attributes: {
           FIRSTNAME: name,
+          LOCATION: location,
         },
         listIds: [WAITLIST_LIST_ID],
         updateEnabled: true,
@@ -43,11 +45,7 @@ export const waitlist = defineAction({
 
     return {
       success: true,
-      message: `🎉 You're on the list!
-      You'll be the first to hear when enrollment opens.
-      (Heads up— it might land in Promotions or Spam, so be sure to check there too!)
-
-      Questions? Email me at ali@englishforabroad.com.`,
+      message: `You’re on the list! Check your inbox for a quick welcome email (and check in spam just in case).\n\nDidn’t get it? DM me on Instagram @englishforabroad and I’ll help you out!`,
     };
   },
 });

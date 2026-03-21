@@ -18,6 +18,7 @@ import { z } from "zod";
 const formSchema = z.object({
   name: z.string().min(1, { message: "Name is required" }),
   email: z.string().email({ message: "Invalid email address" }),
+  location: z.string().min(1, { message: "Location is required" }),
   consent: z.boolean().default(false).optional(),
 });
 
@@ -27,6 +28,7 @@ export default function WaitlistForm() {
     defaultValues: {
       name: "",
       email: "",
+      location: "",
       consent: false,
     },
   });
@@ -40,6 +42,7 @@ export default function WaitlistForm() {
     const { error, data } = await actions.waitlist({
       name: values.name,
       email: values.email,
+      location: values.location,
       consent: values.consent,
     });
 
@@ -88,6 +91,22 @@ export default function WaitlistForm() {
               <FormControl>
                 <Input
                   placeholder="your@email.com"
+                  {...field}
+                  className="bg-white h-12 text-center"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="location"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Input
+                  placeholder="Where are you currently based?"
                   {...field}
                   className="bg-white h-12 text-center"
                 />
