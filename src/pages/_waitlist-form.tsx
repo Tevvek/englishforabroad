@@ -139,7 +139,7 @@ export default function WaitlistForm() {
         <Button
           type="submit"
           disabled={!consent || !isValid}
-          className="w-full bg-orange-500 hover:bg-orange-600 text-white h-12 font-semibold uppercase"
+          className="w-full bg-[#CCCCFF] hover:bg-[#b3b3ff] text-[#2F4858] text-base h-12 font-semibold uppercase shadow-sm transition-transform hover:-translate-y-0.5 focus:-translate-y-0.5"
         >
           JOIN THE WAITLIST
         </Button>
