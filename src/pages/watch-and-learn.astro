@@ -1,7 +1,7 @@
 ---
 import FreebieLayout from "@/layouts/FreebieLayout.astro";
-import WatchAndLearnForm from "./_freebie-watch-and-learn-form";
-import { CheckCircle } from "lucide-react";
+import WatchAndLearnForm from "../components/forms/WatchAndLearnForm.svelte";
+import { CircleCheck } from "lucide-svelte";
 import { Image } from "astro:assets";
 
 import resourcesImage from "@/assets/freebie/01-resources.webp";
@@ -27,7 +27,7 @@ import { cn } from "@/lib/utils";
         Subscribe to get your free guide, plus language tips and early access to
         new offers and resources to help you speak English with confidence.
       </p>
-      <WatchAndLearnForm client:visible />
+      <WatchAndLearnForm client:load />
     </Section>
 
     <Section
@@ -94,27 +94,27 @@ import { cn } from "@/lib/utils";
 
       <div class="text-left grid md:grid-cols-2 gap-4 md:gap-8 mb-12">
         <div class="flex items-start space-x-3">
-          <CheckCircle className="h-5 w-5 text-orange-500 mt-1 flex-shrink-0" />
+          <CircleCheck className="h-5 w-5 text-orange-500 mt-1 flex-shrink-0" />
           <span class="text-gray-700">
             Easy, low-pressure ways to turn your TV time into real speaking
             practice
           </span>
         </div>
         <div class="flex items-start space-x-3">
-          <CheckCircle className="h-5 w-5 text-orange-500 mt-1 flex-shrink-0" />
+          <CircleCheck className="h-5 w-5 text-orange-500 mt-1 flex-shrink-0" />
           <span class="text-gray-700">
             Tricks to build English into your routine in a way that feels fun &
             flexible
           </span>
         </div>
         <div class="flex items-start space-x-3">
-          <CheckCircle className="h-5 w-5 text-orange-500 mt-1 flex-shrink-0" />
+          <CircleCheck className="h-5 w-5 text-orange-500 mt-1 flex-shrink-0" />
           <span class="text-gray-700">
             Tools to gain the confidence to talk about shows in English
           </span>
         </div>
         <div class="flex items-start space-x-3">
-          <CheckCircle className="h-5 w-5 text-orange-500 mt-1 flex-shrink-0" />
+          <CircleCheck className="h-5 w-5 text-orange-500 mt-1 flex-shrink-0" />
           <span class="text-gray-700">
             Access to dozens of show recommendations for practicing English
           </span>
@@ -169,7 +169,7 @@ import { cn } from "@/lib/utils";
         new offers and resources to help you speak English with confidence.
       </p>
 
-      <WatchAndLearnForm client:visible />
+      <WatchAndLearnForm client:load />
     </Section>
   </main>
 </FreebieLayout>

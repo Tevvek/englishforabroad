@@ -1,19 +1,34 @@
-import vue from "@astrojs/vue";
+import svelte from "@astrojs/svelte";
 import { defineConfig, envField } from "astro/config";
 
 import tailwindcss from "@tailwindcss/vite";
-import svgLoader from "vite-svg-loader";
+import svgLoader from "vite-plugin-svelte-svg";
+import path from "path";
 
 import vercel from "@astrojs/vercel";
 
-import react from "@astrojs/react";
-
 // https://astro.build/config
 export default defineConfig({
-  integrations: [vue(), react()],
+  integrations: [svelte()],
 
   vite: {
-    plugins: [tailwindcss(), svgLoader()],
+    plugins: [tailwindcss()],
+    resolve: {
+      alias: {
+        $app: path.resolve('./src/lib/app'),
+        '$app/forms': path.resolve('./src/lib/app/forms.js'),
+        '$app/navigation': path.resolve('./src/lib/app/navigation.js'),
+        '$app/environment': path.resolve('./src/lib/app/environment.js'),
+        '$app/stores': path.resolve('./src/lib/app/stores.js'),
+      },
+      noExternal: ['svelte-sonner', 'sveltekit-superforms', 'lucide-svelte', 'bits-ui', 'mode-watcher', 'formsnap', 'svelte-toolbelt']
+    },
+    optimizeDeps: {
+      exclude: ['sveltekit-superforms']
+    },
+    ssr: {
+      noExternal: ['svelte-sonner', 'sveltekit-superforms', 'lucide-svelte', 'bits-ui', 'mode-watcher', 'formsnap', 'svelte-toolbelt']
+    }
   },
 
   adapter: vercel(),

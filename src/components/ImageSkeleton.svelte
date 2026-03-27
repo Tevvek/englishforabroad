@@ -1,0 +1,10 @@
+<script lang="ts">
+  let { children, class: className = "" } = $props<{ children: any; class?: string }>();
+</script>
+
+<div class="relative overflow-hidden isolate {className}">
+  <!-- Actual skeleton loader -->
+  <div class="-z-10 absolute inset-0 before:absolute before:inset-0 before:-translate-y-full before:animate-[shimmer-vertical_2s_infinite] before:bg-gradient-to-b before:from-transparent before:via-gray-200 before:to-transparent"></div>
+  <!-- Image goes here -->
+  {@render children()}
+</div>

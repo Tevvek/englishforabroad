@@ -1,6 +1,6 @@
 ---
 import BigArrowRight from "@/icons/BigArrowRight.astro";
-import WaitlistForm from "@/pages/_waitlist-form";
+import WaitlistForm from "../components/forms/WaitlistForm.svelte";
 ---
 
 <section id="services" class="bg-surface">
@@ -89,7 +89,7 @@ import WaitlistForm from "@/pages/_waitlist-form";
           Enter your email to join the waitlist and get updates on class dates,
           tips, and early access to offers.
         </p>
-        <WaitlistForm client:visible />
+        <WaitlistForm client:load />
       </div>
     </div>
   </div>

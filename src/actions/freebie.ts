@@ -39,9 +39,10 @@ export const freebieWatchAndLearn = defineAction({
     });
 
     if (!brevoResult.ok) {
-      return {
-        error: "Failed to subscribe to newsletter",
-      };
+      throw new ActionError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: "Failed to subscribe to newsletter",
+      });
     }
 
     const emailResult = await sendEmailNotificationToMyself(
@@ -51,7 +52,10 @@ export const freebieWatchAndLearn = defineAction({
       "watch-and-learn"
     );
     if (!emailResult.accepted || emailResult.accepted.length === 0) {
-      return { error: "Failed to send notification email" };
+      throw new ActionError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: "Failed to send notification email",
+      });
     }
 
     return {
@@ -109,9 +113,10 @@ export const freebie = defineAction({
     });
 
     if (!brevoResult.ok) {
-      return {
-        error: "Failed to subscribe to newsletter",
-      };
+      throw new ActionError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: "Failed to subscribe to newsletter",
+      });
     }
 
     const emailResult = await sendEmailNotificationToMyself(
@@ -121,7 +126,10 @@ export const freebie = defineAction({
       freebieSlug
     );
     if (!emailResult.accepted || emailResult.accepted.length === 0) {
-      return { error: "Failed to send notification email" };
+      throw new ActionError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: "Failed to send notification email",
+      });
     }
 
     return {

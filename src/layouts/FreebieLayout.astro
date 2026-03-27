@@ -44,7 +44,7 @@ const {
     <meta property="og:type" content="website" />
   </head>
   <body class="bg-surface h-auto">
-    <Toaster client:visible position="top-center" />
+    <Toaster client:only="svelte" position="top-center" />
     <slot />
   </body>
 </html>

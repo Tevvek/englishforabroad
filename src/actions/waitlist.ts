@@ -38,9 +38,10 @@ export const waitlist = defineAction({
     });
 
     if (!response.ok) {
-      return {
-        error: "Failed to subscribe to waitlist",
-      };
+      throw new ActionError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: "Failed to subscribe to waitlist",
+      });
     }
 
     return {
