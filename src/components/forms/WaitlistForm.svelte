@@ -147,12 +147,14 @@
 
   <Button
     type="submit"
+    variant="secondary"
+    size="lg"
     disabled={isSubmitting}
-    class="h-12 w-full text-base uppercase tracking-[0.18em]"
+    class="w-full uppercase tracking-[0.18em]"
   >
     {#if isSubmitting}
       <Loader2 class="animate-spin mr-2" />
     {/if}
-    JOIN THE WAITLIST
+    Join the waitlist
   </Button>
 </form>

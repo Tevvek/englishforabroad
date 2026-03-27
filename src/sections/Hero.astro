@@ -1,11 +1,9 @@
 ---
 import { Image } from "astro:assets";
-import { Button } from "@/components/ui/button";
-import { Card as UiCard, CardContent } from "@/components/ui/card";
+import BookDiscoveryCall from "@/components/BookDiscoveryCall.astro";
 // import BottomLeftBlob from "@/components/blobs/BottomLeftBlob.astro";
 // import BottomRightBlob from "@/components/blobs/BottomRightBlob.astro";
 import aliImage from "@/images/ali.webp";
-import BigArrowRight from "@/icons/BigArrowRight.astro";
 ---
 
 <section class="relative overflow-x-hidden" id="hero">
@@ -25,8 +23,7 @@ import BigArrowRight from "@/icons/BigArrowRight.astro";
     <div
       class="space-y-5 text-center lg:row-span-4 lg:row-start-1 lg:text-start"
     >
-      <p class="text-xs font-semibold uppercase tracking-[0.22em] text-primary">Private English coaching that feels personal</p>
-      <h1 class="text-5xl md:text-6xl lg:text-7xl">Launch your English journey with confident, natural speaking.</h1>
+      <h1 class="text-5xl md:text-6xl lg:text-7xl">Launch your English Journey</h1>
       <p class="max-w-2xl text-base text-muted-foreground md:text-lg lg:max-w-xl">
         Hi! I'm Ali, an American English teacher offering personalized ESL
         classes. With an educational foundation from Georgetown University and
@@ -36,29 +33,7 @@ import BigArrowRight from "@/icons/BigArrowRight.astro";
       </p>
 
       <!-- CTA -->
-      <Button
-        href=""
-        onclick="Calendly.initPopupWidget({url: 'https://calendly.com/englishforabroad/trial-esl-class'});return false;"
-        class="h-10 w-full gap-x-2 uppercase tracking-[0.18em] md:mx-auto md:w-fit lg:mx-0"
-      >Book Discovery Call<BigArrowRight />
-      </Button>
-
-      <UiCard class="mx-auto max-w-xl bg-card/95 lg:mx-0">
-        <CardContent class="grid gap-3 pt-6 text-left sm:grid-cols-3">
-          <div>
-            <p class="text-2xl font-semibold text-primary">1:1</p>
-            <p class="text-sm text-muted-foreground">Tailored sessions around your goals</p>
-          </div>
-          <div>
-            <p class="text-2xl font-semibold text-primary">1000+</p>
-            <p class="text-sm text-muted-foreground">Learners supported with real speaking practice</p>
-          </div>
-          <div>
-            <p class="text-2xl font-semibold text-primary">Global</p>
-            <p class="text-sm text-muted-foreground">Lessons built for life abroad and everyday confidence</p>
-          </div>
-        </CardContent>
-      </UiCard>
+      <BookDiscoveryCall class="w-full md:mx-auto md:w-fit lg:mx-0" />
     </div>
 
     <!-- Hero image -->
@@ -67,7 +42,7 @@ import BigArrowRight from "@/icons/BigArrowRight.astro";
       alt="Ali"
       width="500"
       height="500"
-      class="lg:row-span-5 lg:row-start-1 rounded-[2rem] border bg-card p-2 shadow-lg"
+      class="lg:row-span-5 lg:row-start-1 rounded-[2rem]"
       loading="eager"
     />
   </div>

@@ -1,7 +1,6 @@
 ---
-import { Button } from "@/components/ui/button";
+import BookDiscoveryCall from "@/components/BookDiscoveryCall.astro";
 import { Card as UiCard, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import BigArrowRight from "@/icons/BigArrowRight.astro";
 import WaitlistForm from "../components/forms/WaitlistForm.svelte";
 ---
 
@@ -9,12 +8,8 @@ import WaitlistForm from "../components/forms/WaitlistForm.svelte";
   <div
     class="mx-auto max-w-6xl space-y-6 overflow-x-hidden px-4 py-12 md:px-8 md:py-16"
   >
-    <p class="text-center text-xs font-semibold uppercase tracking-[0.22em] text-primary">Offerings</p>
-    <h2 class="text-center text-5xl">Services</h2>
-    <h3 class="text-center text-2xl text-muted-foreground md:text-3xl">
-      Custom English Coaching
-    </h3>
-
+    <p class="text-center text-xs font-semibold uppercase tracking-[0.22em] text-primary">Services</p>
+    <h2 class="text-center text-5xl">Custom English Coaching</h2>
     <div class="grid gap-6 md:grid-cols-2">
       <UiCard>
         <CardHeader>
@@ -51,12 +46,7 @@ import WaitlistForm from "../components/forms/WaitlistForm.svelte";
         <p class="text-sm text-muted-foreground">Book a free discovery call to get started.</p>
 
         <div class="flex justify-center">
-          <Button
-            href=""
-            onclick="Calendly.initPopupWidget({url: 'https://calendly.com/englishforabroad/trial-esl-class'});return false;"
-            class="h-10 w-full gap-x-2 uppercase tracking-[0.18em] md:w-fit"
-          >Book Discovery Call<BigArrowRight />
-          </Button>
+          <BookDiscoveryCall class="w-full" />
         </div>
         </CardContent>
       </UiCard>

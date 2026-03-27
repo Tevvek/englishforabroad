@@ -1,18 +1,15 @@
 ---
-import { Button } from "@/components/ui/button";
+import BookDiscoveryCall from "@/components/BookDiscoveryCall.astro";
 import cn from "@/utils/cn";
 
 const { class: className } = Astro.props;
 ---
 
-<Button
+<BookDiscoveryCall
   id="calendly-cta"
+  style="z-index: var(--z-index-cta);"
   class={cn(
-    "fixed right-0 top-1/5 z-cta origin-bottom-right rotate-[270deg] rounded-b-none px-8 uppercase tracking-[0.18em]",
+    "fixed right-0 top-1/5 z-cta origin-bottom-right rotate-[270deg] rounded-b-none px-8 pointer-events-auto isolate",
     className
   )}
-  href=""
-  onclick="Calendly.initPopupWidget({url: 'https://calendly.com/englishforabroad/trial-esl-class'});return false;"
->
-  Book Discovery Call
-</Button>
+/>

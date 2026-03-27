@@ -13,34 +13,30 @@ const { title } = Astro.props;
 <Layout title={title}>
   <Navbar slot="navbar" />
 
-  <FixedCTA
-    slot="fixed-cta"
-    class="opacity-0 transition-opacity duration-500"
-  />
+  <FixedCTA slot="fixed-cta" class="transition-opacity duration-500" />
   <slot />
 </Layout>
 
 <script>
-  const cta = document.querySelector("#calendly-cta")!;
-  const hero = document.querySelector("section#hero")!;
+  const cta = document.querySelector("#calendly-cta");
+  const hero = document.querySelector("section#hero");
 
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      if (entry.isIntersecting) {
-        // Hero is in view → hide CTA
-        cta.classList.add("opacity-0", "pointer-events-none");
-      } else {
-        // Hero is out of view → show CTA
-        cta.classList.remove("opacity-0", "pointer-events-none");
+  if (cta && hero) {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          cta.classList.add("opacity-0", "pointer-events-none");
+        } else {
+          cta.classList.remove("opacity-0", "pointer-events-none");
+        }
+      },
+      {
+        root: null,
+        threshold: 0.6,
       }
-    },
-    {
-      root: null,
-      threshold: 0.6, // small threshold means even a little bit of hero showing will count as visible
-    }
-  );
+    );
 
-  if (hero) {
+    cta.classList.add("opacity-0", "pointer-events-none");
     observer.observe(hero);
   }
 </script>

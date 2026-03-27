@@ -1,0 +1,24 @@
+---
+import { buttonVariants } from "@/components/ui/button";
+import cn from "@/utils/cn";
+
+interface Props {
+  class?: string;
+  id?: string;
+  size?: "default" | "sm" | "lg" | "icon" | "icon-sm" | "icon-lg";
+  style?: string;
+}
+
+const { class: className, id, size = "lg", style } = Astro.props;
+const classes = cn(buttonVariants({ variant: "secondary", size }), className);
+---
+
+<button
+  id={id}
+  type="button"
+  style={style}
+  class={classes}
+  onclick="Calendly.initPopupWidget({url: 'https://calendly.com/englishforabroad/trial-esl-class'});return false;"
+>
+  Book discovery call
+</button>

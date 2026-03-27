@@ -49,8 +49,8 @@
   --letter-spacing: -0.01em;
   --spacing: 0.25rem;
   --spacing-navbar: 132px;
-  --z-index-navbar: 50;
-  --z-index-cta: 30;
+  --z-index-navbar: 200;
+  --z-index-cta: 190;
   --shadow-2xs: 4px 4px 0px 0px hsl(0 0% 0% / 0.5);
   --shadow-xs: 4px 4px 0px 0px hsl(0 0% 0% / 0.5);
   --shadow-sm: 4px 4px 0px 0px hsl(0 0% 0% / 1), 4px 1px 2px -1px hsl(0 0% 0% / 1);
