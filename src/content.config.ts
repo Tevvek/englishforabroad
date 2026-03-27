@@ -1,6 +1,6 @@
 import { defineCollection } from "astro:content";
-import { z } from "astro:schema";
 import { glob } from "astro/loaders";
+import { z } from "astro/zod";
 
 const podcasts = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/data/resources/podcasts" }),
@@ -11,7 +11,7 @@ const podcasts = defineCollection({
       longDescription: z.string(),
       theme: z.string(),
       image: z.string(),
-      link: z.string().url(),
+      link: z.url(),
     }),
 });
 
@@ -24,7 +24,7 @@ const tvShows = defineCollection({
       longDescription: z.string(),
       theme: z.string(),
       image: z.string(),
-      link: z.string().url(),
+      link: z.url(),
     }),
 });
 
@@ -37,7 +37,7 @@ const movies = defineCollection({
       longDescription: z.string(),
       theme: z.string(),
       image: image(),
-      link: z.string().url(),
+      link: z.url(),
     }),
 });
 

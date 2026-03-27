@@ -1,7 +1,7 @@
 import { EMAIL_TRANSPORTER, MAIL_OPTIONS } from "@/utils/email";
 import { ActionError, defineAction } from "astro:actions";
 import { BREVO_API_KEY } from "astro:env/server";
-import { z } from "astro:schema";
+import { z } from "astro/zod";
 import nodemailer from "nodemailer";
 import { getEntry } from "astro:content";
 
@@ -10,7 +10,7 @@ const BREVO_LIST_ID = 5;
 export const freebieWatchAndLearn = defineAction({
   input: z.object({
     name: z.string(),
-    email: z.string().email(),
+    email: z.email(),
     consent: z.boolean().default(false).optional(),
   }),
   handler: async ({ name, email, consent }) => {
@@ -72,7 +72,7 @@ export const freebieWatchAndLearn = defineAction({
 export const freebie = defineAction({
   input: z.object({
     name: z.string(),
-    email: z.string().email(),
+    email: z.email(),
     consent: z.boolean().default(false).optional(),
     freebieSlug: z.string(),
   }),

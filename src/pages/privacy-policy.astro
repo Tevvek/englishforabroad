@@ -5,8 +5,10 @@ import Container from "@/components/Container.astro";
 ---
 
 <RestLayout title="Legal Notice - English for Abroad">
-  <Container class="text-primary py-8 md:py-12 bg-white grow" tag="main">
-    <h1 class="text-4xl font-bold mb-4">Privacy Policy</h1>
+  <Container class="grow py-8 md:py-12" tag="main">
+    <div class="rounded-[2rem] border bg-card px-6 py-8 shadow-sm md:px-10 md:py-10">
+    <p class="text-xs font-semibold uppercase tracking-[0.22em] text-primary">Legal</p>
+    <h1 class="mb-4 text-4xl font-bold">Privacy Policy</h1>
     <p class="mb-4">
       Welcome to <strong>English for Abroad</strong>. Your privacy is important
       to us, and we are committed to safeguarding your personal information.
@@ -111,6 +113,7 @@ import Container from "@/components/Container.astro";
       </li>
       <li><strong>Phone:</strong> +34 674 524 300</li>
     </ul>
+    </div>
   </Container>
   <Footer />
 </RestLayout>

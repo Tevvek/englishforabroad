@@ -35,16 +35,19 @@ const cards = [
 ];
 ---
 
-<section id="methodology" class="bg-surface">
+<section id="methodology">
   <div
-    class="grid md:grid-cols-[auto_1fr] gap-8 md:gap-12 px-4 md:px-8 py-8 md:py-12 2xl:container mx-auto"
+    class="mx-auto grid max-w-6xl gap-8 px-4 py-8 md:grid-cols-[auto_1fr] md:gap-12 md:px-8 md:py-12"
   >
-    <h2 class="text-5xl text-primary md:col-span-2 text-center">
+    <p class="text-center text-xs font-semibold uppercase tracking-[0.22em] text-primary md:col-span-2">
+      Methodology
+    </p>
+    <h2 class="text-5xl md:col-span-2 text-center">
       Discover a new way of learning
     </h2>
 
     <!-- Student image -->
-    <div class="hidden lg:block">
+    <div class="hidden lg:block rounded-[2rem] border bg-card p-2 shadow-lg">
       <Image
         src={studentImage}
         alt="Student"

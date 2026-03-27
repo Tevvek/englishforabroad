@@ -1,13 +1,13 @@
 import { ActionError, defineAction } from "astro:actions";
 import { BREVO_API_KEY } from "astro:env/server";
-import { z } from "astro:schema";
+import { z } from "astro/zod";
 
 const WAITLIST_LIST_ID = 11;
 
 export const waitlist = defineAction({
   input: z.object({
     name: z.string(),
-    email: z.string().email(),
+    email: z.email(),
     location: z.string(),
     consent: z.boolean().default(false).optional(),
   }),

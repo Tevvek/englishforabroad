@@ -1,4 +1,11 @@
 ---
+import "@fontsource/outfit/400.css";
+import "@fontsource/outfit/500.css";
+import "@fontsource/outfit/600.css";
+import "@fontsource/outfit/700.css";
+import "@fontsource/young-serif/400.css";
+import "@fontsource/space-mono/400.css";
+import "@fontsource/space-mono/700.css";
 import "@/styles/global.css";
 import { Toaster } from "@/components/ui/sonner";
 import { ClientRouter } from "astro:transitions";
@@ -43,7 +50,7 @@ const {
     <meta property="og:url" content="https://www.englishforabroad.com/" />
     <meta property="og:type" content="website" />
   </head>
-  <body class="bg-surface h-auto">
+  <body class="min-h-screen bg-background text-foreground antialiased">
     <Toaster client:only="svelte" position="top-center" />
     <slot />
   </body>

@@ -2,7 +2,6 @@ import svelte from "@astrojs/svelte";
 import { defineConfig, envField } from "astro/config";
 
 import tailwindcss from "@tailwindcss/vite";
-import svgLoader from "vite-plugin-svelte-svg";
 import path from "path";
 
 import vercel from "@astrojs/vercel";

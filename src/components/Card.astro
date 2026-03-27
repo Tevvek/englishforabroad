@@ -1,4 +1,5 @@
 ---
+import { Card as UiCard, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 interface Props {
   title: string;
   description: string;
@@ -8,10 +9,14 @@ interface Props {
 const { title, description, icon: Icon } = Astro.props;
 ---
 
-<div
-  class="hover:scale-105 sm:hover:scale-110 transition relative flex flex-col gap-y-2 rounded-xl border border-accent text-primary p-4 bg-white shadow-lg"
->
-  <Icon />
-  <h3 class="text-lg font-bold">{title}</h3>
-  <p>{description}</p>
-</div>
+<UiCard class="relative h-full transition-transform hover:-translate-y-1">
+  <CardHeader class="gap-3">
+    <div class="text-primary">
+      <Icon />
+    </div>
+    <CardTitle class="text-lg">{title}</CardTitle>
+  </CardHeader>
+  <CardContent>
+    <p class="text-sm text-muted-foreground">{description}</p>
+  </CardContent>
+</UiCard>

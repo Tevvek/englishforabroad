@@ -9,6 +9,9 @@
         "@astrojs/svelte": "^8.0.4",
         "@astrojs/vercel": "^10.0.3",
         "@fontsource-variable/nunito": "^5.0.19",
+        "@fontsource/outfit": "^5.2.8",
+        "@fontsource/space-mono": "^5.2.9",
+        "@fontsource/young-serif": "^5.2.7",
         "@tailwindcss/vite": "^4.0.7",
         "@types/grecaptcha": "^3.0.9",
         "@types/nodemailer": "^6.4.17",
@@ -31,7 +34,6 @@
         "zod": "^3.25.57",
       },
       "devDependencies": {
-        "@fontsource-variable/geist": "^5.2.8",
         "@internationalized/date": "^3.12.0",
         "@lucide/svelte": "^1.7.0",
         "sharp": "^0.34.2",
@@ -164,9 +166,13 @@
 
     "@floating-ui/utils": ["@floating-ui/utils@0.2.11", "", {}, "sha512-RiB/yIh78pcIxl6lLMG0CgBXAZ2Y0eVHqMPYugu+9U0AeT6YBeiJpf7lbdJNIugFP5SIjwNRgo4DhR1Qxi26Gg=="],
 
-    "@fontsource-variable/geist": ["@fontsource-variable/geist@5.2.8", "", {}, "sha512-cJ6m9e+8MQ5dCYJsLylfZrgBh6KkG4bOLckB35Tr9J/EqdkEM6QllH5PxqP1dhTvFup+HtMRPuz9xOjxXJggxw=="],
-
     "@fontsource-variable/nunito": ["@fontsource-variable/nunito@5.2.7", "", {}, "sha512-2N8QhatkyKgSUbAGZO2FYLioxA32+RyI1EplVLawbpkGjUeui9Qg9VMrpkCaik1ydjFjfLV+kzQ0cGEsMrMenQ=="],
+
+    "@fontsource/outfit": ["@fontsource/outfit@5.2.8", "", {}, "sha512-rXC6g0MqD7cOBjht0bMqc43qM6lRqDLML9KXsmg9uykz0wLQhy8Z/ajrMG6iyoT3NJR+MYgU+OEHp7uHoTb+Yw=="],
+
+    "@fontsource/space-mono": ["@fontsource/space-mono@5.2.9", "", {}, "sha512-b61faFOHEISQ/pD25G+cfGY9o/WW6lRv6hBQQfpWvEJ4y1V+S4gmth95EVyBE2VL3qDYHeVQ8nBzrplzdXTDDg=="],
+
+    "@fontsource/young-serif": ["@fontsource/young-serif@5.2.7", "", {}, "sha512-BltTmAlXLWQpu9XCQa+dfDJHQXt0EHUA4h9Q53VToDW3Onq0dkWzCPM1EyhinqfuwD9tb/5cEcGoRcRwiyiUUA=="],
 
     "@hapi/hoek": ["@hapi/hoek@9.3.0", "", {}, "sha512-/c6rf4UJlmHlC9b5BaNvzAcFv7HZ2QHaV0D4/HNlBdvFnvQq8RI4kYdhyPCl7Xj+oWvTWQ8ujhqS53LIgAe6KQ=="],
 

@@ -6,16 +6,17 @@ import Container from "@/components/Container.astro";
 const currentYear = new Date().getFullYear();
 ---
 
-<footer id="contact" class="bg-accent text-white">
+<footer id="contact" class="border-t bg-card text-card-foreground">
   <Container tag="div" class="py-8 md:py-12">
     <div class="space-y-4">
-      <h2 class="text-2xl">Contact</h2>
-      <div class="flex gap-x-2">
+      <p class="text-xs font-semibold uppercase tracking-[0.22em] text-primary">Contact</p>
+      <h2 class="text-3xl">Let's keep in touch</h2>
+      <div class="flex gap-x-3 text-muted-foreground">
         <a
           href="https://www.instagram.com/englishforabroad/"
           target="_blank"
           rel="noopener noreferrer"
-          class="hover:text-primary transition focus:text-primary"
+          class="transition hover:text-primary focus:text-primary"
         >
           <Instagram />
         </a>
@@ -23,36 +24,34 @@ const currentYear = new Date().getFullYear();
           href="https://www.tiktok.com/@englishforabroad_"
           target="_blank"
           rel="noopener noreferrer"
-          class="hover:text-primary transition focus:text-primary"
+          class="transition hover:text-primary focus:text-primary"
         >
           <TikTok />
         </a>
       </div>
       <div class="pb-4">
         <a
-          class="underline font-bold hover:text-primary transition focus:text-primary"
+          class="font-semibold text-primary underline decoration-primary/40 underline-offset-4 transition hover:text-foreground focus:text-foreground"
           href="mailto:ali@englishforabroad.com"
         >
           ali@englishforabroad.com
         </a>
       </div>
 
-      <div
-        class="border-t border-white pt-4 grid grid-cols-2 grid-rows-[auto_auto] md:grid-cols-1 gap-y-2 gap-x-4"
-      >
+      <div class="grid grid-cols-2 grid-rows-[auto_auto] gap-x-4 gap-y-2 border-t pt-4 md:grid-cols-1">
         <a
-          class="text-sm underline hover:text-primary transition focus:text-primary text-right md:text-start"
+          class="text-right text-sm text-muted-foreground underline underline-offset-4 transition hover:text-primary focus:text-primary md:text-start"
           href="/legal-notice"
         >
           Legal notice
         </a>
         <a
-          class="text-sm underline hover:text-primary transition focus:text-primary"
+          class="text-sm text-muted-foreground underline underline-offset-4 transition hover:text-primary focus:text-primary"
           href="/privacy-policy"
         >
           Privacy policy
         </a>
-        <p class="text-sm col-span-2 md:col-span-1 text-center md:text-start">
+        <p class="col-span-2 text-sm text-muted-foreground md:col-span-1 md:text-start">
           &copy; English for Abroad. All Rights Reserved {currentYear}
         </p>
       </div>

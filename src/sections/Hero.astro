@@ -1,12 +1,14 @@
 ---
 import { Image } from "astro:assets";
+import { Button } from "@/components/ui/button";
+import { Card as UiCard, CardContent } from "@/components/ui/card";
 // import BottomLeftBlob from "@/components/blobs/BottomLeftBlob.astro";
 // import BottomRightBlob from "@/components/blobs/BottomRightBlob.astro";
 import aliImage from "@/images/ali.webp";
 import BigArrowRight from "@/icons/BigArrowRight.astro";
 ---
 
-<section class="relative overflow-x-hidden bg-white" id="hero">
+<section class="relative overflow-x-hidden" id="hero">
   <!-- Hero blobs -->
   <!-- <div class="absolute bottom-0 right-0 -z-10 hidden sm:block">
     <BottomRightBlob />
@@ -17,14 +19,15 @@ import BigArrowRight from "@/icons/BigArrowRight.astro";
   </div> -->
 
   <div
-    class="px-4 md:px-8 pt-12 md:pt-24 grid gap-y-8 place-items-center place-content-center 2xl:container mx-auto grid-cols-[minmax(250px_550px)] lg:grid-cols-[minmax(250px_550px)_max-content] lg:pr-0 lg:grid-rows-5 lg:gap-x-20"
+    class="mx-auto grid max-w-6xl grid-cols-[minmax(250px,550px)] place-items-center place-content-center gap-y-10 px-4 pt-12 md:px-8 md:pt-24 lg:grid-cols-[minmax(250px,560px)_max-content] lg:grid-rows-5 lg:gap-x-20 lg:pr-0"
   >
     <!-- Title & Description -->
     <div
-      class="text-center text-primary space-y-4 lg:text-start lg:row-span-4 lg:row-start-1"
+      class="space-y-5 text-center lg:row-span-4 lg:row-start-1 lg:text-start"
     >
-      <h1 class="text-6xl">Launch your English Journey</h1>
-      <p class="">
+      <p class="text-xs font-semibold uppercase tracking-[0.22em] text-primary">Private English coaching that feels personal</p>
+      <h1 class="text-5xl md:text-6xl lg:text-7xl">Launch your English journey with confident, natural speaking.</h1>
+      <p class="max-w-2xl text-base text-muted-foreground md:text-lg lg:max-w-xl">
         Hi! I'm Ali, an American English teacher offering personalized ESL
         classes. With an educational foundation from Georgetown University and
         two master's degrees, I specialize in one-on-one classes tailored to fit
@@ -33,12 +36,29 @@ import BigArrowRight from "@/icons/BigArrowRight.astro";
       </p>
 
       <!-- CTA -->
-      <a
+      <Button
         href=""
         onclick="Calendly.initPopupWidget({url: 'https://calendly.com/englishforabroad/trial-esl-class'});return false;"
-        class="bg-[#CCCCFF] hover:bg-[#b3b3ff] text-[#2F4858] text-base font-semibold uppercase rounded-lg px-12 h-12 flex items-center gap-x-2 w-full md:w-fit justify-center md:mx-auto lg:mx-0 shadow-sm transition-transform hover:-translate-y-0.5 focus:-translate-y-0.5"
-        >Book Discovery Call<BigArrowRight />
-      </a>
+        class="h-10 w-full gap-x-2 uppercase tracking-[0.18em] md:mx-auto md:w-fit lg:mx-0"
+      >Book Discovery Call<BigArrowRight />
+      </Button>
+
+      <UiCard class="mx-auto max-w-xl bg-card/95 lg:mx-0">
+        <CardContent class="grid gap-3 pt-6 text-left sm:grid-cols-3">
+          <div>
+            <p class="text-2xl font-semibold text-primary">1:1</p>
+            <p class="text-sm text-muted-foreground">Tailored sessions around your goals</p>
+          </div>
+          <div>
+            <p class="text-2xl font-semibold text-primary">1000+</p>
+            <p class="text-sm text-muted-foreground">Learners supported with real speaking practice</p>
+          </div>
+          <div>
+            <p class="text-2xl font-semibold text-primary">Global</p>
+            <p class="text-sm text-muted-foreground">Lessons built for life abroad and everyday confidence</p>
+          </div>
+        </CardContent>
+      </UiCard>
     </div>
 
     <!-- Hero image -->
@@ -47,7 +67,7 @@ import BigArrowRight from "@/icons/BigArrowRight.astro";
       alt="Ali"
       width="500"
       height="500"
-      class="lg:row-span-5 lg:row-start-1"
+      class="lg:row-span-5 lg:row-start-1 rounded-[2rem] border bg-card p-2 shadow-lg"
       loading="eager"
     />
   </div>

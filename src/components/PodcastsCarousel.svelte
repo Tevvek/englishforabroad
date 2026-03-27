@@ -51,14 +51,14 @@
     })}
     pagination="true"
     loop="true"
-    class="text-primary"
-    style="--swiper-pagination-color: #155e75; --swiper-pagination-bullet-inactive-color: #fff; --swiper-pagination-bullet-inactive-opacity: 1;"
+    class="text-foreground"
+    style="--swiper-pagination-color: oklch(0.385 0.152 285.7926); --swiper-pagination-bullet-inactive-color: color-mix(in oklab, white 70%, transparent); --swiper-pagination-bullet-inactive-opacity: 1;"
   >
     {#each filteredPodcasts as podcast (podcast.title)}
       <swiper-slide class="px-6 pb-10 pt-2">
         <a
           href={podcast.url}
-          class="bg-white rounded-xl p-4 h-80 xs:h-44 grid grid-rows-[min-content_min-content_auto] xs:grid-rows-[auto_1fr] xs:grid-cols-[auto_1fr] gap-x-4 transition duration-300 hover:scale-105 shadow-lg"
+          class="grid h-80 grid-rows-[min-content_min-content_auto] gap-x-4 rounded-xl border bg-card p-4 text-card-foreground shadow-sm transition duration-300 hover:-translate-y-1 xs:h-44 xs:grid-cols-[auto_1fr] xs:grid-rows-[auto_1fr]"
         >
           <h3 class="font-bold xs:col-start-2 xs:row-start-1">
             {podcast.title}
@@ -71,7 +71,7 @@
           </p>
 
           <ImageSkeleton
-            class="self-end place-self-center aspect-square w-48 xs:w-36 xs:col-start-1 xs:row-start-1 xs:row-span-2 bg-gray-300"
+            class="self-end place-self-center aspect-square w-48 rounded-xl bg-muted xs:col-start-1 xs:row-start-1 xs:row-span-2 xs:w-36"
           >
             <img
               src={getImageSrc(podcast.image)}
@@ -90,7 +90,7 @@
 
     {#if filteredPodcasts.length === 0}
       <swiper-slide class="px-6 pb-10 pt-2">
-        <div class="bg-white rounded-xl p-4 h-44 flex gap-x-4 shadow-lg justify-center items-center">
+        <div class="flex h-44 items-center justify-center gap-x-4 rounded-xl border bg-card p-4 shadow-sm">
           <p>Coming soon! 🚀</p>
         </div>
       </swiper-slide>

@@ -52,15 +52,15 @@
     })}
     pagination="true"
     loop="true"
-    class="text-primary"
-    style="--swiper-pagination-color: #155e75; --swiper-pagination-bullet-inactive-color: #fff; --swiper-pagination-bullet-inactive-opacity: 1;"
+    class="text-foreground"
+    style="--swiper-pagination-color: oklch(0.385 0.152 285.7926); --swiper-pagination-bullet-inactive-color: color-mix(in oklab, white 70%, transparent); --swiper-pagination-bullet-inactive-opacity: 1;"
   >
     {#each filteredMovies as movie (movie.title)}
       <swiper-slide class="px-6 pb-10 pt-2">
         <a
           href={movie.url}
           class={cn(
-            "bg-white rounded-xl p-4 h-[392px] grid grid-rows-[min-content_min-content_auto] gap-x-4 transition duration-300 hover:scale-105 shadow-lg",
+            "grid h-[392px] grid-rows-[min-content_min-content_auto] gap-x-4 rounded-xl border bg-card p-4 text-card-foreground shadow-sm transition duration-300 hover:-translate-y-1",
             "xs:h-60 xs:grid-rows-[auto_1fr] xs:grid-cols-[auto_1fr]"
           )}
         >
@@ -75,7 +75,7 @@
           </p>
 
           <ImageSkeleton
-            class="self-end place-self-center xs:self-center aspect-[2/3] w-48 xs:w-36 xs:col-start-1 xs:row-start-1 xs:row-span-2 bg-gray-300"
+            class="self-end place-self-center xs:self-center aspect-[2/3] w-48 rounded-xl bg-muted xs:w-36 xs:col-start-1 xs:row-start-1 xs:row-span-2"
           >
             <img
               src={movie.image.src}
@@ -95,7 +95,7 @@
 
     {#if filteredMovies.length === 0}
       <swiper-slide class="px-6 pb-10 pt-2">
-        <div class="bg-white rounded-xl p-4 h-[392px] flex gap-x-4 shadow-lg justify-center items-center">
+        <div class="flex h-[392px] items-center justify-center gap-x-4 rounded-xl border bg-card p-4 shadow-sm">
           <p>Coming soon! 🚀</p>
         </div>
       </swiper-slide>

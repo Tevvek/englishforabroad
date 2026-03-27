@@ -26,7 +26,7 @@ const { tag: Tag = "section", id, class: className } = Astro.props;
   )}
 >
   <!-- we dont do responsive when 2xl screen -->
-  <div class="2xl:container mx-auto">
+  <div class="mx-auto max-w-6xl">
     <slot />
   </div>
 </Tag>

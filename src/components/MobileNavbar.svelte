@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { slide } from "svelte/transition";
   import Menu from "lucide-svelte/icons/menu";
   import X from "lucide-svelte/icons/x";
   import { NAV } from "@/utils/constants";
@@ -24,18 +23,18 @@
 </script>
 
 <header
-  class="mobile-header sticky top-0 z-navbar bg-white shadow-lg lg:hidden"
-  style:margin-right={isOpen ? "calc(-1 * var(--scroll-offset))" : ""}
+	class="mobile-header sticky top-0 z-navbar border-b bg-background/95 shadow-sm backdrop-blur lg:hidden"
+	style:margin-right={isOpen ? "calc(-1 * var(--scroll-offset))" : ""}
 >
-  <div class="mobile-visible-navbar grid grid-cols-[1fr_auto_1fr] px-4 py-4 z-10 bg-white" style:padding-right="calc(1rem + var(--scroll-offset, 0px))">
-    <div class="size-[100px] col-start-2">
-      <a href="/#">
+	<div class="mobile-visible-navbar grid grid-cols-[1fr_auto_1fr] bg-background px-4 py-4 z-10" style:padding-right="calc(1rem + var(--scroll-offset, 0px))">
+	  <div class="col-start-2 size-[82px] rounded-full border bg-card p-2 shadow-xs">
+	    <a href="/#">
         {#if children}
           {@render children()}
         {/if}
       </a>
     </div>
-    <button onclick={() => (isOpen = !isOpen)} class="justify-self-end self-start text-primary">
+	  <button aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"} onclick={() => (isOpen = !isOpen)} class="justify-self-end self-start rounded-md border bg-card p-2 text-foreground shadow-xs transition hover:bg-accent hover:text-accent-foreground">
       {#if isOpen}
         <X />
       {:else}
@@ -44,30 +43,30 @@
     </button>
   </div>
 
-  {#if isOpen}
-    <div
-      transition:slide={{ duration: 300, axis: 'y' }}
-      class="mobile-sliding-navbar absolute top-full left-0 w-full bg-white shadow-lg py-8 text-primary pl-8 pr-4 flex flex-col gap-y-4 z-10 h-screen"
-      style:padding-right="calc(1rem + var(--scroll-offset, 0px))"
-    >
-      <nav class="contents">
-        {#each NAV as item}
+	{#if isOpen}
+	  <div
+		class="mobile-sliding-navbar animate-in fade-in slide-in-from-top-2 absolute top-full left-0 z-10 flex h-screen w-full flex-col gap-y-5 border-t bg-background px-8 py-8 text-foreground shadow-sm duration-300"
+		style:padding-right="calc(1rem + var(--scroll-offset, 0px))"
+	  >
+		<nav class="contents">
+        {#each NAV as item (item.href)}
           <a
             onclick={() => (isOpen = false)}
             href={item.href}
-            class="font-extrabold uppercase text-lg hover:text-accent transition focus:text-accent"
-          >
+			class="text-sm font-semibold uppercase tracking-[0.18em] text-muted-foreground transition hover:text-primary focus:text-primary"
+		  >
             {item.text}
           </a>
         {/each}
       </nav>
 
-      <div class="flex gap-x-4 border-t border-primary pt-4">
-        <a
-          class="hover:text-accent transition focus:text-accent"
+		<div class="flex gap-x-4 border-t pt-4 text-muted-foreground">
+		  <a
+			class="transition hover:text-primary focus:text-primary"
           href="https://www.instagram.com/englishforabroad/"
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Instagram"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -85,11 +84,12 @@
             <path d="M16.5 7.5v.01" />
           </svg>
         </a>
-        <a
-          class="hover:text-accent transition focus:text-accent"
+		  <a
+			class="transition hover:text-primary focus:text-primary"
           href="https://www.tiktok.com/@englishforabroad_"
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="TikTok"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -107,10 +107,10 @@
         </a>
       </div>
 
-      <a
-        class="hover:text-accent transition focus:text-accent text-lg font-extrabold underline"
-        href="mailto:ali@englishforabroad.com"
-      >
+		<a
+		  class="text-sm font-semibold uppercase tracking-[0.18em] text-primary underline decoration-primary/40 underline-offset-4 transition hover:text-foreground focus:text-foreground"
+		  href="mailto:ali@englishforabroad.com"
+		>
         ali@englishforabroad.com
       </a>
     </div>

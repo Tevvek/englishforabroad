@@ -4,6 +4,8 @@
   import { toast } from "svelte-sonner";
   import { Input } from "@/components/ui/input";
   import { Button } from "@/components/ui/button";
+  import { Checkbox } from "@/components/ui/checkbox";
+  import { Label } from "@/components/ui/label";
   import Loader2 from "lucide-svelte/icons/loader-2";
 
   const waitlistFormSchema = z.object({
@@ -91,7 +93,7 @@
       bind:value={form.name}
       oninput={() => setField("name", form.name)}
       aria-invalid={errors.name ? "true" : undefined}
-      class="bg-white h-12 text-center"
+      class="h-12 border-0 bg-input text-center shadow-none"
     />
     {#if errors.name}
       <p class="text-destructive text-sm mt-1">{errors.name}</p>
@@ -106,7 +108,7 @@
       bind:value={form.email}
       oninput={() => setField("email", form.email)}
       aria-invalid={errors.email ? "true" : undefined}
-      class="bg-white h-12 text-center"
+      class="h-12 border-0 bg-input text-center shadow-none"
     />
     {#if errors.email}
       <p class="text-destructive text-sm mt-1">{errors.email}</p>
@@ -120,7 +122,7 @@
       bind:value={form.location}
       oninput={() => setField("location", form.location)}
       aria-invalid={errors.location ? "true" : undefined}
-      class="bg-white h-12 text-center"
+      class="h-12 border-0 bg-input text-center shadow-none"
     />
     {#if errors.location}
       <p class="text-destructive text-sm mt-1">{errors.location}</p>
@@ -128,17 +130,16 @@
   </div>
 
   <div>
-    <label class="text-muted-foreground flex items-start gap-2 text-sm">
-      <input
+    <Label class="flex items-start gap-3 text-sm leading-6 text-muted-foreground">
+      <Checkbox
         name="consent"
-        type="checkbox"
         bind:checked={form.consent}
         onchange={() => setField("consent", form.consent)}
         aria-invalid={errors.consent ? "true" : undefined}
-        class="border-input mt-0.5 size-4 shrink-0 rounded border"
+        class="mt-1"
       />
       <span>I agree to receive emails from English for Abroad. I can unsubscribe at any time.</span>
-    </label>
+    </Label>
     {#if errors.consent}
       <p class="text-destructive text-sm mt-1">{errors.consent}</p>
     {/if}
@@ -147,7 +148,7 @@
   <Button
     type="submit"
     disabled={isSubmitting}
-    class="w-full bg-[#CCCCFF] hover:bg-[#b3b3ff] text-[#2F4858] text-base h-12 font-semibold uppercase shadow-sm transition-transform hover:-translate-y-0.5 focus:-translate-y-0.5"
+    class="h-12 w-full text-base uppercase tracking-[0.18em]"
   >
     {#if isSubmitting}
       <Loader2 class="animate-spin mr-2" />

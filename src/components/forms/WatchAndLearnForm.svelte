@@ -4,6 +4,8 @@
   import { toast } from "svelte-sonner";
   import { Input } from "@/components/ui/input";
   import { Button } from "@/components/ui/button";
+  import { Checkbox } from "@/components/ui/checkbox";
+  import { Label } from "@/components/ui/label";
   import Loader2 from "lucide-svelte/icons/loader-2";
 
   const watchAndLearnFormSchema = z.object({
@@ -90,7 +92,7 @@
       bind:value={form.name}
       oninput={() => setField("name", form.name)}
       aria-invalid={errors.name ? "true" : undefined}
-      class="bg-white h-12 text-center"
+      class="h-12 border-0 bg-input text-center shadow-none"
     />
     {#if errors.name}
       <p class="text-destructive text-sm mt-1">{errors.name}</p>
@@ -105,7 +107,7 @@
       bind:value={form.email}
       oninput={() => setField("email", form.email)}
       aria-invalid={errors.email ? "true" : undefined}
-      class="bg-white h-12 text-center"
+      class="h-12 border-0 bg-input text-center shadow-none"
     />
     {#if errors.email}
       <p class="text-destructive text-sm mt-1">{errors.email}</p>
@@ -113,17 +115,16 @@
   </div>
 
   <div>
-    <label class="text-muted-foreground flex items-start gap-2 text-sm">
-      <input
+    <Label class="flex items-start gap-3 text-sm leading-6 text-muted-foreground">
+      <Checkbox
         name="consent"
-        type="checkbox"
         bind:checked={form.consent}
         onchange={() => setField("consent", form.consent)}
         aria-invalid={errors.consent ? "true" : undefined}
-        class="border-input mt-0.5 size-4 shrink-0 rounded border"
+        class="mt-1"
       />
       <span>I agree to receive emails from English for Abroad. I can unsubscribe at any time.</span>
-    </label>
+    </Label>
     {#if errors.consent}
       <p class="text-destructive text-sm mt-1">{errors.consent}</p>
     {/if}
@@ -132,7 +133,7 @@
   <Button
     type="submit"
     disabled={isSubmitting}
-    class="w-full bg-orange-500 hover:bg-orange-600 text-white h-12 font-semibold uppercase flex items-center justify-center gap-2"
+    class="h-12 w-full gap-2 text-base uppercase tracking-[0.18em]"
   >
     {#if isSubmitting}
       <Loader2 class="animate-spin" />
