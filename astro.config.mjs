@@ -8,11 +8,9 @@ import vercel from "@astrojs/vercel";
 
 import react from "@astrojs/react";
 
-import db from "@astrojs/db";
-
 // https://astro.build/config
 export default defineConfig({
-  integrations: [vue(), react(), db()],
+  integrations: [vue(), react()],
 
   vite: {
     plugins: [tailwindcss(), svgLoader()],
@@ -39,42 +37,8 @@ export default defineConfig({
         access: "secret",
       }),
 
-      // Stripe payments
-      STRIPE_SECRET_KEY: envField.string({
-        context: "server",
-        access: "secret",
-      }),
-      STRIPE_WEBHOOK_SECRET: envField.string({
-        context: "server",
-        access: "secret",
-      }),
-      STRIPE_PRICE_ID: envField.string({
-        context: "server",
-        access: "secret",
-      }),
-
       // Brevo email marketing
       BREVO_API_KEY: envField.string({
-        context: "server",
-        access: "secret",
-      }),
-
-      // Naver
-      NAVER_CLIENT_ID: envField.string({
-        context: "server",
-        access: "secret",
-      }),
-      NAVER_CLIENT_SECRET: envField.string({
-        context: "server",
-        access: "secret",
-      }),
-
-      // Upstash
-      UPSTASH_REDIS_REST_URL: envField.string({
-        context: "server",
-        access: "secret",
-      }),
-      UPSTASH_REDIS_REST_TOKEN: envField.string({
         context: "server",
         access: "secret",
       }),
