@@ -1,6 +1,7 @@
 ---
 import Logo from "@/components/Logo.astro";
 import MobileNavbar from "@/components/MobileNavbar.svelte";
+import { buttonVariants } from "@/components/ui/button";
 import { NAV } from "@/utils/constants";
 
 const firstHalf = NAV.slice(0, Math.ceil(NAV.length / 2));
@@ -15,7 +16,7 @@ const secondHalf = NAV.slice(Math.ceil(NAV.length / 2));
       {
         firstHalf.map((item) => (
           <a
-            class="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground transition hover:text-primary focus:text-primary"
+            class={buttonVariants({ variant: "outline", size: "sm" })}
             href={item.href}
           >
             {item.text}
@@ -25,8 +26,8 @@ const secondHalf = NAV.slice(Math.ceil(NAV.length / 2));
     </nav>
 
     <!-- logo -->
-    <div class="size-[88px] rounded-full border bg-card p-2 shadow-xs">
-      <a href="/#">
+    <div>
+      <a href="/#" class="block w-[220px]">
         <Logo />
       </a>
     </div>
@@ -36,13 +37,21 @@ const secondHalf = NAV.slice(Math.ceil(NAV.length / 2));
       {
         secondHalf.map((item) => (
           <a
-            class="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground transition hover:text-primary focus:text-primary"
+            class={buttonVariants({ variant: "outline", size: "sm" })}
             href={item.href}
           >
             {item.text}
           </a>
         ))
       }
+      <a
+        class={buttonVariants({ variant: "outline", size: "sm" })}
+        href="https://app.englishforabroad.com"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Dashboard
+      </a>
     </nav>
   </div>
 </header>

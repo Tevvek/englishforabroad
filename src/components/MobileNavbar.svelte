@@ -2,6 +2,7 @@
   import { onDestroy } from "svelte";
   import Menu from "lucide-svelte/icons/menu";
   import X from "lucide-svelte/icons/x";
+  import { buttonVariants } from "@/components/ui/button";
   import { NAV } from "@/utils/constants";
   
   let { children } = $props<{ children?: any }>();
@@ -46,8 +47,8 @@
 >
 	<div class="pointer-events-none absolute inset-x-0 top-full h-12 bg-gradient-to-b from-background via-background/85 to-transparent"></div>
 	<div class="mobile-visible-navbar grid grid-cols-[1fr_auto_1fr] bg-background px-4 py-4" style:padding-right="calc(1rem + var(--scroll-offset, 0px))">
-	  <div class="col-start-2 size-[82px] rounded-full border bg-card p-2 shadow-xs">
-	    <a href="/#">
+	  <div class="col-start-2">
+	    <a href="/#" class="block w-[180px]">
         {#if children}
           {@render children()}
         {/if}
@@ -72,12 +73,21 @@
           <a
             onclick={closeMenu}
             href={item.href}
-			class="text-sm font-semibold uppercase tracking-[0.18em] text-muted-foreground transition hover:text-primary focus:text-primary"
+			class={buttonVariants({ variant: "outline", size: "lg" })}
 		  >
             {item.text}
           </a>
         {/each}
       </nav>
+
+		<a
+		  class={buttonVariants({ variant: "outline", size: "lg" })}
+		  href="https://app.englishforabroad.com"
+		  target="_blank"
+		  rel="noopener noreferrer"
+		>
+		  Dashboard
+		</a>
 
 		<div class="flex gap-x-4 border-t pt-4 text-muted-foreground">
 		  <a

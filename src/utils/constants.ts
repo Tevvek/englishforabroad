@@ -1,6 +1,6 @@
 export const NAV = [
   {
-    text: "SERVICES",
+    text: "Services",
     href: "/#services",
   },
   // {
@@ -8,15 +8,15 @@ export const NAV = [
   //   href: "/#pricing",
   // },
   {
-    text: "METHODOLOGY",
+    text: "Methodology",
     href: "/#methodology",
   },
   {
-    text: "TESTIMONIALS",
+    text: "Testimonials",
     href: "/#testimonials",
   },
   {
-    text: "CONTACT",
+    text: "Contact",
     href: "#contact",
   },
 ];

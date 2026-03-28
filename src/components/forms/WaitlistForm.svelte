@@ -93,7 +93,7 @@
       bind:value={form.name}
       oninput={() => setField("name", form.name)}
       aria-invalid={errors.name ? "true" : undefined}
-      class="h-12 border-0 bg-input text-center shadow-none"
+      class="h-10"
     />
     {#if errors.name}
       <p class="text-destructive text-sm mt-1">{errors.name}</p>
@@ -108,7 +108,7 @@
       bind:value={form.email}
       oninput={() => setField("email", form.email)}
       aria-invalid={errors.email ? "true" : undefined}
-      class="h-12 border-0 bg-input text-center shadow-none"
+      class="h-10"
     />
     {#if errors.email}
       <p class="text-destructive text-sm mt-1">{errors.email}</p>
@@ -122,7 +122,7 @@
       bind:value={form.location}
       oninput={() => setField("location", form.location)}
       aria-invalid={errors.location ? "true" : undefined}
-      class="h-12 border-0 bg-input text-center shadow-none"
+      class="h-10"
     />
     {#if errors.location}
       <p class="text-destructive text-sm mt-1">{errors.location}</p>
@@ -150,7 +150,7 @@
     variant="secondary"
     size="lg"
     disabled={isSubmitting}
-    class="w-full uppercase tracking-[0.18em]"
+    class="w-full"
   >
     {#if isSubmitting}
       <Loader2 class="animate-spin mr-2" />

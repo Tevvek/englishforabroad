@@ -37,7 +37,7 @@ const cards = [
 
 <section id="methodology">
   <div
-    class="mx-auto grid max-w-6xl gap-8 px-4 py-8 md:grid-cols-[auto_1fr] md:gap-12 md:px-8 md:py-12"
+    class="mx-auto grid max-w-6xl gap-8 px-4 py-8 md:px-8 md:py-12 lg:grid-cols-[minmax(300px,440px)_1fr] lg:gap-x-0 lg:gap-y-8"
   >
     <p class="text-center text-xs font-semibold uppercase tracking-[0.22em] text-primary md:col-span-2">
       Methodology
@@ -47,13 +47,14 @@ const cards = [
     </h2>
 
     <!-- Student image -->
-    <div class="hidden lg:block rounded-[2rem] overflow-hidden">
+    <div class="hidden aspect-square w-full max-w-[440px] shrink-0 overflow-hidden rounded-full lg:block">
       <Image
         src={studentImage}
         alt="Student"
         width="500"
         height="500"
         loading="lazy"
+        class="h-full w-full object-cover"
       />
     </div>
 

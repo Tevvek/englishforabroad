@@ -10,11 +10,11 @@ const { title, description, icon: Icon } = Astro.props;
 ---
 
 <UiCard class="relative h-full transition-transform hover:-translate-y-1">
-  <CardHeader class="gap-3">
-    <div class="text-primary">
+  <CardHeader class="flex flex-row items-center gap-3 space-y-0">
+    <div class="shrink-0 text-primary">
       <Icon />
     </div>
-    <CardTitle class="text-lg">{title}</CardTitle>
+    <CardTitle class="text-lg leading-none">{title}</CardTitle>
   </CardHeader>
   <CardContent>
     <p class="text-sm text-muted-foreground">{description}</p>

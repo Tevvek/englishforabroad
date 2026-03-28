@@ -1,16 +1,14 @@
 ---
-import { Image } from "astro:assets";
-import logoImage from "@/images/logo.webp";
 import cn from "@/utils/cn";
 
 const { class: className } = Astro.props;
 ---
 
-<Image
-  src={logoImage}
-  width="150"
-  height="150"
+<img
+  src="/navbar-logo-horizontal.svg"
+  width="280"
+  height="88"
   alt="English for Abroad logo"
   loading="eager"
-  class={cn("aspect-square", className)}
+  class={cn("h-auto w-full object-contain", className)}
 />
