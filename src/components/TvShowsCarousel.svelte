@@ -71,6 +71,7 @@
               <img
                 src={getImageSrc(tvShow.image)}
                 alt="tv show"
+                style:border-radius="0.75rem"
                 style:view-transition-name={getViewTransitionName(tvShow)}
                 loading="lazy"
                 onload={(e) => {

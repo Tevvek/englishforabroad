@@ -67,6 +67,7 @@
               <img
                 src={getImageSrc(podcast.image)}
                 alt="podcast"
+                style:border-radius="0.75rem"
                 style:view-transition-name={podcast.slug ? podcast.slug : podcast.title.replaceAll(" ", "")}
                 loading="lazy"
                 onload={(e) => {

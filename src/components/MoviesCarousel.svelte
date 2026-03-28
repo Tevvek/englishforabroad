@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { EmblaCarouselType, EmblaOptionsType } from "embla-carousel";
   import useEmblaCarousel from "embla-carousel-svelte";
+  import { fromAction } from "svelte/attachments";
   import type { Movie } from "@/types/resources";
   import ImageSkeleton from "./ImageSkeleton.svelte";
   import cn from "@/utils/cn";
@@ -42,7 +43,7 @@
   <div
     class="embla__viewport"
     onemblaInit={handleEmblaInit}
-    use:emblaAction={{ options }}
+    {@attach fromAction(emblaAction, () => ({ options }))}
   >
     <div class="embla__container">
       {#each movies as movie (movie.title)}
@@ -70,7 +71,8 @@
               <img
                 src={movie.image}
                 alt="movie"
-                style="view-transition-name: {getViewTransitionName(movie)};"
+                style:border-radius="0.75rem"
+                style:view-transition-name={getViewTransitionName(movie)}
                 loading="lazy"
                 onload={(e) => {
                   const prev = (e.target as HTMLImageElement).previousElementSibling as HTMLDivElement;
