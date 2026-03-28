@@ -2,7 +2,14 @@
   import { cn } from "@/lib/utils";
   import { PodcastsThemes } from "@/types/resources";
   import { Button } from "./ui/button";
-  import { selection } from "./state.svelte";
+
+  let {
+    selectedTheme,
+    onSelect,
+  } = $props<{
+    selectedTheme: PodcastsThemes;
+    onSelect: (theme: PodcastsThemes) => void;
+  }>();
 </script>
 
 <div
@@ -13,13 +20,13 @@
     <Button
       value={theme}
       size="sm"
-      variant={selection.podcast === theme ? "default" : "outline"}
+      variant={selectedTheme === theme ? "default" : "outline"}
       class={cn(
         "rounded-full text-xs uppercase tracking-[0.16em] transition-none",
-        selection.podcast !== theme &&
+        selectedTheme !== theme &&
           "bg-card text-foreground hover:text-foreground"
       )}
-      onclick={() => selection.podcast = theme}
+      onclick={() => onSelect(theme)}
     >
       {theme}
     </Button>

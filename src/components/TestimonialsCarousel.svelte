@@ -1,0 +1,176 @@
+<script lang="ts">
+  import useEmblaCarousel from "embla-carousel-svelte";
+  import type { EmblaOptionsType } from "embla-carousel";
+  import Autoplay from "embla-carousel-autoplay";
+  import { Star } from "lucide-svelte";
+
+  interface Testimonial {
+    student: string;
+    platform: string;
+    opinion: string;
+  }
+
+  const TESTIMONIALS: Testimonial[] = [
+    {
+      student: "Candice",
+      opinion:
+        "My favorite teacher I've come across! She was informative, engaging, and inspirational. This teacher never disappoints! If you're looking for someone that's not only highly qualified, but truly cares about your learning experience, then you've come to the right place.",
+      platform: "Outschool",
+    },
+    {
+      student: "Yongbeom",
+      opinion:
+        "Ali is the most talented tutor I have ever met. She knows how to teach students at their level and gives them the feedback they need. One of the best things about her is that she is relentless in endeavoring to give her best to her students. I truly recommend her to everyone.",
+      platform: "Private Lesson",
+    },
+    {
+      student: "Seoyeon",
+      opinion:
+        "Ali always checks in with me before class to ask about my lesson goals and she always helps me accomplish them. She is also very good at pointing out any grammatical mistakes or incorrect expressions. Best tutor ever!!!",
+      platform: "Ringle",
+    },
+    {
+      student: "Haeun",
+      opinion:
+        "Ali's preparation for the lessons and the way she conducts the classes are very professional. The classes are so enjoyable that time flies by! I'm glad to have met such a great teacher!!",
+      platform: "Private Lesson",
+    },
+    {
+      student: "Hyejin",
+      opinion:
+        "I usually get nervous with new tutors, but today's class was so relaxing I ended up speaking more than usual! She asked many questions and created a comfortable atmosphere, which made it a joy to participate. The way she corrected my responses to sound more natural and pointed out grammatical mistakes was very helpful. I was extremely satisfied :)",
+      platform: "Ringle",
+    },
+    {
+      student: "Meg",
+      opinion:
+        "Truly an inspiring class! My daughter loves Miss Ali, she is patient, kind, and motivating! We look forward to taking more classes with her!",
+      platform: "Outschool",
+    },
+    {
+      student: "Min-ji",
+      opinion:
+        "Ali is kind and responsible. She earnestly answers all questions and makes the atmosphere comfortable. She diligently fills the class time, making me look forward to every lesson :)",
+      platform: "Ringle",
+    },
+    {
+      student: "Yoo-jung",
+      opinion:
+        "Ali was the best tutor I ever met! Perhaps because of her background in English education, I could see her willingness to teach me one more thing somehow. She taught me 20mins classes without a second's rest. Thanks a million!",
+      platform: "Ringle",
+    },
+    {
+      student: "Marli",
+      opinion:
+        "Ali is such a passionate teacher, and really engages with the students. She educates in a fun way and encourages critical thinking, creativity while empowering her students to challenge stereotypes and explore their potential and inner strengths.",
+      platform: "Outschool",
+    },
+    {
+      student: "Soo-bin",
+      opinion:
+        "I am lucky to have Ali as my first tutor. She is patient and a great communicator. I can feel a great deal of positive energy incuding helping my English. I definitely want to talk with her again!:)",
+      platform: "Ringle",
+    },
+    {
+      student: "Hyun-woo",
+      opinion:
+        "I think she's the best tutor, especially if you want to have a conversation about a variety of topics. She leads the class the way you want and is very flexible if you want to change anything, so I'd love to do it again!",
+      platform: "Ringle",
+    },
+    {
+      student: "Jisoo",
+      opinion:
+        "I really appreciated how thoroughly she checked my learning requests, guided the conversation to the topics I wanted, and made sure to follow up with corrections and additional questions even after hours. I'm already looking forward to the next class.",
+      platform: "Ringle",
+    },
+    {
+      student: "Sungmin",
+      opinion:
+        "I love how Ali leads sessions. Even when we're just chatting casually, she teaches me new English expressions, which helps me a lot. She's the best tutor because she organizes my paraphrasing the way I request.",
+      platform: "Ringle",
+    },
+    {
+      student: "Eun-kyung",
+      opinion:
+        "I wanted to learn more native-like expressions and she took care of that as much as possible! Her bright and cheerful personality made me feel comfortable talking to her and the lesson went by quickly. I highly recommend her:)",
+      platform: "Ringle",
+    },
+  ];
+
+  const options: EmblaOptionsType = {
+    align: "start",
+    loop: true,
+  };
+  const emblaAction = useEmblaCarousel;
+
+  const plugins = [
+    Autoplay({
+      delay: 1500,
+      stopOnInteraction: true,
+    }),
+  ];
+</script>
+
+<div class="embla">
+  <div class="embla__viewport" use:emblaAction={{ options, plugins }}>
+    <div class="embla__container">
+      {#each TESTIMONIALS as testimonial (testimonial.student + testimonial.platform)}
+        <div class="embla__slide">
+          <div class="space-y-2 rounded-xl border bg-card p-8 text-card-foreground shadow-sm">
+            <p class="line-clamp-6" title={testimonial.opinion}>
+              {testimonial.opinion}
+            </p>
+            <h3 class="text-lg font-bold">{testimonial.student}</h3>
+            <div class="flex text-primary" aria-hidden="true">
+              {#each Array.from({ length: 5 }) as _, index (index)}
+                <Star size={18} fill="currentColor" strokeWidth={1.6} />
+              {/each}
+            </div>
+          </div>
+        </div>
+      {/each}
+    </div>
+  </div>
+</div>
+
+<style>
+  .embla {
+    padding-inline: 0;
+  }
+
+  .embla__viewport {
+    overflow: hidden;
+  }
+
+  .embla__container {
+    display: flex;
+    gap: 0;
+    touch-action: pan-y pinch-zoom;
+  }
+
+  .embla__slide {
+    box-sizing: border-box;
+    min-width: 0;
+    flex: 0 0 100%;
+    padding: 0.5rem 0.75rem 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .embla__slide {
+      flex-basis: 50%;
+      padding-bottom: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .embla__slide {
+      flex-basis: 33.3333%;
+    }
+  }
+
+  @media (min-width: 1440px) {
+    .embla__slide {
+      flex-basis: 25%;
+    }
+  }
+</style>

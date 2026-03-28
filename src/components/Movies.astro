@@ -1,6 +1,5 @@
 ---
-import MoviesCarousel from "@/components/MoviesCarousel.svelte";
-import MoviesTags from "@/components/MoviesTags.svelte";
+import MoviesBrowser from "@/components/MoviesBrowser.svelte";
 import { getCollection } from "astro:content";
 
 const markdowns = await getCollection("movies");
@@ -28,7 +27,5 @@ const movies = markdowns.map<any>((markdown) => ({
     </p>
   </div>
 
-  <MoviesTags client:load />
-
-  <MoviesCarousel client:load movies={movies} />
+  <MoviesBrowser client:load movies={movies} />
 </section>

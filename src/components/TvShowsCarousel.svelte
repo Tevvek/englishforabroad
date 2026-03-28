@@ -1,35 +1,37 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+  import type { EmblaCarouselType, EmblaOptionsType } from "embla-carousel";
+  import useEmblaCarousel from "embla-carousel-svelte";
   import type { TvShow } from "@/types/resources";
-  import { selection } from "./state.svelte";
-  import Spinner from "./Spinner.svelte";
   import ImageSkeleton from "./ImageSkeleton.svelte";
   import cn from "@/utils/cn";
 
   let { tvShows } = $props<{ tvShows: TvShow[] }>();
 
-  let isMounted = $state(false);
-  let isSwiperReady = $state(false);
-  let swiperEl = $state<any>(null);
+  const options: EmblaOptionsType = {
+    align: "start",
+    loop: true,
+  };
+  const emblaAction = useEmblaCarousel;
 
-  onMount(async () => {
-    // Import swiper web component
-    const { register } = await import("swiper/element/bundle");
-    register();
-    isMounted = true;
-    isSwiperReady = true;
-  });
+  let emblaApi = $state<EmblaCarouselType | null>(null);
+  let scrollSnaps = $state<number[]>([]);
+  let selectedSnap = $state(0);
 
-  let filteredTvShows = $derived(
-    !isMounted ? tvShows : tvShows.filter((show) => show.theme === selection.tvShow)
-  );
+  function syncEmblaState(api: EmblaCarouselType) {
+    scrollSnaps = api.snapList();
+    selectedSnap = api.selectedScrollSnap();
+  }
 
-  $effect(() => {
-    // When selection changes, slide back to 0
-    if (selection.tvShow && swiperEl && swiperEl.swiper) {
-      swiperEl.swiper.slideTo(0);
-    }
-  });
+  function handleEmblaInit(event: CustomEvent<EmblaCarouselType>) {
+    emblaApi = event.detail;
+    syncEmblaState(emblaApi);
+    emblaApi.on("reInit", syncEmblaState);
+    emblaApi.on("select", syncEmblaState);
+  }
+
+  function goTo(index: number) {
+    emblaApi?.scrollTo(index);
+  }
 
   function getImageSrc(image: TvShow["image"]) {
     return typeof image === "string" ? image : image.src;
@@ -40,71 +42,137 @@
   }
 </script>
 
-{#if !isSwiperReady}
-  <div class="min-h-56 flex justify-center items-center">
-    <Spinner />
-  </div>
-{/if}
-
-<div class="swiper-wrapper-container" style:display={isSwiperReady ? "block" : "none"}>
-  <swiper-container
-    bind:this={swiperEl}
-    slides-per-view="1"
-    breakpoints={JSON.stringify({
-      768: { slidesPerView: 2 },
-      1024: { slidesPerView: 3 },
-      1280: { slidesPerView: 4 },
-      2560: { slidesPerView: 5 },
-    })}
-    pagination="true"
-    loop="true"
-    class="text-foreground"
-    style="--swiper-pagination-color: oklch(0.385 0.152 285.7926); --swiper-pagination-bullet-inactive-color: color-mix(in oklab, white 70%, transparent); --swiper-pagination-bullet-inactive-opacity: 1;"
+<div class="embla">
+  <div
+    class="embla__viewport"
+    onemblaInit={handleEmblaInit}
+    use:emblaAction={{ options }}
   >
-    {#each filteredTvShows as tvShow (tvShow.title)}
-      <swiper-slide class="px-6 pb-10 pt-2">
-        <a
-          href={tvShow.url}
-          class={cn(
-            "grid h-[392px] grid-rows-[min-content_min-content_auto] gap-x-4 rounded-xl border bg-card p-4 text-card-foreground shadow-sm transition duration-300 hover:-translate-y-1",
-            "xs:h-60 xs:grid-rows-[auto_1fr] xs:grid-cols-[auto_1fr]"
-          )}
-        >
-          <h3 class="font-bold xs:col-start-2 xs:row-start-1">
-            {tvShow.title}
-          </h3>
-          <p
-            class="text-sm line-clamp-2 xs:line-clamp-6 xs:h-fit mb-2 xs:mb-0 xs:col-start-2 xs:row-start-2"
-            title={tvShow.longDescription}
+    <div class="embla__container">
+      {#each tvShows as tvShow (tvShow.title)}
+        <div class="embla__slide">
+          <a
+            href={tvShow.url}
+            class={cn(
+              "grid h-[392px] grid-rows-[min-content_min-content_auto] gap-x-4 rounded-xl border bg-card p-4 text-card-foreground shadow-sm transition duration-300 hover:-translate-y-1",
+              "xs:h-60 xs:grid-cols-[auto_1fr] xs:grid-rows-[auto_1fr]"
+            )}
           >
-            {tvShow.longDescription}
-          </p>
+            <h3 class="font-bold xs:col-start-2 xs:row-start-1">
+              {tvShow.title}
+            </h3>
+            <p
+              class="mb-2 text-sm line-clamp-2 xs:col-start-2 xs:row-start-2 xs:mb-0 xs:h-fit xs:line-clamp-6"
+              title={tvShow.longDescription}
+            >
+              {tvShow.longDescription}
+            </p>
 
-          <ImageSkeleton
-            class="self-end place-self-center xs:self-center aspect-[2/3] w-48 rounded-xl bg-muted xs:w-36 xs:col-start-1 xs:row-start-1 xs:row-span-2"
-          >
-            <img
-              src={getImageSrc(tvShow.image)}
-              alt="tvShow"
-              style="view-transition-name: {getViewTransitionName(tvShow)};"
-              loading="lazy"
-              onload={(e) => {
-                const prev = (e.target as HTMLImageElement).previousElementSibling as HTMLDivElement;
-                if (prev) prev.style.display = 'none';
-              }}
-              class="h-full object-cover"
-            />
-          </ImageSkeleton>
-        </a>
-      </swiper-slide>
-    {/each}
-
-    {#if filteredTvShows.length === 0}
-      <swiper-slide class="px-6 pb-10 pt-2">
-        <div class="flex h-[392px] items-center justify-center gap-x-4 rounded-xl border bg-card p-4 shadow-sm">
-          <p>Coming soon! 🚀</p>
+            <ImageSkeleton
+              class="aspect-[2/3] w-48 self-end place-self-center rounded-xl bg-muted xs:col-start-1 xs:row-span-2 xs:w-36 xs:self-center"
+            >
+              <img
+                src={getImageSrc(tvShow.image)}
+                alt="tv show"
+                style="view-transition-name: {getViewTransitionName(tvShow)};"
+                loading="lazy"
+                onload={(e) => {
+                  const prev = (e.target as HTMLImageElement).previousElementSibling as HTMLDivElement;
+                  if (prev) prev.style.display = "none";
+                }}
+                class="h-full object-cover"
+              />
+            </ImageSkeleton>
+          </a>
         </div>
-      </swiper-slide>
-    {/if}
-  </swiper-container>
+      {/each}
+
+      {#if tvShows.length === 0}
+        <div class="embla__slide">
+          <div class="flex h-[392px] items-center justify-center rounded-xl border bg-card p-4 shadow-sm">
+            <p>Coming soon! 🚀</p>
+          </div>
+        </div>
+      {/if}
+    </div>
+  </div>
+
+  <div class="embla__dots" aria-label="TV shows carousel pagination">
+    {#each scrollSnaps as _, index (index)}
+      <button
+        type="button"
+        class:embla__dot--selected={index === selectedSnap}
+        class="embla__dot"
+        aria-label={`Go to TV show slide ${index + 1}`}
+        aria-pressed={index === selectedSnap}
+        onclick={() => goTo(index)}
+      ></button>
+    {/each}
+  </div>
 </div>
+
+<style>
+  .embla {
+    padding-inline: 0;
+  }
+
+  .embla__viewport {
+    overflow: hidden;
+  }
+
+  .embla__container {
+    display: flex;
+    gap: 0;
+    touch-action: pan-y pinch-zoom;
+  }
+
+  .embla__slide {
+    box-sizing: border-box;
+    min-width: 0;
+    flex: 0 0 100%;
+    padding: 0.5rem 0.75rem 2.5rem;
+  }
+
+  .embla__dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.625rem;
+  }
+
+  .embla__dot {
+    height: 0.75rem;
+    width: 0.75rem;
+    border-radius: 999px;
+    background: var(--muted-foreground);
+    transition: transform 150ms ease, background-color 150ms ease;
+  }
+
+  .embla__dot--selected {
+    background: var(--primary);
+    transform: scale(1.1);
+  }
+
+  @media (min-width: 768px) {
+    .embla__slide {
+      flex-basis: 50%;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .embla__slide {
+      flex-basis: 33.3333%;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .embla__slide {
+      flex-basis: 25%;
+    }
+  }
+
+  @media (min-width: 2560px) {
+    .embla__slide {
+      flex-basis: 20%;
+    }
+  }
+</style>

@@ -20,6 +20,9 @@
     "bits-ui": "^2.16.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "embla-carousel": "^8.6.0",
+    "embla-carousel-autoplay": "^8.6.0",
+    "embla-carousel-svelte": "^8.6.0",
     "formsnap": "^2.0.1",
     "lucide-svelte": "^1.0.1",
     "mode-watcher": "^1.1.0",
@@ -29,7 +32,6 @@
     "simple-icons": "^16.3.0",
     "svelte": "^5.55.0",
     "sveltekit-superforms": "^2.30.1",
-    "swiper": "^11.1.4",
     "tailwind-merge": "^3.5.0",
     "tailwindcss": "^4.0.7",
     "zod": "^3.25.57"

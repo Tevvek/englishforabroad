@@ -1,5 +1,5 @@
 ---
-import TestimonialsCarousel from "@/components/TestimonialsCarousel.astro";
+import TestimonialsCarousel from "@/components/TestimonialsCarousel.svelte";
 ---
 
 <section
@@ -9,5 +9,5 @@ import TestimonialsCarousel from "@/components/TestimonialsCarousel.astro";
   <p class="text-center text-xs font-semibold uppercase tracking-[0.22em] text-primary">Reviews</p>
   <h2 class="text-5xl text-center">Testimonials</h2>
 
-  <TestimonialsCarousel />
+  <TestimonialsCarousel client:load />
 </section>

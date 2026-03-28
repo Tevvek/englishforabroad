@@ -1,6 +1,5 @@
 ---
-import TvShowsCarousel from "@/components/TvShowsCarousel.svelte";
-import TvShowsTags from "@/components/TvShowsTags.svelte";
+import TvShowsBrowser from "@/components/TvShowsBrowser.svelte";
 import { getCollection } from "astro:content";
 import resolveResourceImage from "@/utils/resolveResourceImage";
 
@@ -28,7 +27,5 @@ const tvShows = markdowns.map<any>((markdown) => ({
     </p>
   </div>
 
-  <TvShowsTags client:load />
-
-  <TvShowsCarousel client:load tvShows={tvShows} />
+  <TvShowsBrowser client:load tvShows={tvShows} />
 </section>

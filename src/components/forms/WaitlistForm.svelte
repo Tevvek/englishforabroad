@@ -130,7 +130,7 @@
   </div>
 
   <div>
-    <Label class="flex items-start gap-3 text-sm leading-6 text-muted-foreground">
+    <Label class="flex w-full items-start gap-3 text-left text-sm leading-6 text-muted-foreground">
       <Checkbox
         name="consent"
         bind:checked={form.consent}
@@ -138,7 +138,9 @@
         aria-invalid={errors.consent ? "true" : undefined}
         class="mt-1"
       />
-      <span>I agree to receive emails from English for Abroad. I can unsubscribe at any time.</span>
+      <span class="flex-1 [text-wrap:wrap]">
+        I agree to receive emails from English for Abroad. I can unsubscribe at any time.
+      </span>
     </Label>
     {#if errors.consent}
       <p class="text-destructive text-sm mt-1">{errors.consent}</p>

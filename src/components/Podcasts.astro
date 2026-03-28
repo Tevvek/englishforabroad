@@ -1,6 +1,5 @@
 ---
-import PodcastsTags from "@/components/PodcastsTags.svelte";
-import PodcastsCarousel from "@/components/PodcastsCarousel.svelte";
+import PodcastsBrowser from "@/components/PodcastsBrowser.svelte";
 import { getCollection } from "astro:content";
 import resolveResourceImage from "@/utils/resolveResourceImage";
 
@@ -38,7 +37,5 @@ const podcasts = markdowns.map<any>((markdown) => ({
     </li>
   </ul> -->
 
-  <PodcastsTags client:visible />
-
-  <PodcastsCarousel client:load podcasts={podcasts} />
+  <PodcastsBrowser client:load podcasts={podcasts} />
 </section>
