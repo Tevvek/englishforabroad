@@ -26,6 +26,8 @@
 
   type WaitlistFormErrors = Partial<Record<keyof WaitlistFormData, string>>;
 
+  let { consentTextClass = "text-muted-foreground" } = $props<{ consentTextClass?: string }>();
+
   const initialData: WaitlistFormData = { name: "", email: "", location: "", consent: false };
 
   let form = $state<WaitlistFormData>({ ...initialData });
@@ -130,7 +132,7 @@
   </div>
 
   <div>
-    <Label class="flex w-full items-start gap-3 text-left text-sm leading-6 text-muted-foreground">
+    <Label class={`flex w-full items-start gap-3 text-left text-sm leading-6 ${consentTextClass}`}>
       <Checkbox
         name="consent"
         bind:checked={form.consent}
